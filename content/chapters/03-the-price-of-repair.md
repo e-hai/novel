@@ -1,6 +1,7 @@
 ---
 chapter: 3
 title: "The Price of Repair"
+summary: "Inside the memory, he is offered a cleaner version of himself. He chooses the fracture — and finds, at last, an honest way to work."
 status: ai-draft
 words: 817
 ---
