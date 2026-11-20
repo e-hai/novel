@@ -1,0 +1,82 @@
+name: Build & deploy novel site (Cloudflare Pages)
+
+# 小说站是静态站，内容更新靠人工编辑章节后 push，无需每日 cron。
+# 合规门槛：默认只发布 status=approved 的章节；要看草稿设 repo variable PREVIEW_DRAFTS=1。
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: novel-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          # 纯标准库、零 pip 依赖，不启用 cache: pip
+
+      # 生成站点。SITE_BASE_URL/PREVIEW_DRAFTS/SITE_AUTHOR 来自 repo variables。
+      - name: Build static site
+        run: python3 src/generate.py
+        env:
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://novel.pages.dev' }}
+          PREVIEW_DRAFTS: ${{ vars.PREVIEW_DRAFTS || '' }}
+          SITE_AUTHOR: ${{ vars.SITE_AUTHOR || '' }}
+          SITE_CONTACT: ${{ vars.SITE_CONTACT || '' }}
+
+      - name: Sanity check
+        run: |
+          test -f site/sitemap.xml || { echo "no sitemap"; exit 1; }
+          test -f site/index.html || { echo "no home"; exit 1; }
+          echo "URLs: $(grep -c '<loc>' site/sitemap.xml)"
+          if grep -rl 'example.com' site --include=*.html | grep -q .; then
+            echo "ERROR: placeholder domain found"; exit 1
+          fi
+          pages=$(find site -name index.html | wc -l)
+          disclosed=$(grep -rl 'How this story was made' site --include=*.html | wc -l)
+          echo "pages: $pages, with disclosure: $disclosed"
+          test "$pages" -eq "$disclosed" || { echo "ERROR: not every page has AI disclosure"; exit 1; }
+
+      # 注入搜索引擎验证文件（可选）
+      - name: Inject search-console verification files (optional)
+        run: |
+          python3 - <<'PY'
+          import os, pathlib
+          for tag in ("GSC", "BING"):
+              name = os.environ.get(f"{tag}_VERIFY_FILE", "").strip()
+              content = os.environ.get(f"{tag}_VERIFY_CONTENT", "").strip()
+              if name and content and "/" not in name and "\\" not in name and ".." not in name:
+                  (pathlib.Path("site") / name).write_text(content, encoding="utf-8")
+                  print(f"[i] {tag} verification file written: {name}")
+              else:
+                  print(f"[i] {tag} verification not configured, skip")
+          PY
+        env:
+          GSC_VERIFY_FILE: ${{ secrets.GSC_VERIFY_FILE }}
+          GSC_VERIFY_CONTENT: ${{ secrets.GSC_VERIFY_CONTENT }}
+          BING_VERIFY_FILE: ${{ secrets.BING_VERIFY_FILE }}
+          BING_VERIFY_CONTENT: ${{ secrets.BING_VERIFY_CONTENT }}
+
+      - name: Ensure Cloudflare Pages project exists
+        uses: cloudflare/wrangler-action@v4
+        continue-on-error: true
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages project create ${{ vars.CF_PAGES_PROJECT || 'novel' }} --production-branch=main
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy site --project-name=${{ vars.CF_PAGES_PROJECT || 'novel' }} --branch=main

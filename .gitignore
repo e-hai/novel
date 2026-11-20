@@ -1,0 +1,7 @@
+# 站点生成产物（ Actions 每次重新生成再部署）
+site/
+
+# Python 缓存与系统文件
+*.pyc
+__pycache__/
+.DS_Store
