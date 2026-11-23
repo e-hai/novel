@@ -15,4 +15,12 @@ status: published-on-every-page
 
 There is no attempt to present this work as though it were written solely by a human, and no fabricated author biography or portrait is used. The author is identified honestly as the human editor responsible for the work.
 
+## Classical-fiction fusion edition (chapters 1–3)
+
+The published version of chapters 1–3 is a revised edition. Its narrative mechanisms draw on public-domain Chinese classical fiction: the old handkerchief in *Dream of the Red Chamber* (an ordinary object that carries a private relationship), *The Handan Pillow / 枕中记* (a full life lived in the time it takes to cook a meal), and *Xi Fangping / 席方平* (an appeal that must pass successive counters, each exacting a cost). These are structural influences, not copied text: no modern translation, annotation, commentary or adaptation was reproduced. The work remains original speculative fiction in English.
+
+The revision was drafted with AI assistance. The decision to publish it was made by apprank studio on 2026-11-23; no sentence-by-sentence human rewrite is claimed. The earlier English text is preserved in the source repository.
+
+Because the English source changed, the earlier Turkish, Cantonese and Korean approvals were invalidated. On 2026-11-23 the user instructed "全部发布" to release all four languages of this edition. The three translations were re-created from the new approved English source, verified against its `source_sha256`, and given fresh independent approval records. All three languages — Turkish (`/tr/`), Cantonese (`/yue/`) and Korean (`/ko/`) — are now published alongside the English text and carry the same AI-assistance disclosure. The earlier translation versions are retained in the source history. Borrowing classical narrative mechanisms does not by itself guarantee compliance; the work is published on the basis of its originality and reader value, as recorded in the human review log.
+
 Questions about the work can be sent to the contact address in the About section.

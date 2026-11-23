@@ -11,6 +11,8 @@
 #   ./tools/publish-chapter.sh 04                    # 发布第4章（自动匹配 04-*.md）
 #   ./tools/publish-chapter.sh 04-the-woman-who-kept-receipts   # 精确 slug
 #   ./tools/publish-chapter.sh 04 --dry-run          # 预览不改
+#   ./tools/publish-chapter.sh 01 --lang tr --dry-run # 土耳其语独立审校
+#   --lang: en / tr / yue / ko；--local-only: 不提交、不推送
 #
 # 环境:
 #   REVIEWER       审核人署名（不设则交互式询问，默认 apprank studio）
@@ -27,13 +29,28 @@ fi
 
 KEY="$1"; shift
 DRY=0
-for a in "$@"; do [[ "$a" == "--dry-run" ]] && DRY=1; done
+LANGUAGE=en
+LOCAL_ONLY=0
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --dry-run) DRY=1; shift ;;
+    --local-only) LOCAL_ONLY=1; shift ;;
+    --lang)
+      [[ $# -ge 2 ]] || { echo "--lang 需要语言代码" >&2; exit 1; }
+      LANGUAGE="$2"; shift 2 ;;
+    *) echo "未知参数: $1" >&2; exit 1 ;;
+  esac
+done
+[[ "$LANGUAGE" =~ ^(en|tr|yue|ko)$ ]] || { echo "不支持的语言" >&2; exit 1; }
+[[ "$KEY" =~ ^[a-z0-9-]+$ ]] || { echo "无效章节标识" >&2; exit 1; }
+DIR=content/chapters
+[[ "$LANGUAGE" == en ]] || DIR="content/translations/$LANGUAGE"
 
 # ---------- 定位章节文件 ----------
 shopt -s nullglob
-matches=(content/chapters/${KEY}*.md)
+matches=("$DIR"/${KEY}*.md)
 if [[ ${#matches[@]} -eq 0 ]]; then
-  echo "✗ 找不到匹配 '${KEY}' 的章节文件（在 content/chapters/ 下）" >&2
+  echo "✗ 找不到匹配 '${KEY}' 的章节文件（在 ${DIR}/ 下）" >&2
   exit 1
 fi
 if [[ ${#matches[@]} -gt 1 ]]; then
@@ -51,6 +68,23 @@ if [[ "$status" != "ai-draft" ]]; then
   exit 1
 fi
 echo "  当前状态: ${status} ✓"
+
+# 译文必须基于当前已批准原文；原文批准不能代替译文审核。
+if [[ "$LANGUAGE" != en ]]; then
+  python3 - "$CH" "$LANGUAGE" <<'PY'
+import sys
+from pathlib import Path
+sys.path.insert(0, 'src')
+from generate import read_doc, source_digest
+p = Path(sys.argv[1])
+meta = read_doc(p)[0]
+source = Path('content/chapters') / p.name
+if not source.exists() or read_doc(source)[0].get('status') != 'approved':
+    raise SystemExit('原文章节不存在或尚未获批准，不能发布译文。')
+if meta.get('language') != sys.argv[2] or meta.get('source_sha256') != source_digest(source):
+    raise SystemExit('译文语言不匹配或原文已改变，请更新翻译并重新审校。')
+PY
+fi
 
 # ---------- 提取标题/章号 ----------
 title="$(grep -m1 '^title:' "$CH" | sed 's/^title:[[:space:]]*//; s/^"//; s/"$//')"
@@ -92,6 +126,7 @@ DATE="$(date +%F)"
 
 echo ""
 echo "════ 发布预览 ════"
+echo "  语言:      ${LANGUAGE}"
 echo "  章节:      Ch.${num} — ${title}"
 echo "  审核人:    ${REVIEWER}"
 echo "  日期:      ${DATE}"
@@ -104,23 +139,30 @@ if [[ $DRY -eq 1 ]]; then
 fi
 
 # ---------- 改写 front matter 状态 ----------
-python3 - "$CH" <<'PY'
-import sys, re
-p = sys.argv[1]
+python3 - "$CH" "$LANGUAGE" "$REVIEWER" "$DATE" "$NOTES" <<'PY'
+import sys, re, json
+p, language, reviewer, date, notes = sys.argv[1:6]
 s = open(p, encoding='utf-8').read()
-s2 = re.sub(r'(?m)^status:\s*ai-draft\s*$', 'status: approved', s, count=1)
+s2 = re.sub(r'(?m)^status:[ \t]*ai-draft[ \t]*$', 'status: approved', s, count=1)
 assert s2 != s, 'status 改写失败'
+if language != 'en':
+    # Keep a translation-specific review record in front matter as well as the log.
+    header, body = s2.split('\n---', 1)
+    for key, value in [('reviewer', reviewer), ('review_date', date), ('review_notes', notes)]:
+        header = re.sub(r'(?m)^' + key + r':.*\n?', '', header)
+        header += '\n' + key + ': ' + json.dumps(value, ensure_ascii=False)
+    s2 = header + '\n---' + body
 open(p, 'w', encoding='utf-8').write(s2)
 PY
 
 # ---------- 追加审校日志条目 ----------
-python3 - "$num" "$title" "$REVIEWER" "$DATE" "$NOTES" <<'PY'
+python3 - "$num" "$title" "$REVIEWER" "$DATE" "$NOTES" "$LANGUAGE" <<'PY'
 import sys
-num, title, reviewer, date, notes = sys.argv[1:6]
+num, title, reviewer, date, notes, language = sys.argv[1:7]
 p = 'content/editorial/review-log.md'
 s = open(p, encoding='utf-8').read()
 entry = (
-    f'\n## Ch.{num} — "{title}"\n\n'
+    f'\n## Ch.{num} [{language}] — "{title}"\n\n'
     f'- **Status:** `approved`\n'
     f'- **Reviewer:** {reviewer}\n'
     f'- **Date:** {date}\n'
@@ -140,9 +182,13 @@ echo "  ✓ front matter 状态 → approved"
 echo "  ✓ 审校日志已追加"
 
 # ---------- 提交并推送 ----------
+if [[ $LOCAL_ONLY -eq 1 ]]; then
+  echo "[local-only] 仅更新本地状态和真实审校记录；未提交、未推送。"
+  exit 0
+fi
 git add "$CH" content/editorial/review-log.md
 git -c user.name="WorkBuddy" -c user.email="workbuddy@local" \
-  commit -q -m "Publish Ch.${num}: ${title} (human review by ${REVIEWER})"
+  commit -q -m "Publish Ch.${num} [${LANGUAGE}]: ${title} (human review by ${REVIEWER})"
 echo "  ✓ 已提交"
 
 if git remote get-url origin >/dev/null 2>&1; then

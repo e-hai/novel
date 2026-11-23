@@ -1,7 +1,7 @@
 name: Build & deploy novel site (Cloudflare Pages)
 
 # 小说站是静态站，内容更新靠人工编辑章节后 push，无需每日 cron。
-# 合规门槛：默认只发布 status=approved 的章节；要看草稿设 repo variable PREVIEW_DRAFTS=1。
+# 生产部署禁用草稿；译文独立审校。草稿仅用本机 PREVIEW_DRAFTS=1 预览。
 on:
   push:
     branches: [main]
@@ -24,13 +24,17 @@ jobs:
           python-version: '3.11'
           # 纯标准库、零 pip 依赖，不启用 cache: pip
 
-      # 生成站点。SITE_BASE_URL/PREVIEW_DRAFTS/SITE_AUTHOR 来自 repo variables。
+      - name: Test language routes and review gate
+        run: python3 -m unittest discover -s src -p 'test_*.py' -v
+
+      # 生成生产站点，禁止通过 repo variable 绕过人工审核。
       - name: Build static site
         run: python3 src/generate.py
         env:
-          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://novel.pages.dev' }}
-          PREVIEW_DRAFTS: ${{ vars.PREVIEW_DRAFTS || '' }}
-          SITE_AUTHOR: ${{ vars.SITE_AUTHOR || '' }}
+          SITE_BASE_URL: ${{ vars.SITE_BASE_URL || 'https://novel-9wi.pages.dev' }}
+          PREVIEW_DRAFTS: '0'
+          SITE_OUTPUT_DIR: site
+          SITE_AUTHOR: ${{ vars.SITE_AUTHOR || 'apprank studio' }}
           SITE_CONTACT: ${{ vars.SITE_CONTACT || '' }}
 
       - name: Sanity check
@@ -42,7 +46,7 @@ jobs:
             echo "ERROR: placeholder domain found"; exit 1
           fi
           pages=$(find site -name index.html | wc -l)
-          disclosed=$(grep -rl 'How this story was made' site --include=*.html | wc -l)
+          disclosed=$(grep -rl 'data-ai-disclosure="true"' site --include=*.html | wc -l)
           echo "pages: $pages, with disclosure: $disclosed"
           test "$pages" -eq "$disclosed" || { echo "ERROR: not every page has AI disclosure"; exit 1; }
 

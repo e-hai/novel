@@ -9,14 +9,14 @@ from __future__ import annotations
 import os
 
 # 站点域名：默认 Cloudflare Pages 免费域名，可用环境变量覆盖。
-DEFAULT_BASE_URL = "https://novel.pages.dev"
+DEFAULT_BASE_URL = "https://novel-9wi.pages.dev"
 BASE_URL = os.environ.get("SITE_BASE_URL", DEFAULT_BASE_URL).rstrip("/")
 
 # 作品与作者。发布署名 apprank studio，可由 SITE_AUTHOR 环境变量覆盖，不伪造头像/履历。
 WORK = {
     "title": "The Memory Repairman",
     "subtitle": "Three stories about the things we choose to forget.",
-    "author": os.environ.get("SITE_AUTHOR", "apprank studio").strip(),  # 发布署名，可被 SITE_AUTHOR 变量覆盖
+    "author": (os.environ.get("SITE_AUTHOR", "").strip() or "apprank studio"),  # 发布署名，可被 SITE_AUTHOR 变量覆盖
     "genre": "Science Fiction",
     "language": "en",
     "description": (
@@ -38,3 +38,9 @@ SITE = {
 #   draft_only=True  -> 只发布 status=approved 的章节（默认，合规安全）
 #   若想本地预览草稿，设环境变量 PREVIEW_DRAFTS=1（会在每章显示醒目草稿横幅）
 PREVIEW_DRAFTS = os.environ.get("PREVIEW_DRAFTS", "").strip() in ("1", "true", "True")
+# 古典融合等修订只能独立预览，不替换已审核原稿和对应译文。
+REVISION_SET = os.environ.get("NOVEL_REVISION_SET", "").strip()
+# 草稿预览独立输出，不能意外覆盖生产构建。
+DEFAULT_OUTPUT_DIR = ("revision-preview-site" if REVISION_SET else
+                      "preview-site" if PREVIEW_DRAFTS else "site")
+OUTPUT_DIR = os.environ.get("SITE_OUTPUT_DIR", DEFAULT_OUTPUT_DIR)

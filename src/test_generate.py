@@ -1,0 +1,286 @@
+"""Offline regression tests. Never invoke git, push, or production publishing."""
+import copy
+import json
+import os
+import re
+import shutil
+import subprocess
+import tempfile
+import unittest
+from html.parser import HTMLParser
+from pathlib import Path
+from unittest.mock import patch
+from urllib.parse import urlparse
+import xml.etree.ElementTree as ET
+
+import generate as G
+from locales import LOCALES, route
+
+
+class Tags(HTMLParser):
+    def __init__(self, document):
+        super().__init__()
+        self.tags = []
+        self.feed(document)
+
+    def handle_starttag(self, tag, attrs):
+        self.tags.append((tag, dict(attrs)))
+
+    def attrs(self, tag):
+        return [attrs for name, attrs in self.tags if name == tag]
+
+
+class LanguageTests(unittest.TestCase):
+    def setUp(self):
+        revision_patch = patch.object(G.C, 'REVISION_SET', '')
+        revision_patch.start()
+        self.addCleanup(revision_patch.stop)
+        self.collection = {lang: G.load_chapters(lang) for lang in LOCALES}
+        # Test pending/approved states in memory, independently of future human approvals.
+        for lang in ('tr', 'yue', 'ko'):
+            for chapter in self.collection[lang]:
+                chapter['approved'] = False
+
+    def build(self, preview=False, collection=None):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        output = Path(temporary.name)
+        with patch.object(G.C, 'OUTPUT_DIR', str(output)), patch.object(G.C, 'PREVIEW_DRAFTS', preview):
+            fixtures = collection if collection is not None else self.collection
+            with patch.object(G, 'load_chapters', side_effect=lambda lang: fixtures[lang]):
+                G.main()
+        return output
+
+    def test_translation_content_and_sources(self):
+        for lang in ('tr', 'yue', 'ko'):
+            chapters = G.load_chapters(lang)
+            self.assertGreaterEqual(len(chapters), 3)
+            for translation in chapters:
+                self.assertIn(translation['status'], ('ai-draft', 'approved'))
+                meta = G.read_doc(translation['path'])[0]
+                source = G.CHAPTERS_DIR / translation['path'].name
+                self.assertRegex(meta['source_sha256'], r'^[a-f0-9]{64}$')
+                if translation['approved']:
+                    self.assertEqual(meta['source_sha256'], G.source_digest(source))
+                self.assertNotEqual(translation['html'], G.read_doc(source)[2])
+                self.assertGreater(translation['words'], 0)
+
+    def test_english_approval_does_not_approve_translation(self):
+        meta = {'status': 'ai-draft', 'source_sha256': 'hash'}
+        self.assertFalse(G.translation_approved(meta, {'status': 'approved'}, 'hash'))
+        meta['status'] = 'approved'
+        self.assertFalse(G.translation_approved(meta, {'status': 'approved'}, 'hash'))
+
+    def test_source_change_and_draft_block_translation(self):
+        meta = {'status': 'approved', 'source_sha256': 'hash', 'reviewer': 'TEST ONLY',
+                'review_date': '2026-11-23', 'review_notes': 'Fixture-only review, never written to repository.'}
+        self.assertTrue(G.translation_approved(meta, {'status': 'approved'}, 'hash'))
+        self.assertFalse(G.translation_approved(meta, {'status': 'approved'}, 'changed'))
+        self.assertFalse(G.translation_approved(meta, {'status': 'ai-draft'}, 'hash'))
+
+    def test_production_hides_drafts(self):
+        output = self.build()
+        for lang in ('tr', 'yue', 'ko'):
+            for c in self.collection[lang]:
+                document = (output / G.chapter_path(c).strip('/') / 'index.html').read_text()
+                self.assertIn('content="noindex,follow"', document)
+                self.assertNotIn(c['html'], document)
+                self.assertNotIn('application/ld+json', document)
+                self.assertNotIn('hreflang=', document)
+
+    def test_production_sitemap_excludes_pending_languages(self):
+        output = self.build()
+        root = ET.parse(output / 'sitemap.xml').getroot()
+        urls = [item.text for item in root.iter('{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
+        self.assertEqual(len(urls), 2 + sum(c['approved'] for c in self.collection['en']))
+        for url in urls:
+            self.assertFalse(any(f'/{lang}/' in url for lang in ('tr', 'yue', 'ko')))
+            path = urlparse(url).path
+            document = (output / path.strip('/') / 'index.html').read_text()
+            self.assertIn('content="index,follow"', document)
+
+    def test_draft_preview_is_all_noindex_with_empty_sitemap(self):
+        output = self.build(True)
+        self.assertNotIn('<loc>', (output / 'sitemap.xml').read_text())
+        for path in output.rglob('index.html'):
+            document = path.read_text()
+            self.assertIn('content="noindex,follow"', document)
+            self.assertNotIn('application/ld+json', document)
+        for lang in ('tr', 'yue', 'ko'):
+            c = self.collection[lang][0]
+            document = (output / G.chapter_path(c).strip('/') / 'index.html').read_text()
+            self.assertIn(c['html'], document)
+            self.assertIn(LOCALES[lang]['draft_notice'], document)
+
+    def test_languages_and_canonical(self):
+        output = self.build()
+        for lang, t in LOCALES.items():
+            document = (output / route(lang).strip('/') / 'index.html').read_text()
+            tags = Tags(document)
+            self.assertEqual(tags.attrs('html')[0]['lang'], t['lang'])
+            canonical = [a['href'] for a in tags.attrs('link') if a.get('rel') == 'canonical']
+            self.assertEqual(canonical, [G.C.SITE['base_url'] + route(lang)])
+            self.assertIn('data-ai-disclosure="true"', document)
+            self.assertIn('apprank studio', document)
+
+    def test_all_local_links_exist_in_both_modes(self):
+        for preview in (False, True):
+            output = self.build(preview)
+            for path in output.rglob('index.html'):
+                for a in Tags(path.read_text()).attrs('a'):
+                    href = a.get('href', '')
+                    if href.startswith('/'):
+                        self.assertTrue((output / href.strip('/') / 'index.html').exists(), (path, href))
+
+    def test_chapter_switch_preserves_chapter_when_available(self):
+        slug = self.collection['en'][0]['slug']
+        with patch.object(G.C, 'PREVIEW_DRAFTS', True):
+            switches = G.chapter_switches(self.collection, slug)
+            for lang in LOCALES:
+                self.assertEqual(switches[lang], route(lang, f'/chapters/{slug}/'))
+        with patch.object(G.C, 'PREVIEW_DRAFTS', False):
+            self.assertEqual(G.chapter_switches(self.collection, slug)['tr'], '/tr/')
+
+    def test_reciprocal_alternates_after_independent_approval(self):
+        # In-memory fixture only: no source, status, review-log, or git is modified.
+        collection = copy.deepcopy(self.collection)
+        collection['tr'][0]['approved'] = True
+        collection['yue'][0]['approved'] = True
+        output = self.build(collection=collection)
+        slug = collection['en'][0]['slug']
+        suffix = f'/chapters/{slug}/'
+        expected = G.page_alternates(collection, suffix)
+        for lang in ('en', 'tr', 'yue'):
+            document = (output / route(lang, suffix).strip('/') / 'index.html').read_text()
+            alternates = {a['hreflang']: a['href'] for a in Tags(document).attrs('link') if a.get('rel') == 'alternate'}
+            self.assertEqual(alternates['x-default'], G.C.SITE['base_url'] + suffix)
+            for candidate, path in expected.items():
+                self.assertEqual(alternates[LOCALES[candidate]['hreflang']], G.C.SITE['base_url'] + path)
+            self.assertNotIn('ko', alternates)
+            schema = json.loads(document.split('<script type="application/ld+json">')[1].split('</script>')[0])
+            self.assertEqual(schema[0]['inLanguage'], LOCALES[lang]['lang'])
+
+    def test_json_quoted_front_matter(self):
+        meta, body = G.parse_front_matter('---\nreview_notes: "Changed \\"word\\" and pacing."\n---\nBody')
+        self.assertEqual(meta['review_notes'], 'Changed "word" and pacing.')
+        self.assertEqual(body, 'Body')
+
+    def test_preview_cannot_overwrite_production(self):
+        with patch.object(G.C, 'PREVIEW_DRAFTS', True), patch.object(G.C, 'OUTPUT_DIR', 'site'):
+            with self.assertRaises(ValueError):
+                G.main()
+
+    def test_publish_gate_in_isolated_copy_without_git(self):
+        # Only copy explicitly required files. In particular, NEVER copy .git or origin.
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for folder in ('tools', 'src', 'content/chapters', 'content/translations/tr', 'content/editorial'):
+                (root / folder).mkdir(parents=True, exist_ok=True)
+            for name in ('generate.py', 'config.py', 'locales.py'):
+                shutil.copyfile(G.ROOT / 'src' / name, root / 'src' / name)
+            script = root / 'tools/publish-chapter.sh'
+            shutil.copyfile(G.ROOT / 'tools/publish-chapter.sh', script)
+            source = self.collection['en'][0]['path']
+            original = root / 'content/chapters' / source.name
+            translation = root / 'content/translations/tr' / source.name
+            shutil.copyfile(source, original)
+            shutil.copyfile(self.collection['tr'][0]['path'], translation)
+            fixture = translation.read_text()
+            fixture = re.sub(r'(?m)^status:.*$', 'status: ai-draft', fixture, count=1)
+            fixture = re.sub(r'(?m)^source_sha256:.*$', 'source_sha256: ' + G.source_digest(original), fixture, count=1)
+            translation.write_text(fixture)
+            log = root / 'content/editorial/review-log.md'
+            log.write_text('# TEST FIXTURE ONLY\n')
+            env = {**os.environ, 'REVIEWER': 'TEST FIXTURE ONLY',
+                   'REVIEW_NOTES': 'Fixture-only edit to wording and pacing, never a real approval.'}
+            command = ['bash', str(script), '01', '--lang', 'tr', '--local-only']
+            result = subprocess.run(command + ['--dry-run'], env=env, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(G.read_doc(translation)[0]['status'], 'ai-draft')
+            result = subprocess.run(command, env={**env, 'REVIEW_NOTES': 'approved'}, capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(G.read_doc(translation)[0]['status'], 'ai-draft')
+            result = subprocess.run(command, env=env, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            meta = G.read_doc(translation)[0]
+            self.assertTrue(G.translation_approved(meta, G.read_doc(original)[0], G.source_digest(original)))
+            self.assertIn('[tr]', log.read_text())
+            self.assertFalse((root / '.git').exists())
+
+    def test_published_edition_is_classical_fusion(self):
+        chapters = G.load_chapters('en')
+        self.assertEqual(len(chapters), 6)
+        fused = [c for c in chapters if int(c['num']) <= 3]
+        self.assertTrue(all(c['approved'] for c in fused))
+        self.assertTrue(all(G.read_doc(c['path'])[0].get('edition') == 'classical-fusion' for c in fused))
+        # A scorched cloth and the archive token only exist in the fused edition.
+        first = (G.ROOT / 'site/chapters/the-shop-on-cinder-lane/index.html').read_text()
+        self.assertIn('scorched', first)
+        self.assertNotIn('Nobody ever thanked him for the seam', first)
+        # Classical-fusion translations were re-translated from the new source
+        # and re-approved on 2026-11-23 ("全部发布"), so Ch.1-3 are now live in
+        # all three languages while Ch.4-6 remain English-only drafts.
+        for lang in ('tr', 'yue', 'ko'):
+            chapters = G.load_chapters(lang)
+            self.assertEqual(len(chapters), 3)
+            fused = [c for c in chapters if int(c['num']) <= 3]
+            self.assertTrue(all(c['approved'] for c in fused))
+            for c in fused:
+                meta = G.read_doc(c['path'])[0]
+                self.assertEqual(meta.get('edition'), 'classical-fusion')
+                src = G.ROOT / 'content/chapters' / c['path'].name
+                self.assertTrue(G.translation_approved(
+                    meta, G.read_doc(src)[0], G.source_digest(src)))
+
+    def test_revision_requires_local_draft_preview(self):
+        with patch.object(G.C, 'REVISION_SET', 'classical-fusion'), patch.object(G.C, 'PREVIEW_DRAFTS', False):
+            with self.assertRaises(ValueError):
+                G.load_chapters('en')
+            with self.assertRaises(ValueError):
+                G.main()
+
+    def test_revision_rejects_invalid_names(self):
+        for name in ('../chapters', '/tmp', 'unknown-revision'):
+            with patch.object(G.C, 'REVISION_SET', name), patch.object(G.C, 'PREVIEW_DRAFTS', True):
+                with self.assertRaises(ValueError):
+                    G.revision_root()
+
+    def test_revision_does_not_reuse_old_translations(self):
+        with patch.object(G.C, 'REVISION_SET', 'classical-fusion'), patch.object(G.C, 'PREVIEW_DRAFTS', True):
+            chapters = G.load_chapters('en')
+            self.assertEqual(len(chapters), 3)
+            for c in chapters:
+                self.assertFalse(c['approved'])
+                self.assertEqual(c['status'], 'ai-draft')
+                self.assertGreater(c['words'], 700)
+            for lang in ('tr', 'yue', 'ko'):
+                self.assertEqual(G.load_chapters(lang), [])
+
+    def test_revision_preview_isolated_and_disclosed(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            with patch.object(G.C, 'REVISION_SET', 'classical-fusion'), patch.object(G.C, 'PREVIEW_DRAFTS', True), patch.object(G.C, 'OUTPUT_DIR', str(output)):
+                G.main()
+            self.assertEqual(len(list(output.rglob('index.html'))), 6)
+            self.assertNotIn('<loc>', (output / 'sitemap.xml').read_text())
+            self.assertFalse((output / 'tr').exists())
+            self.assertTrue((output / 'revision-notes/index.html').exists())
+            for path in output.rglob('index.html'):
+                document = path.read_text()
+                self.assertIn('content="noindex,follow"', document)
+                self.assertIn('not been human-reviewed', document)
+                self.assertNotIn('application/ld+json', document)
+                self.assertNotIn('hreflang=', document)
+                for a in Tags(document).attrs('a'):
+                    href = a.get('href', '')
+                    if href.startswith('/'):
+                        self.assertTrue((output / href.strip('/') / 'index.html').exists(), (path, href))
+
+    def test_revision_cannot_replace_original_preview(self):
+        with patch.object(G.C, 'REVISION_SET', 'classical-fusion'), patch.object(G.C, 'PREVIEW_DRAFTS', True), patch.object(G.C, 'OUTPUT_DIR', 'preview-site'):
+            with self.assertRaises(ValueError):
+                G.main()
+
+
+if __name__ == '__main__':
+    unittest.main()

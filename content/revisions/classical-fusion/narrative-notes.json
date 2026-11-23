@@ -1,0 +1,75 @@
+{
+  "revision": "classical-fusion",
+  "title": "《The Memory Repairman》古典叙事融合修订",
+  "created_at": "2026-11-23",
+  "status": "ai-draft",
+  "author_byline": "apprank studio",
+  "human_review": "未审核。此版本由 AI 协助重写，不继承旧英文稿或旧译文的审核通过状态。没有宣称人类进行了实质改写。",
+  "purpose": "提高故事因果、人物行动、叙事可信度和阅读体验，不以拼接、换词或规避检测为目标。",
+  "policy_note": "借鉴古典文学并不能保证搜索引擎合规。Google 规模化内容滥用政策关注大量内容是否主要用于操纵排名且缺少用户价值；人工审核、翻译和内容融合都不是自动豁免。此次改动也不保证排名、收录或无版权争议。",
+  "copyright_boundary": "只取古典作品的叙事机制，不复制现代译本、注释、评论、影视改编或别人现成的续写。原著、现代译文与网页评论不能视为同一版权层。没有在小说正文中直接引用这些网页的句子。",
+  "sources": [
+    {
+      "work": "沈既济《枕中记》",
+      "reference_url": "https://zhuanlan.zhihu.com/p/535669376",
+      "source_type": "含原文节录的二次发布页面；本次只核对其原文节录，不取现代转述文字。",
+      "mechanism": "器物引入幻境，漫长人生与未完成的日常动作形成时间反差，幻境考验欲望而不只是制造反转。",
+      "transformation": "织机让 Elias 在18秒内体验一生清白的替代人生；外面的水壶和茶叶尚未变化。他拒绝的不是富贵，而是替自己撤销责任的技术性幻境。",
+      "used_in": ["第2章结尾短时连接", "第3章替代人生与水壶回照"]
+    },
+    {
+      "work": "蒲松龄《聊斋志异·席方平》",
+      "reference_url": "https://liaozhai.5000yan.com/20334.html",
+      "source_type": "同页提供古典原文、现代译文及评论；只取原文的申诉结构，不复制译文与评论。",
+      "mechanism": "申诉者逐层遇阻，流程和权力互相维护，每次坚持都要求付出更高代价。",
+      "transformation": "档案馆三个柜台不是给同一张表换名字，而是依次要求付费、身份、认证；认证制度将未经修补的证词排除。Elias 从受阻者变成必须署名、暴露无证经营并承担责任的申诉者。没有照搬神明降临判案或刑罚场景。",
+      "used_in": ["第2章三个柜台", "第3章实名证据包"]
+    },
+    {
+      "work": "曹雪芹《红楼梦》第34回的旧帕情节",
+      "reference_url": "https://baike.baidu.com/item/%E6%97%A7%E5%B8%95/7414376",
+      "source_type": "用于核对宝玉赠旧帕、黛玉理解情意的情节点的二手资料；维基文库原文请求被限流，本次未完成逐句原文核对。没有把网页中的谐音解释当作原文事实。",
+      "mechanism": "一件寻常旧物可以在当事人之间承载具体关系，外人无法仅靠物件表面完整理解它。",
+      "transformation": "旧布有妻子的整齐灰线与丈夫的歪斜绿线。机器因整洁偏好抹去了烧痕，恰好抹掉两人关系的细节；丈夫说出缝线由来，触发修补师改变操作伦理。这不是旧帕赠礼的情节改写。",
+      "used_in": ["第1章旧布与干净袖口", "第3章两种针脚的回收"]
+    },
+    {
+      "work": "Google Search spam policies — Scaled content abuse",
+      "reference_url": "https://developers.google.com/search/docs/essentials/spam-policies#scaled-content",
+      "source_type": "Google 搜索中心官方政策，本次已读取。",
+      "mechanism": "政策依据，不是小说内容来源。",
+      "transformation": "明确不采用批量拼接和改词作为合规捷径；保留原创贡献说明、草稿状态及真实人工终审。",
+      "used_in": []
+    }
+  ],
+  "chapter_changes": [
+    {
+      "chapter": 1,
+      "changes": "从修补展示扩展为有代价的委托：客户带来有两种针脚的旧布，织机无请求地清理袖口，修补师为省事放任。引入价格、执照及不确定性表格，让主角的道德问题发生在当下而非只在过去。"
+    },
+    {
+      "chapter": 2,
+      "changes": "补齐匿名核心到达的因果：二十年托管到期自动归还。三次档案交涉提供互不等价的阻力。纸面审计、初始缩写和被删警告互相校验，区别证据与主角的感受。Mara 有自己的质询，不只是主角失忆的符号。"
+    },
+    {
+      "chapter": 3,
+      "changes": "把无辜版本扩写成有诱惑力的一生；通过不回答具体问题识别其虚构。主角保留不可知部分，不拿痛苦当全部真实性证明。新增实名申诉及执照代价。旧布回收成实际关系细节，结尾从补完笑声转为注明当下口述的限度。"
+    }
+  ],
+  "world_en": "This revision keeps the Ward, Cinder Lane, the Loom, Elias Vane and the damaged first-generation core. Memory repair constructs a bridge across missing material; it cannot recover what is absent. Surviving fragments, external records and synthetic bridges must be distinguished. The Municipal Memory Archive certifies continuity rather than completeness, making an uncorrected witness difficult to submit. The blue token belongs to a twenty-year custody contract: expiry explains the core's return. Mara is an independent participant in the release meeting who questions whose feelings are treated as distress. Her relationship to Elias and her later fate are not established by a damaged image. The old cloth preserves two people's different stitches; the cloth corroborates a present account, not a perfectly recoverable past. The first three revised chapters form an alternate opening movement; existing chapters 4–6 have not yet been reconciled with it.",
+  "continuity_and_review": [
+    "检查核心托管到期、归还与纸面审计的日期是否衔接；实物只能佐证具体事实，不能自动证明整段记忆。",
+    "检查织机修补的范围和副作用，明确机器不能恢复失去的感情，也不能读取任何未记录的秘密。",
+    "检查 Mara 的主体性、老人的语言是否有真实个体差异，而非都替作者讲道理。",
+    "检查档案柜台的节奏与18秒替代人生的转场，避免哲理句密度过高。",
+    "现有第4–6章仍是旧主线草稿，新版不能直接接续；扩写前需要对账人物关系与档案规则。",
+    "旧土耳其语、粤语和韩语译文仍对应旧英文稿。新版经人工审批采用后，必须重新翻译并独立审批，不能只更新 source_sha256。",
+    "发布前记录真实的人类审核意见和改动；审核不需要伪造不存在的实质改写。",
+    "本次没有推送、上线、增加索引页面或修改原稿审批。"
+  ],
+  "original_fingerprints": {
+    "01-the-shop-on-cinder-lane.md": "b190d369633f6be4546f13ee9670060f15d2f79b2c633b78b5c2db0fd01792fb",
+    "02-a-client-without-a-face.md": "896f5488214f517953dd92c1cc9cd70965caae8928d1379fa72f93e583a3497d",
+    "03-the-price-of-repair.md": "fa0ba622e55ae51e40270403240e3fb30b5dc37fab7feab7b79b15846112b588"
+  }
+}

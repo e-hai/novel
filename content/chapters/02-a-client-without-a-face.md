@@ -1,55 +1,167 @@
 ---
 chapter: 2
 title: "A Client Without a Face"
-summary: "An unlabeled engram turns out to be his own — the memory he erased to survive his old life. To look at it, he must break the only rule that held."
+summary: "A paper token leads Elias through three archive counters, where a tidy record carries more authority than a damaged witness. His own signature is waiting at the last one."
 status: approved
-words: 723
+language: en
+edition: classical-fusion
+reviewer: apprank studio
+review_date: 2026-11-23
+approval_basis: user-release-request
+review_notes: "User explicitly selected the classical-fusion version for publication on 2026-11-23. No sentence-level human edits or substantive human rewriting were provided or claimed."
+based_on_sha256: 896f5488214f517953dd92c1cc9cd70965caae8928d1379fa72f93e583a3497d
 ---
 
 # A Client Without a Face
 
-Elias set the engram on the workbench and did not touch it for two days.
+For two days Elias left the core beside his kettle.
 
-It sat beside the kettle, beside the chipped cup, beside the stack of envelopes he had not yet mailed, and it took up more room than its size allowed. He found himself arranging his movements around it. He made tea and reached around it. He washed a cup and reached around it. At night he locked the shop and left it under the sheet with the loom, as if the machine might be tempted.
+The envelope had arrived on a Monday. By Wednesday its blue token had dried flat, but the core retained a little warmth. Not enough to be a fault. Enough that he noticed it whenever he reached for his cup.
 
-On the third morning he took it out.
+On the third morning he moved both to the loom and made a read-only copy. The machine found a sealed personal recollection, ninety-one seconds long, with a missing interval at its centre. Before the gap: rain striking hot metal. After it: the beginning of a word.
 
-A first-generation core. He had not held one since the lab. The casing was warm to the touch, which was wrong — they were never warm. He told himself it was the kettle.
+The recording predated his shop by twenty years.
 
-He seated it in the loom and ran a read-only scan, careful to stitch nothing, change nothing. The machine showed him the surface: a single memory, sealed tight, corrupted at the edges. Whoever had erased it had done a clean job. That was the signature of someone who knew how.
+He took his old notebooks out of the bottom drawer. In the first there was a plan of the original laboratory. The service entrance stood on the site of what was now Cinder Lane. Roof exhaust had heated the metal walkway even in winter. The smell was not evidence that the core knew his present life. It was evidence that his present life had been built on a place he refused to remember.
 
-The scan returned one readable fragment. Not an image — a sound. Rain on hot metal, the exact smell of Cinder Lane after a storm. Elias had smelled it a thousand times from the door of his shop. But this recording predated the shop by twenty years.
+He closed the notebook.
 
-He shut the loom down.
+The blue token had a number beneath the date. He called the archive line and read it aloud.
 
-In the lab, they had called the first commercial loom **June**. It was a joke about how much they fussed over it. June could read an engram and render it, and June could do the one thing no previous machine could: fill a gap without leaving a visible join. That was the breakthrough. That was what they sold.
+“Expired custody,” a recorded voice told him. “Materials returned to depositor. Identification required for supplementary records.”
 
-Elias had built the fill algorithm himself.
+An automatic return, not a visitor. No one had slipped through the Ward looking for him. A storage contract had lasted twenty years, and a clerk or a machine had done what it said.
 
-He remembered the day the board came to see June work. He remembered the demo — a soldier with a hole where a month should have been, and June knitting it closed in eleven minutes, and the board member saying, *"It's like it never happened."*
+He had paid in advance to forget something until the payment ran out.
 
-That was the phrase. He had heard it and felt a small cold place open behind his ribs, because he knew what the algorithm did. It did not remember. It invented. It gave the soldier a plausible month, clean and calm and empty, and the soldier had wept with relief and thanked them.
+At the Municipal Memory Archive the entrance doors were blue, though not the blue he remembered. They had once been painted a darker colour; it showed where hands had worn through the newer layer.
 
-He had gone to the director that night. He remembered the blue door of the director's office, and the director saying, *"You can save the facts, Elias. You can't save the feeling. Do you want to tell them that, or do you want to let them live?"*
+The first counter sold numbers. Elias gave up the coins he had set aside for the shop's electric meter. A woman in front of him was asking for her father's original discharge recollection.
 
-After that, there was a gap in his own memory. A clean one. The kind only an expert could make.
+“Certified copy?” said the clerk.
 
-He had made it himself. He had to have — the work was too precise to be anyone else's.
+“Before it was repaired.”
 
-Elias opened the drawer where he kept his notebooks and took out the oldest one. On the last page, in his handwriting, was the same four words from the envelope: *Don't open this, Elias.* Underneath, in smaller writing, he had added a line he did not remember writing either:
+“Then it wouldn't be certified.”
 
-*If you're reading this, you already broke the rule. Finish it.*
+She tried to explain. The clerk gave her a second form, which cost less but required the reference number on the first. Elias watched her return to the payment queue. He looked down at his own ticket and found that it gave him a time to be seen, not a promise that anyone would look.
 
-He looked at the engram on the workbench. It was still warm.
+At the second counter he presented the token.
 
-He covered the loom, uncovered it, then uncovered the engram and seated it properly this time. He keyed the first synthetic seam into place with hands that did not shake, because his hands had done this ten thousand times and knew the work even when the rest of him did not.
+The attendant clipped another square from it. Her scissors had one blue handle and one white.
 
-The seam slid in. The memory opened.
+“Deposit eight,” she said. “You already collected the core.”
 
-Rain on hot metal. A blue door. Someone saying his name — not as a client says it, but the way a friend says it when they have been looking for you a long time.
+“I need to know what it was extracted from.”
 
-He woke on the floor beside the loom with the taste of copper in his mouth and a name in his head that he had no right to know: **Mara**.
+“Yourself.”
 
-He said it aloud. The shop did not answer.
+“That much I know.”
 
-On the workbench, the engram was cool now. And on its surface, where there had been a gap, there was now a thin, clean line of fill, and it looked exactly like nothing had ever happened.
+“Then what is the question?”
+
+Elias had not prepared an answer that fitted the window.
+
+“Was there a second witness?”
+
+She consulted the screen. “One supplementary statement. Closed.”
+
+“Can I see it?”
+
+“Records desk.”
+
+“Why is it closed?”
+
+“That's a records question.”
+
+At the third counter a young man rotated a display towards him. It showed a release sheet for the first commercial loom, the one they had called June. Elias's name was at the bottom.
+
+Above it was a box headed **AFFECTIVE CONTINUITY**. The contents had been revised. Beneath the clean black text, the scan still showed the pale tail of a letter struck through on the paper original.
+
+“What did that say?” Elias asked.
+
+“The current wording is on the screen.”
+
+“Before.”
+
+The clerk clicked once. A side panel opened. **Testimonial disagreement; no continuing claim.** Beside it was a small index photograph of a woman holding a folder at waist height. Her face was indistinct. Her thumb had caught the folder's corner.
+
+“Who withdrew the claim?”
+
+“It doesn't say withdrawn.”
+
+“It says no continuing claim.”
+
+“That's the category.”
+
+Elias stared at the photograph. He felt none of the shock he had hoped for. He could place the cheap folder, the laboratory's floor tiles, the line of metal under the door. He could not place the woman.
+
+“Can I buy an uncorrected copy?”
+
+“We don't endorse incomplete records.”
+
+“I didn't ask you to endorse it.”
+
+The clerk glanced towards his supervisor. Then he opened another screen and quoted a price.
+
+When Elias said he could not afford it, the young man lowered his voice.
+
+“There's a source audit. No witness image, just the original marks on the release sheet. It's cheaper.”
+
+“Why didn't you say that?”
+
+“Most people want the version they can use.”
+
+The copy came out on paper, with a retrieval time and a hash along its edge. In a box labelled **RESTORATION LIMITS**, the original had read: **loss of feeling persists; patient reports not yet reconciled.** Someone had replaced that with **emotional distress reduced**.
+
+Elias had initialled the replacement.
+
+There was another line in a different hand: **Who decides which feelings count as distress?**
+
+The copy could establish that the question had been written. It could not tell him who had written it, what the writer had lost, or whether anyone had answered. The archive charged the same price for that uncertainty as for the text.
+
+He folded the sheet without creasing the initials.
+
+On his way out, the woman who wanted her father's memory was still at the second counter. She held two paid receipts. He considered offering her the remainder of his coins. There were none.
+
+Outside, he checked the paper against the image he had copied into his handset. The marks matched. It did not make the whole record truthful. It made one small part harder for him to dismiss.
+
+At the shop he put the audit beneath the lamp and opened the oldest notebook again. A run of pages had been cut out near the end. The last remaining page carried the same warning as the core.
+
+*Don't open this, Elias.*
+
+Below it, in ink pressed so hard it had bruised the next leaf, was another instruction:
+
+*Mara counted every patient. Count every addition.*
+
+Mara. The name made no image. His body had no convenient memory of her voice. He read the sentence twice, then went back to the archive photograph and examined the hand around the folder. On one finger there might have been a ring. The image was too poor to make that a fact.
+
+He remembered the demonstration of June. A soldier had lost a month. The loom filled it in eleven minutes, and the board applauded when the soldier thanked them. Elias had explained the fill algorithm himself. He remembered every technical question.
+
+No one in that memory asked the question on the audit sheet.
+
+He knew the name of the setting he had used to silence such questions. The interface called it **conflict reduction**. At first it had been meant to keep a patient's imagined movement from contradicting a surviving one. Later it reconciled accounts. Later still, it reconciled people with their accounts.
+
+His own core carried the trace of that setting. The cut was precise enough to be his work, but precision alone would not prove it. On the release sheet, however, he could no longer pretend not to recognise the initials.
+
+He put water on to heat and scattered tea into his stained cup. Then he copied the core a second time and locked the copy against changes. He recorded the audit number in the notebook. These small precautions did not give him a witness. They might leave something for one.
+
+To enter the missing interval, the loom needed a bridge. The bridge would be invention. He drew its limits on the display and refused the machine permission to overwrite the surviving edges.
+
+His hands did not shake until he reached the final key.
+
+For a moment he considered taking the core back to the archive. They could put it in a certified envelope. They could tell him it had always been this way.
+
+He pressed the key.
+
+A blue door opened. A woman was standing beyond it, a folder held against her ribs. She called him Eli, with no surprise at finding him there.
+
+On the table behind her was a sheet waiting for his signature. One box was already ticked.
+
+**Consent inferred.**
+
+He broke the connection and found himself gripping the edge of the workbench. The kettle had not yet begun to steam. The tea leaves had not begun to sink.
+
+The test had lasted less than a minute.
+
+He could not have said how long he had stood in front of that door.

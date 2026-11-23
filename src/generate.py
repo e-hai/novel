@@ -14,6 +14,7 @@ generate.py — 精品小说静态站生成器（零第三方依赖）
 """
 from __future__ import annotations
 
+import hashlib
 import html
 import json
 import os
@@ -23,11 +24,30 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
 import config as C
+from locales import LOCALES, route, work
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "content"
 CHAPTERS_DIR = CONTENT / "chapters"
 EDITORIAL_DIR = CONTENT / "editorial"
+
+
+def revision_root() -> Path | None:
+    if not C.REVISION_SET:
+        return None
+    if not C.PREVIEW_DRAFTS:
+        raise ValueError("A revision is a preview-only draft; set PREVIEW_DRAFTS=1")
+    if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", C.REVISION_SET):
+        raise ValueError("Invalid revision identifier")
+    root = CONTENT / "revisions" / C.REVISION_SET
+    if not (root / "chapters").is_dir() or not (root / "narrative-notes.json").is_file():
+        raise ValueError("Revision chapters or narrative notes are missing")
+    return root
+
+
+def revision_notes() -> dict:
+    root = revision_root()
+    return json.loads((root / "narrative-notes.json").read_text(encoding="utf-8")) if root else {}
 
 
 # ---------------------------------------------------------------------------
@@ -42,7 +62,15 @@ def parse_front_matter(text: str) -> tuple[dict, str]:
             for line in header.splitlines():
                 if ":" in line:
                     k, v = line.split(":", 1)
-                    meta[k.strip()] = v.strip().strip('"').strip("'")
+                    value = v.strip()
+                    if value.startswith('"') and value.endswith('"'):
+                        try:
+                            value = json.loads(value)
+                        except json.JSONDecodeError:
+                            value = value[1:-1]
+                    elif value.startswith("'") and value.endswith("'"):
+                        value = value[1:-1]
+                    meta[k.strip()] = str(value)
             text = text[end + 4:].lstrip("\n")
     return meta, text
 
@@ -162,65 +190,89 @@ STYLE = (
     "hr{border:0;border-top:1px solid var(--line);margin:2.4rem 0;"
     "max-width:120px;margin-left:auto;margin-right:auto}"
     ".progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);width:0;z-index:9}"
+    ".language-switch{display:flex;flex-wrap:wrap;gap:.5rem 1rem;padding:1rem 0;"
+    "font-family:system-ui,sans-serif;font-size:.82rem;border-bottom:1px solid var(--line)}"
+    ".language-switch a[aria-current=page]{color:var(--fg);font-weight:700}"
+    "html:lang(ko) .chapter-body>p:first-of-type::first-letter,"
+    "html:lang(yue) .chapter-body>p:first-of-type::first-letter{float:none;font-size:inherit;padding:0}"
+    "html:lang(ko) body,html:lang(yue) body{word-break:normal;overflow-wrap:break-word}"
     "@media(max-width:600px){h1{font-size:2rem}.hero h1{font-size:2.2rem}"
     "body{font-size:17px}}"
 )
 
-DISCLOSURE = (
-    "<div class=\"disclosure\"><strong>How this story was made.</strong> "
-    "Drafted with the assistance of an AI language model, then reviewed and edited by a human "
-    "editor before publication. No fabricated author biography or portrait is used. "
-    "<a href=\"/about/\">Full disclosure</a>.</div>"
-)
-
-
-def disclosure_banner(is_draft: bool) -> str:
+def disclosure_banner(is_draft: bool, language: str = "en") -> str:
     if not is_draft:
         return ""
-    return (
-        "<div class=\"banner\"><strong>Editor's note — preview draft.</strong> "
-        "This chapter is an AI-assisted draft awaiting human editorial review. "
-        "It is shown for preview only and is not a finished, approved text.</div>"
-    )
+    t = LOCALES[language]
+    return (f'<div class="banner"><strong>{html.escape(t["draft_title"])}</strong> '
+            f'{html.escape(t["draft_notice"])}</div>')
 
 
 def page(title: str, description: str, canonical_path: str, body: str,
-         jsonld: dict | list[dict] | None = None, is_draft: bool = False) -> str:
+         jsonld: dict | list[dict] | None = None, is_draft: bool = False,
+         language: str = "en", alternates: dict | None = None,
+         switches: dict | None = None) -> str:
+    t = LOCALES[language]
+    w = work(C.WORK, language)
     base = C.SITE["base_url"]
     canonical = base + canonical_path
+    noindex = is_draft or C.PREVIEW_DRAFTS or bool(C.REVISION_SET)
     ld = ""
-    if jsonld is not None:
+    if jsonld is not None and not noindex:
         obj = jsonld if isinstance(jsonld, list) else [jsonld]
         ld = '<script type="application/ld+json">' + json.dumps(
-            obj, ensure_ascii=False) + "</script>"
-    site_name = html.escape(C.SITE["name"])
+            obj, ensure_ascii=False).replace("<", "\\u003c") + "</script>"
+    # Only indexable, independently approved translations enter SEO clusters.
+    alternate_tags = []
+    if not noindex and alternates:
+        for lang, path in alternates.items():
+            alternate_tags.append(f'<link rel="alternate" hreflang="{LOCALES[lang]["hreflang"]}" '
+                                  f'href="{html.escape(base + path)}"/>')
+        if "en" in alternates:
+            alternate_tags.append(f'<link rel="alternate" hreflang="x-default" '
+                                  f'href="{html.escape(base + alternates["en"])}"/>')
+    switch_links = []
+    available_languages = ("en",) if C.REVISION_SET else LOCALES
+    for lang, path in (switches or {lang: route(lang) for lang in available_languages}).items():
+        current = ' aria-current="page"' if lang == language else ''
+        switch_links.append(f'<a href="{html.escape(path)}" lang="{LOCALES[lang]["lang"]}"'
+                            f'{current}>{html.escape(LOCALES[lang]["label"])}</a>')
+    disclosure_text = ("This is an AI-assisted revised draft inspired by narrative mechanisms in "
+                       "classical Chinese fiction. It has not been human-reviewed. Earlier approvals "
+                       "cover the earlier text only; existing translations do not represent this revision."
+                       if C.REVISION_SET else t["disclosure"])
+    revision_banner = ('<div class="banner"><strong>Classical-fiction fusion — revised draft.</strong> '
+                       'Independent local preview. Not approved and not published. '
+                       '<a href="/revision-notes/">创作来源、实质变化与审核要点</a></div>') if C.REVISION_SET else ""
+    disclosure = (f'<div class="disclosure" data-ai-disclosure="true"><strong>'
+                  f'{html.escape(t["disclosure_title"])}</strong> {html.escape(disclosure_text)} '
+                  f'<a href="{route(language, "/about/")}">{html.escape(t["full_disclosure"])}</a>.</div>')
     return f"""<!doctype html>
-<html lang="{html.escape(C.SITE['lang'])}">
+<html lang="{t['lang']}">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(description)}"/>
-<meta name="robots" content="{"noindex,follow" if is_draft else "index,follow"}"/>
+<meta name="robots" content="{'noindex,follow' if noindex else 'index,follow'}"/>
 <link rel="canonical" href="{html.escape(canonical)}"/>
-<link rel="alternate" hreflang="x-default" href="{html.escape(canonical)}"/>
+{chr(10).join(alternate_tags)}
 {ld}
 <style>{STYLE}</style>
 </head>
 <body>
 <div class="progress" id="progress"></div>
 <header class="site"><div class="wrap">
-  <a class="brand" href="/">{site_name}</a>
-  <nav><a href="/about/">About</a></nav>
+  <a class="brand" href="{route(language)}">{html.escape(C.SITE['name'])}</a>
+  <nav><a href="{route(language, '/about/')}">{html.escape(t['about'])}</a></nav>
 </div></header>
 <div class="wrap">
-{disclosure_banner(is_draft)}
+<nav class="language-switch" aria-label="{html.escape(t['languages'])}">{' '.join(switch_links)}</nav>
+{revision_banner}
+{disclosure_banner(is_draft, language)}
 {body}
-{DISCLOSURE}
-<footer>
-&copy; {html.escape(C.WORK['author'])} · {html.escape(C.WORK['title'])}.
-A work of fiction. Any resemblance to persons or events is coincidental.
-</footer>
+{disclosure}
+<footer>&copy; {html.escape(w['author'])} · {html.escape(w['title'])}. {html.escape(t['fiction'])}</footer>
 </div>
 <script>
 window.addEventListener('scroll',function(){{
@@ -237,33 +289,56 @@ window.addEventListener('scroll',function(){{
 # ---------------------------------------------------------------------------
 # 加载章节，执行人工关口
 # ---------------------------------------------------------------------------
-def load_chapters() -> list[dict]:
+def source_digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def translation_approved(meta: dict, source_meta: dict, source_hash: str) -> bool:
+    # Original approval is NOT translation approval. Bind review to this source version.
+    return bool(meta.get("status") == "approved"
+                and source_meta.get("status") == "approved"
+                and meta.get("source_sha256") == source_hash
+                and meta.get("reviewer", "").strip()
+                and re.fullmatch(r"\d{4}-\d{2}-\d{2}", meta.get("review_date", ""))
+                and len(meta.get("review_notes", "").strip()) >= 12)
+
+
+def load_chapters(language: str = "en") -> list[dict]:
+    revision = revision_root()
+    if revision and language != "en":
+        return []  # Never reuse previously approved translations for changed prose.
+    directory = (revision / "chapters" if revision else CHAPTERS_DIR) if language == "en" else CONTENT / "translations" / language
     chapters = []
-    for p in sorted(CHAPTERS_DIR.glob("*.md")):
+    seen = set()
+    for p in sorted(directory.glob("*.md")):
         meta, raw, body_html = read_doc(p)
         body_html = strip_leading_h1(body_html)
         slug = meta.get("slug") or re.sub(r"^\d+-", "", p.stem)
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug) or slug in seen:
+            raise ValueError(f"Invalid or duplicate chapter slug: {p}")
+        seen.add(slug)
         num = meta.get("chapter", "?")
         status = meta.get("status", "draft")
-        approved = status == "approved"
-        words_raw = meta.get("words", "")
-        try:
-            wcount = int(words_raw)
-            readtime = max(1, round(wcount / 220))
-        except (ValueError, TypeError):
-            wcount = 0
-            readtime = 0
+        approved = status == "approved" and not revision
+        if language != "en":
+            if meta.get("language") != language:
+                raise ValueError(f"Translation language does not match directory: {p}")
+            source = CHAPTERS_DIR / p.name
+            if not source.exists():
+                raise ValueError(f"Translation has no English source: {p}")
+            source_meta, _, _ = read_doc(source)
+            source_slug = source_meta.get("slug") or re.sub(r"^\d+-", "", source.stem)
+            if source_slug != slug or source_meta.get("chapter") != num:
+                raise ValueError(f"Translation does not match its source chapter: {p}")
+            approved = translation_approved(meta, source_meta, source_digest(source))
+        text = re.sub(r"^#.*$", "", raw, flags=re.M)
+        units = len(re.findall(r"[\u3400-\u9fff]", text)) if language == "yue" else len(text.split())
+        readtime = max(1, round(units / (350 if language == "yue" else 220)))
         chapters.append({
-            "num": num,
-            "slug": slug,
-            "title": meta.get("title", p.stem),
-            "summary": meta.get("summary", ""),
-            "status": status,
-            "approved": approved,
-            "words": wcount,
-            "readtime": readtime,
-            "html": body_html,
-            "path": p,
+            "num": num, "slug": slug, "title": meta.get("title", p.stem),
+            "summary": meta.get("summary", ""), "status": status, "approved": approved,
+            "words": units, "readtime": readtime, "html": body_html, "path": p,
+            "language": language,
         })
     chapters.sort(key=lambda c: int(c["num"]) if str(c["num"]).isdigit() else 999)
     return chapters
@@ -272,8 +347,8 @@ def load_chapters() -> list[dict]:
 # ---------------------------------------------------------------------------
 # 各页面
 # ---------------------------------------------------------------------------
-def book_schema() -> dict:
-    w = C.WORK
+def book_schema(language: str = "en") -> dict:
+    w = work(C.WORK, language)
     schema: dict = {
         "@context": "https://schema.org",
         "@type": "Book",
@@ -281,50 +356,71 @@ def book_schema() -> dict:
         "description": w["description"],
         "inLanguage": w["language"],
         "genre": w["genre"],
-        "author": {"@type": "Person", "name": w["author"]},
+        "author": {"@type": "Organization", "name": w["author"]},
     }
     if w.get("isbn"):
         schema["isbn"] = w["isbn"]
-    if w.get("date_published"):
+    if language == "en" and w.get("date_published"):
         schema["datePublished"] = w["date_published"]
     return schema
 
 
-def render_home(chapters: list[dict], out: Path):
-    w = C.WORK
+def write_page(out: Path, path: str, document: str):
+    dest = out / path.strip("/") / "index.html"
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(document, encoding="utf-8")
+
+
+def chapter_path(c: dict) -> str:
+    return route(c["language"], f'/chapters/{c["slug"]}/')
+
+
+def page_alternates(collection: dict, suffix: str = "/") -> dict:
+    result = {}
+    for language, chapters in collection.items():
+        if suffix in ("/", "/about/"):
+            available = any(c["approved"] for c in chapters)
+        else:
+            available = any(c["approved"] and f'/chapters/{c["slug"]}/' == suffix for c in chapters)
+        if available:
+            result[language] = route(language, suffix)
+    return result
+
+
+def chapter_switches(collection: dict, slug: str) -> dict:
+    return {language: (route(language, f"/chapters/{slug}/")
+                       if any(c["slug"] == slug and (c["approved"] or C.PREVIEW_DRAFTS)
+                              for c in chapters) else route(language))
+            for language, chapters in collection.items()}
+
+
+def render_home(chapters: list[dict], out: Path, language: str = "en", collection: dict | None = None):
+    t = LOCALES[language]
+    w = work(C.WORK, language)
+    collection = collection or {language: chapters}
     visible = [c for c in chapters if c["approved"] or C.PREVIEW_DRAFTS]
+    approved = any(c["approved"] for c in chapters)
     lis = []
     for c in visible:
-        draft_tag = ' <span class="meta">· preview draft</span>' if not c["approved"] else ""
-        rt = f'{c["readtime"]} min read' if c["readtime"] else ''
-        summary = (f'<p class="summary">{html.escape(c["summary"])}</p>'
-                   if c["summary"] else "")
-        lis.append(
-            f'<li><a href="/chapters/{html.escape(c["slug"])}/">'
-            f'<span class="num">Chapter {html.escape(str(c["num"]))}</span>'
-            f'<h3>{html.escape(c["title"])}{draft_tag}</h3>'
-            f'{summary}<span class="readtime">{rt}</span>'
-            f'</a></li>')
-    toc = "\n".join(lis) or (
-        '<li class="meta">No chapters are published yet. Chapters appear here after '
-        'human editorial review.</li>')
-    total_words = sum(c["words"] for c in visible)
-    stat = (f'{len(visible)} chapters · ~{total_words:,} words' if visible
-            else 'A story in three parts')
+        draft_tag = f' <span class="meta">· {html.escape(t["draft_tag"])}</span>' if not c["approved"] else ""
+        summary = f'<p class="summary">{html.escape(c["summary"])}</p>' if c["summary"] else ""
+        lis.append(f'<li><a href="{chapter_path(c)}">'
+                   f'<span class="num">{html.escape(t["chapter"].format(n=c["num"]))}</span>'
+                   f'<h3>{html.escape(c["title"])}{draft_tag}</h3>{summary}'
+                   f'<span class="readtime">{html.escape(t["readtime"].format(n=c["readtime"]))}</span></a></li>')
+    toc = "\n".join(lis) or f'<li class="meta">{html.escape(t["no_chapters"])}</li>'
+    pending = (f'<p class="banner">{html.escape(t["pending"])} '
+               f'<a href="/">{html.escape(t["read_english"])}</a></p>') if language != "en" and not approved else ""
     body = f"""<section class="hero">
-  <span class="eyebrow">A short story · {html.escape(w['genre'])}</span>
-  <h1>{html.escape(w['title'])}</h1>
-  <p class="sub">{html.escape(w['subtitle'])}</p>
-  <p class="byline meta">By {html.escape(w['author'])} · {stat}</p>
-</section>
-<p>{html.escape(w['description'])}</p>
-<hr/>
-<h2>Chapters</h2>
-<ul class="chapters">{toc}</ul>
-<p class="meta">Read the <a href="/about/">about page</a> for the world, the author, and how this story was made.</p>"""
-    (out / "index.html").write_text(
-        page(f"{w['title']} — {C.SITE['name']}", w["description"], "/", body, book_schema()),
-        encoding="utf-8")
+<span class="eyebrow">{html.escape(t['short_story'])} · {html.escape(w['genre'])}</span>
+<h1>{html.escape(w['title'])}</h1><p class="sub">{html.escape(w['subtitle'])}</p>
+<p class="byline meta">{html.escape(t['by'].format(author=w['author']))} · {html.escape(t['stats'].format(n=len(visible)))}</p>
+</section><p>{html.escape(w['description'])}</p>{pending}<hr/>
+<h2>{html.escape(t['chapters'])}</h2><ul class="chapters">{toc}</ul>
+<p class="meta"><a href="{route(language, '/about/')}">{html.escape(t['about_hint'])}</a></p>"""
+    write_page(out, route(language), page(f"{w['title']} — {C.SITE['name']}", w["description"],
+               route(language), body, book_schema(language), is_draft=not approved,
+               language=language, alternates=page_alternates(collection)))
 
 
 GLOSSARY = [
@@ -336,79 +432,65 @@ GLOSSARY = [
 ]
 
 
-def render_about(out: Path):
-    disclosure = strip_leading_h1(read_doc(EDITORIAL_DIR / "ai-disclosure.md")[2])
-    bible_html = strip_leading_h1(read_doc(CONTENT / "world-bible.md")[2])
-    # 从世界观文档里取 premise，作为开头精选段（避免整篇 bible 全文铺陈）
-    terms = "\n".join(
-        f"<dt>{html.escape(t)}</dt><dd>{html.escape(d)}</dd>" for t, d in GLOSSARY)
-    contact = (f'<p class="meta">Contact: <a href="mailto:{html.escape(C.SITE["contact"])}">'
-               f'{html.escape(C.SITE["contact"])}</a></p>' if C.SITE["contact"] else "")
-    body = f"""<section class="hero">
-  <span class="eyebrow">About</span>
-  <h1>Behind the story</h1>
-  <p class="sub">{html.escape(C.WORK['title'])} · {html.escape(C.WORK['genre'])}</p>
-</section>
-<p>{html.escape(C.WORK['description'])}</p>
-<h2>The idea</h2>
-{bible_html}
-<h2>A small glossary</h2>
-<p>Terms the story uses, without spoilers.</p>
-<dl class="glossary">{terms}</dl>
-<h2>Authorship &amp; AI disclosure</h2>
-{disclosure}
-<p>This work is published under the byline <strong>{html.escape(C.WORK['author'])}</strong>,
-the human editor responsible for the final text. There is no fabricated author portrait or biography.</p>
-{contact}"""
-    (out / "about" / "index.html").parent.mkdir(parents=True, exist_ok=True)
-    (out / "about" / "index.html").write_text(
-        page(f"About — {C.WORK['title']}", C.WORK["description"], "/about/", body, book_schema()),
-        encoding="utf-8")
+def render_about(out: Path, language: str = "en", collection: dict | None = None):
+    t = LOCALES[language]
+    w = work(C.WORK, language)
+    collection = collection or {language: load_chapters(language)}
+    approved = any(c["approved"] for c in collection[language])
+    disclosure = (strip_leading_h1(read_doc(EDITORIAL_DIR / "ai-disclosure.md")[2])
+                  if language == "en" else f'<p>{html.escape(t["disclosure"])}</p>')
+    bible_html = (strip_leading_h1(read_doc(CONTENT / "world-bible.md")[2])
+                  if language == "en" else f'<p>{html.escape(t["world"])}</p>')
+    if C.REVISION_SET:
+        notes = revision_notes()
+        bible_html = f'<p>{html.escape(notes["world_en"])}</p>'
+        disclosure = ('<p>This revised text was drafted with AI assistance and is awaiting new human '
+                      'editorial review. Earlier approvals do not cover this version.</p>')
+    glossary = GLOSSARY if language == "en" else t["terms"]
+    terms = "\n".join(f"<dt>{html.escape(term)}</dt><dd>{html.escape(desc)}</dd>" for term, desc in glossary)
+    contact = (f'<p class="meta">{html.escape(t["contact"])}: '
+               f'<a href="mailto:{html.escape(C.SITE["contact"])}">{html.escape(C.SITE["contact"])}</a></p>'
+               if C.SITE["contact"] else "")
+    body = f"""<section class="hero"><span class="eyebrow">{html.escape(t['about'])}</span>
+<h1>{html.escape(t['behind'])}</h1><p class="sub">{html.escape(w['title'])} · {html.escape(w['genre'])}</p></section>
+<p>{html.escape(w['description'])}</p><h2>{html.escape(t['idea'])}</h2>{bible_html}
+<h2>{html.escape(t['glossary'])}</h2><p>{html.escape(t['terms_hint'])}</p><dl class="glossary">{terms}</dl>
+<h2>{html.escape(t['authorship'])}</h2>{disclosure}
+<p>{html.escape(t['byline_notice'].format(author=w['author']))}</p>{contact}"""
+    write_page(out, route(language, "/about/"), page(f"{t['about']} — {w['title']}", w["description"],
+               route(language, "/about/"), body, book_schema(language), is_draft=not approved,
+               language=language, alternates=page_alternates(collection, "/about/"),
+               switches={lang: route(lang, "/about/") for lang in collection}))
 
 
-def render_chapter(c: dict, chapters: list[dict], out: Path):
-    is_draft = not c["approved"]
-    schema: dict = {
-        "@context": "https://schema.org",
-        "@type": "Chapter",
-        "name": c["title"],
-        "isPartOf": {"@type": "Book", "name": C.WORK["title"],
-                     "author": {"@type": "Person", "name": C.WORK["author"]}},
-        "inLanguage": C.WORK["language"],
-    }
-    path = f"/chapters/{c['slug']}/"
-    # 只在已发布集合中计算相邻章节
+def render_chapter(c: dict, chapters: list[dict], out: Path, collection: dict | None = None):
+    language = c["language"]
+    t = LOCALES[language]
+    w = work(C.WORK, language)
+    collection = collection or {language: chapters}
+    schema = {"@context": "https://schema.org", "@type": "Chapter", "name": c["title"],
+              "isPartOf": {"@type": "Book", "name": w["title"],
+                           "author": {"@type": "Organization", "name": w["author"]}},
+              "inLanguage": w["language"]}
     visible = [x for x in chapters if x["approved"] or C.PREVIEW_DRAFTS]
-    idx = next((i for i, x in enumerate(visible) if x["slug"] == c["slug"]), -1)
+    idx = next(i for i, x in enumerate(visible) if x["slug"] == c["slug"])
     nav = []
-    if idx > 0:
-        prev = visible[idx - 1]
-        nav.append(
-            f'<a class="prev" href="/chapters/{html.escape(prev["slug"])}/">'
-            f'<span class="lbl">← Previous</span>{html.escape(prev["title"])}</a>')
-    if idx >= 0 and idx < len(visible) - 1:
-        nxt = visible[idx + 1]
-        nav.append(
-            f'<a class="next" href="/chapters/{html.escape(nxt["slug"])}/">'
-            f'<span class="lbl">Next →</span>{html.escape(nxt["title"])}</a>')
-    nav_html = ('<nav class="chapter-nav">' + "".join(nav) + "</nav>") if nav else ""
-    lead = (f'<p class="chapter-lead">{html.escape(c["summary"])}</p>'
-            if c["summary"] else "")
-    rt = f'{c["readtime"]} min read' if c["readtime"] else ""
-    body = (f'<span class="eyebrow">Chapter {html.escape(str(c["num"]))}</span>'
-            f'<h1>{html.escape(c["title"])}</h1>'
-            f'<p class="byline meta">{html.escape(C.WORK["title"])} · '
-            f'by {html.escape(C.WORK["author"])}'
-            + (f' · {rt}' if rt else '') + '</p>'
-            + lead
-            + f'<div class="chapter-body">{c["html"]}</div>'
-            + nav_html)
-    dest = out / "chapters" / c["slug"] / "index.html"
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(
-        page(f'{c["title"]} — {C.WORK["title"]}', C.WORK["description"],
-             path, body, schema, is_draft=is_draft),
-        encoding="utf-8")
+    for i, css, label in ((idx - 1, "prev", "previous"), (idx + 1, "next", "next")):
+        if 0 <= i < len(visible):
+            neighbor = visible[i]
+            nav.append(f'<a class="{css}" href="{chapter_path(neighbor)}">'
+                       f'<span class="lbl">{html.escape(t[label])}</span>{html.escape(neighbor["title"])}</a>')
+    nav_html = '<nav class="chapter-nav">' + "".join(nav) + "</nav>" if nav else ""
+    lead = f'<p class="chapter-lead">{html.escape(c["summary"])}</p>' if c["summary"] else ""
+    body = (f'<span class="eyebrow">{html.escape(t["chapter"].format(n=c["num"]))}</span>'
+            f'<h1>{html.escape(c["title"])}</h1><p class="byline meta">{html.escape(w["title"])} · '
+            f'{html.escape(t["by"].format(author=w["author"]))} · '
+            f'{html.escape(t["readtime"].format(n=c["readtime"]))}</p>{lead}'
+            f'<div class="chapter-body">{c["html"]}</div>{nav_html}')
+    write_page(out, chapter_path(c), page(f'{c["title"]} — {w["title"]}', c["summary"] or w["description"],
+               chapter_path(c), body, schema, is_draft=not c["approved"], language=language,
+               alternates=page_alternates(collection, f'/chapters/{c["slug"]}/'),
+               switches=chapter_switches(collection, c["slug"])))
 
 
 def write_sitemap(paths: list[str], out: Path):
@@ -427,48 +509,67 @@ def write_robots(out: Path):
         encoding="utf-8")
 
 
+def render_revision_notes(out: Path):
+    notes = revision_notes()
+    blocks = [f'<section class="hero"><span class="eyebrow">修订工作台 · 未审核草稿</span>'
+              f'<h1>{html.escape(notes["title"])}</h1></section>']
+    for label, key in (("审核状态", "human_review"), ("创作目标", "purpose"),
+                       ("合规边界", "policy_note"), ("引用边界", "copyright_boundary")):
+        blocks.append(f'<h2>{label}</h2><p>{html.escape(notes[key])}</p>')
+    blocks.append('<h2>古典叙事提炼与融合</h2>')
+    for source in notes["sources"]:
+        blocks.append(f'<h3>{html.escape(source["work"])}</h3>'
+                      f'<p>{html.escape(source["mechanism"])}</p><p>{html.escape(source["transformation"])}</p>'
+                      f'<p class="meta">{html.escape(source["source_type"])} '
+                      f'<a href="{html.escape(source["reference_url"])}" target="_blank" rel="noopener noreferrer">参考来源</a></p>')
+    blocks.append('<h2>逐章实质变化</h2>')
+    for chapter in notes["chapter_changes"]:
+        blocks.append(f'<h3>第{chapter["chapter"]}章</h3><p>{html.escape(chapter["changes"])}</p>')
+    blocks.append('<h2>连续性与人工终审要点</h2><ul>')
+    blocks.extend(f'<li>{html.escape(item)}</li>' for item in notes["continuity_and_review"])
+    blocks.append('</ul><p><a href="/">阅读融合版英文草稿</a></p>')
+    document = page(notes["title"], notes["purpose"], "/revision-notes/", "".join(blocks), is_draft=True)
+    document = document.replace('<html lang="en">', '<html lang="zh-Hans">', 1)
+    write_page(out, "/revision-notes/", document)
+
+
 def main():
-    out = ROOT / "site"
+    revision = revision_root()  # Validate before creating or writing any build files.
+    out = ROOT / C.OUTPUT_DIR
+    if C.PREVIEW_DRAFTS and out.resolve() == (ROOT / "site").resolve():
+        raise ValueError("Draft preview must not overwrite the production site directory")
+    if revision and out.resolve() == (ROOT / "preview-site").resolve():
+        raise ValueError("Revision preview must use its own output directory")
     out.mkdir(parents=True, exist_ok=True)
-    chapters = load_chapters()
-    published = [c for c in chapters if c["approved"] or C.PREVIEW_DRAFTS]
-    print(f"[i] chapters found: {len(chapters)}, published: {len(published)} "
-          f"(PREVIEW_DRAFTS={C.PREVIEW_DRAFTS})")
-
-    render_home(chapters, out)
-    render_about(out)
-    for c in published:
-        render_chapter(c, chapters, out)
-
-    # 草稿墓碑：为未发布的草稿输出 noindex 占位页，覆盖旧部署可能残留的
-    # 已发布版本（Cloudflare Pages 增量部署不删除历史文件）。
-    # 这样任何曾误发布的草稿，其公开路径都会变成 noindex，不会被收录。
-    published_slugs = {c["slug"] for c in published}
-    for c in chapters:
-        if c["slug"] in published_slugs:
-            continue
-        tombstone_body = (
-            '<h1>Not published</h1>'
-            '<p>This chapter is not part of the published work. '
-            'Please return to the <a href="/">table of contents</a>.</p>'
-        )
-        dest = out / "chapters" / c["slug"] / "index.html"
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(
-            page("Not published", "This chapter is not published.",
-                 f"/chapters/{c['slug']}/", tombstone_body, None, is_draft=True),
-            encoding="utf-8")
-
-    # sitemap 只包含正式发布的页面，不含草稿墓碑
-    paths = ["/", "/about/"] + [f"/chapters/{c['slug']}/" for c in published]
+    languages = ("en",) if revision else LOCALES
+    collection = {language: load_chapters(language) for language in languages}
+    paths = []
+    for language, chapters in collection.items():
+        visible = [c for c in chapters if c["approved"] or C.PREVIEW_DRAFTS]
+        approved = [c for c in chapters if c["approved"]]
+        print(f"[i] {language}: {len(chapters)} chapters, {len(approved)} approved")
+        render_home(chapters, out, language, collection)
+        render_about(out, language, collection)
+        for c in visible:
+            render_chapter(c, chapters, out, collection)
+        for c in chapters:
+            if c in visible:
+                continue
+            t = LOCALES[language]
+            body = (f'<h1>{html.escape(t["unpublished"])}</h1>'
+                    f'<p>{html.escape(t["unpublished_description"])} '
+                    f'<a href="{route(language)}">{html.escape(t["toc"])}</a></p>')
+            write_page(out, chapter_path(c), page(t["unpublished"], t["unpublished_description"],
+                       chapter_path(c), body, is_draft=True, language=language,
+                       switches=chapter_switches(collection, c["slug"])))
+        if approved and not C.PREVIEW_DRAFTS:
+            paths.extend([route(language), route(language, "/about/")])
+            paths.extend(chapter_path(c) for c in approved)
+    if revision:
+        render_revision_notes(out)
     write_sitemap(paths, out)
     write_robots(out)
-    print(f"[done] {len(paths)} URLs -> {out}/")
-
-    if not published and not C.PREVIEW_DRAFTS:
-        print("[!] No approved chapters. Set PREVIEW_DRAFTS=1 to preview drafts, "
-              "or mark chapters status: approved in front matter after human review.",
-              file=sys.stderr)
+    print(f"[done] {len(paths)} indexable URLs -> {out}/")
 
 
 if __name__ == "__main__":

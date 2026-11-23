@@ -1,79 +1,173 @@
 ---
 chapter: 3
 title: "The Price of Repair"
-summary: "Inside the memory, he is offered a cleaner version of himself. He chooses the fracture — and finds, at last, an honest way to work."
+summary: "The loom offers Elias a lifetime in which he refused the fatal signature. A damaged record and an ordinary gesture force him to choose what he will leave uncorrected."
 status: approved
-words: 817
+language: en
+edition: classical-fusion
+reviewer: apprank studio
+review_date: 2026-11-23
+approval_basis: user-release-request
+review_notes: "User explicitly selected the classical-fusion version for publication on 2026-11-23. No sentence-level human edits or substantive human rewriting were provided or claimed."
+based_on_sha256: fa0ba622e55ae51e40270403240e3fb30b5dc37fab7feab7b79b15846112b588
 ---
 
 # The Price of Repair
 
-The memory gave him the lab exactly as it had been.
+On the second entry, the laboratory was warmer.
 
-June stood in the center of the room on her raised platform, humming. The board member was there, and the director, and a young engineer with Elias's face who watched the demo with his hands behind his back, the way Elias used to stand when he wanted people to think he was calm.
+June stood on her raised platform. The director stood beside her, waiting for a photograph. A younger Elias held a pen between his palms. Mara had the same folder as before, but she was no longer blocking the blue door.
 
-Through the blue door came Mara.
+The loom offered him the day's familiar order: demonstration, questions, approval. It labelled the scene **reconstructed context**. He made himself keep the label in view.
 
-She was not in the outline. She was not in any version of the day he remembered. But there she was, holding a folder, saying his name the way he had heard it on waking — *Eli* — with a familiarity that made something in the constructed world ache.
+The soldier sat on the examination bench, his hands folded neatly over his knees. June had returned a month to him. In the replay he had breakfast, caught a bus, written two letters home. He could describe each day. When asked what the month had felt like, he looked towards the director.
 
-"She worked here," the memory offered. It supplied the fact the way it supplied everything now: smoothly, without seams.
+“Less distress,” the director said gently.
 
-Elias turned to the young engineer. "Who is she?"
+“Less distress,” the soldier repeated.
 
-The engineer did not answer. That was the first sign that this memory had been repaired before he ever touched it. The gaps had been filled by someone who wanted a specific story, and that story had edges.
+Mara turned a page in her folder.
 
-He walked to the blue door and opened it.
+“His daughter says he doesn't recognise why the second letter mattered.”
 
-Beyond was the corridor, and beyond that, the room where the decision had been made. It came back in pieces — not images but the *sense* of them, which is how the loom renders the things a person tried hard to forget.
+“He recognises the letter.”
 
-The board member's voice: *"It's like it never happened."*
+“That's not what she asked.”
 
-His own voice, younger, saying: *"It didn't happen that way."*
+There was no raised voice. A tray of untouched cups stood beside the release sheet. Someone had put sugar in all of them before anyone was asked. Elias had once thought such details meant a meeting was well organised.
 
-The director's hand on the blue door, closing it: *"Then give them a version that did."*
+He remembered the algorithm's first purpose. A movement with a missing middle could not be replayed without a jump. He had given it a way to cross the gap. When the gap lay between a face and the feeling attached to it, the algorithm crossed that too. It used what would fit.
 
-And then the choice, plain as a line of code, because that was what it had been: sign off on June, let the looms go out with a fill algorithm that would quietly turn a generation grey, and keep his career — or refuse, and watch the company fold, and lose Mara, who was not a colleague but a wife, who was not a wife but a memory of one, who was whatever the fill had decided she should be.
+The director rested one finger on the approval box.
 
-He had signed.
+“If we require every response to agree, we won't release anything.”
 
-That was the truth in the fracture. Not an accident. Not a mistake. A decision, made clean, with a pen, on a ordinary afternoon, by a man who told himself he was being kind.
+“And if we make them agree?” Mara asked.
 
-The memory offered him the repaired version now, the one he had built for himself twenty years ago: *Elias refused. Elias walked out. The company folded. Mara was safe. The grey was someone else's problem.* It was a beautiful fill. Seamless. He could feel its calm even as he stood inside it.
+Elias tried to move closer to the paper. The reconstructed floor stretched beneath him. The loom paused at the fracture.
 
-All he had to do was accept it. Key it in, let it settle, wake up a man who had done the right thing.
+A message appeared: **conflicting outcomes available.**
 
-He looked at Mara, who was smiling with the expression the algorithm had chosen for her — pleasant, distant, entirely at peace.
+The machine had found the old fill he had made for himself. It opened that version as though it were another door.
 
-"You can save the facts," he said to her, "you can't save the feeling."
+In it, he refused to sign.
 
-She kept smiling.
+He walked out with Mara. They rented a narrow flat over a bakery. The company failed; someone else was blamed for the soldier's month. At first the money was short, but work came. He designed machines that nobody used to alter a witness. A professional society gave him an award. At dinner Mara told their friends that he had understood before the rest of them.
 
-Elias went back to the loom interface and did the one thing a repairman is trained never to do. He removed the fill.
+The years followed one another without waiting for him. There were repairs to the roof, a quarrel over money, an illness whose worst nights the scene skipped. His hair went grey. A younger engineer called him principled. By then he had forgotten that the word had ever required a decision.
 
-Not all of it — he was not a fool. He removed the parts that had made him innocent. He left the fracture raw and open, the way it had been, and he sealed the engram around the wound without smoothing it. The machine warned him. It told him the memory would be painful to replay. He sealed it anyway.
+He knew this was a constructed alternative. Knowing did not stop him wanting to stay.
 
-When he came to, the shop was dark and the rain had started again. He put the engram in the bottom drawer, on top of the notebook with its four words, and locked it.
+In the flat's kitchen Mara poured tea into two unbroken cups. He asked her what she had written in the folder on the day of the demonstration.
 
-He did not feel better. That was the point. The grey was a trick; the pain was proof of something. He had chosen the unbearable version and kept it, and it was the first honest thing he had made in twenty years.
+“You did the right thing,” she said.
 
-In the morning the bell over the door rang.
+“What was the question?”
 
-The old man from the afternoon before stood there, shaking a little. In his hand was the envelope.
+She passed him a cup.
 
-"It's not right," he said. "She doesn't laugh. I can tell now. Can you... can you fix it again?"
+“You did the right thing.”
 
-Elias looked at him for a long moment. Behind him, under the sheet, the loom waited.
+He pushed back his chair. The floor became the laboratory floor again. The untouched tray was in front of him; the director's finger waited beside the box. On the machine's clock, the entire comfortable life had taken eighteen seconds.
 
-"Tell me," Elias said, "what she actually did."
+Elias pressed his thumb into the pen's ridged grip. He knew that pressure. He had made it every time he signed a release.
 
-The old man blinked. "What?"
+He asked the loom to show the audit marks over the remembered paper.
 
-"When she laughed. What did she do? Did she throw her head back? Did she cover her face? What was it?"
+The external copy did not fit perfectly. The page in his memory was narrower. The date differed by a day. The signature, the crossed-out warning, and the unanswered question occupied the same places. He could trust that correspondence only so far. It was far enough to prevent the machine from clearing his name.
 
-The old man opened his mouth, and closed it. He had played the engram four times and had never once looked at the woman. He had only listened for the sound he wanted.
+Mara had written the question. In the surviving edge of the memory, he could see her hand finish the last letter, could see her finger hold the paper while the director reached to turn it over.
 
-"I don't remember," he said quietly.
+“Keep that page,” she told Elias.
 
-"Then we start there."
+In the comfortable version, he had kept it.
 
-Elias took the envelope, and for the first time in years, he did not reach for the loom.
+In the surviving fragment, he gave the pen to the director, who passed it back and indicated where Elias was to initial the amended wording. His younger hand moved. The director blotted the ink.
+
+After that came the fracture. He could not recover the meeting's end. He could not know from this recording whether Mara left, stayed, or spoke again. The loom supplied three plausible continuations. None was evidence.
+
+He had signed. He did not get to make that fact smaller by learning it inside a damaged memory.
+
+The machine offered to preserve the amended scene with the contradiction removed. He refused. It asked whether he wanted the distressing interval hidden from ordinary replay. He refused that too.
+
+He removed the fill that made him the man who walked out. Not the bridge carrying him past the damaged edge; that remained visibly marked as synthetic. He kept the readable fragments, the unanswered question and the place where the record ended. He could not make a truthful whole from incomplete parts. He could stop calling the whole he had invented truthful.
+
+The loom warned him that the remaining material would be painful to replay.
+
+He sealed it.
+
+Back in the shop, water was just beginning to move in the kettle. His cup was still where he had left it. A whole invented retirement had passed while the tea waited to be made.
+
+He turned off the heat. When he bent to gather the audit from the floor, his legs would not quite hold him. He sat on the stool until they did.
+
+He wanted to telephone someone and confess to being a different man. He had no right to that easy description. The initials on the release sheet were his; so were the more recent receipts in the till. He had not invented the practice he condemned only to leave it twenty years ago. He had kept earning from a smaller version of it.
+
+He put the core in the bottom drawer. Then he took it out again.
+
+The archive would accept a challenge to its classification only from a named claimant. An anonymous copy might circulate in the Ward, but no clerk would have to answer it. A named one might bring an inspector to his unlicensed shop.
+
+Elias laid out three columns on a fresh sheet: **surviving record**, **external corroboration**, **synthetic bridge**. He wrote down what each could establish and what each could not. Under the blank interval he wrote: **Mara's later fate unknown.** He did not insert a reunion or a death to make the account feel finished.
+
+At the bottom he put his name, his shop's address and a request to reopen the question about patient reports. The pen dragged where the paper was still damp from his hands.
+
+He made a copy before sealing the packet.
+
+No answer had come. Nothing had been repaired. He stood it against the till so that in the morning he would have to move it to open the drawer.
+
+The old man returned before the bread seller had raised his shutter.
+
+Elias recognised the uneven buttons. The man took the envelope out of his coat, then the square of cloth, and placed them on the counter in the same order as before.
+
+“It works,” he said.
+
+Elias waited.
+
+“That's the trouble. I keep playing it.”
+
+The man's thumb moved over the green stitches.
+
+“She's too careful now. She never was.”
+
+Elias opened the repaired scene. The woman turned, clean cuffs level at her wrists, and smiled.
+
+The old man looked down at the cloth.
+
+“She burnt her sleeve on the stove,” he said. “Said she'd been watching me instead of the pan. I thought she was angry. She laughed because I looked frightened.”
+
+“Is that what you remember?”
+
+“Today. I can't promise it was exactly that.”
+
+Elias stopped the playback.
+
+“Who did the green stitches?”
+
+“I did. She could sew. I couldn't.”
+
+The old man spread the square flat. At one end the stitches were too close together; at the other, almost a finger's width apart. He smiled at them, then covered his mouth with the back of his hand.
+
+No sound came out of the engram. Elias did not need to pretend one had.
+
+“Can you make her laugh at those?” the man asked.
+
+“No.”
+
+He said it before the man put his coins down. Then he explained the sleeve, how it had been altered because an undamaged one was easier for the machine to fit. He offered to remove that addition, keeping the damaged part visibly incomplete. He offered the payment back.
+
+The man watched the suspended woman for a long time.
+
+“I liked what you gave me,” he said. “I don't want to tell you I didn't.”
+
+“You don't have to.”
+
+They sat without replaying it. Outside, the first bread delivery arrived, and someone complained that the bags had been put down in the wet.
+
+At last the old man pushed the cloth towards Elias.
+
+“Leave this out of the machine.”
+
+Elias moved it well away from the reader. He brought the stained cup from the back and found another for the visitor.
+
+On a fresh intake slip he wrote the old man's account as the old man told it. Beside it he wrote the date, and **recollection given now, not a recovered recording**.
+
+Between them, the two crooked rows of stitches lay in the morning light. Elias kept his pen off the cloth.
