@@ -213,6 +213,12 @@ class LanguageTests(unittest.TestCase):
         fused = [c for c in chapters if int(c['num']) <= 3]
         self.assertTrue(all(c['approved'] for c in fused))
         self.assertTrue(all(G.read_doc(c['path'])[0].get('edition') == 'classical-fusion' for c in fused))
+        self.assertTrue(all(c['approved'] for c in chapters))
+        act2 = [c for c in chapters if 4 <= int(c['num']) <= 6]
+        self.assertEqual(len(act2), 3)
+        self.assertTrue(all(c['approved'] for c in act2))
+        self.assertTrue(all(G.read_doc(c['path'])[0].get('approval_basis') == 'user-release-request'
+                            for c in act2))
         continuation = [c for c in chapters if 7 <= int(c['num']) <= 9]
         self.assertEqual(len(continuation), 3)
         self.assertTrue(all(c['approved'] for c in continuation))
@@ -224,18 +230,19 @@ class LanguageTests(unittest.TestCase):
         first = (output / 'chapters/the-shop-on-cinder-lane/index.html').read_text()
         self.assertIn('scorched', first)
         self.assertNotIn('Nobody ever thanked him for the seam', first)
-        # Classical-fusion translations were re-translated from the new source
-        # and re-approved on 2026-11-23 ("全部发布"), so Ch.1-3 are now live in
-        # all three languages while Ch.4-6 remain English-only drafts; Ch.7-9
-        # were approved for English publication by explicit user instruction.
+        # Ch.1-3 and Ch.7-9 are live in all four languages. Ch.4-6 are
+        # English-only. All post-fusion approvals are explicitly recorded as
+        # user release requests without claiming sentence-level human rewrites.
         for lang in ('tr', 'yue', 'ko'):
             chapters = G.load_chapters(lang)
-            self.assertEqual(len(chapters), 3)
-            fused = [c for c in chapters if int(c['num']) <= 3]
-            self.assertTrue(all(c['approved'] for c in fused))
-            for c in fused:
+            self.assertEqual(len(chapters), 6)
+            self.assertTrue(all(c['approved'] for c in chapters))
+            self.assertTrue(all(int(c['num']) in (1, 2, 3, 7, 8, 9) for c in chapters))
+            for c in chapters:
                 meta = G.read_doc(c['path'])[0]
                 self.assertEqual(meta.get('edition'), 'classical-fusion')
+                if int(c['num']) >= 7:
+                    self.assertEqual(meta.get('approval_basis'), 'user-release-request')
                 src = G.ROOT / 'content/chapters' / c['path'].name
                 self.assertTrue(G.translation_approved(
                     meta, G.read_doc(src)[0], G.source_digest(src)))

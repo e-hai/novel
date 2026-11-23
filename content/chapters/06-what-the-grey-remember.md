@@ -2,7 +2,11 @@
 chapter: 6
 title: "What the Grey Remember"
 summary: "A family asks Elias to bring back a man who is factually intact and emotionally gone — and he must tell them there is no original left to restore."
-status: ai-draft
+status: approved
+reviewer: "apprank studio"
+review_date: "2026-11-23"
+approval_basis: "user-release-request"
+review_notes: "User selected task 2 on 2026-11-23, authorizing review and release of chapters 4-6. No substantive human rewrite was supplied or claimed; continuity and disclosure were verified only."
 words: 603
 ---
 

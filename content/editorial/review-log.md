@@ -233,6 +233,102 @@ The nine entries below are the current valid approvals for the classical-fusion 
 - **Substantive changes:** No substantive human rewrite was supplied or claimed; the user explicitly authorized release of chapters 7-9 on 2026-11-23. Continuity, disclosure and noindex isolation were verified only.
 - **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
 
+## Ch.4 [en] — "The Woman Who Kept Receipts"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 2 on 2026-11-23, authorizing review and release of chapters 4-6. No substantive human rewrite was supplied or claimed; continuity and disclosure were verified only.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.5 [en] — "A Blue Door in Someone Else's Memory"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 2 on 2026-11-23, authorizing review and release of chapters 4-6. No substantive human rewrite was supplied or claimed; continuity and disclosure were verified only.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.6 [en] — "What the Grey Remember"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 2 on 2026-11-23, authorizing review and release of chapters 4-6. No substantive human rewrite was supplied or claimed; continuity and disclosure were verified only.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.7 [tr] — "Köşedeki Klinik"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 1 on 2026-11-23, authorizing translation and release of chapters 7-9 into Turkish, Cantonese and Korean. Re-translated from the current approved English sources with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.8 [tr] — "Kapanmayan Kayıt"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 1 on 2026-11-23, authorizing translation and release of chapters 7-9 into Turkish, Cantonese and Korean. Re-translated from the current approved English sources with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.9 [tr] — "Mara, Yeniden"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 1 on 2026-11-23, authorizing translation and release of chapters 7-9 into Turkish, Cantonese and Korean. Re-translated from the current approved English sources with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.7 [yue] — "轉角嘅診所"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 1 on 2026-11-23, authorizing translation and release of chapters 7-9 into Turkish, Cantonese and Korean. Re-translated from the current approved English sources with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.8 [yue] — "唔閂得返嘅紀錄"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 1 on 2026-11-23, authorizing translation and release of chapters 7-9 into Turkish, Cantonese and Korean. Re-translated from the current approved English sources with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.9 [yue] — "Mara，又嚟"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 1 on 2026-11-23, authorizing translation and release of chapters 7-9 into Turkish, Cantonese and Korean. Re-translated from the current approved English sources with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.7 [ko] — "모퉁이의 클리닉"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 1 on 2026-11-23, authorizing translation and release of chapters 7-9 into Turkish, Cantonese and Korean. Re-translated from the current approved English sources with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.8 [ko] — "닫히지 않는 기록"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 1 on 2026-11-23, authorizing translation and release of chapters 7-9 into Turkish, Cantonese and Korean. Re-translated from the current approved English sources with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.9 [ko] — "마라, 다시"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** User selected task 1 on 2026-11-23, authorizing translation and release of chapters 7-9 into Turkish, Cantonese and Korean. Re-translated from the current approved English sources with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
 ---
 
 ## Note to the human editor

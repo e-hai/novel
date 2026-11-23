@@ -76,7 +76,7 @@ tools/
 
 ## 当前状态（2026-11-23）
 
-- 正式发布：第 1–3 章（`approved`，classical-fusion edition，四语言）和第 7–9 章（`approved`，英文）；GSC 已验证 `novel-9wi.pages.dev` 并提交 sitemap。
-- 草稿待审：第 4–6 章（`ai-draft`，公开路径为 noindex 墓碑）。第 10–12 章仍只有大纲。
-- 2026-11-23 新增并发布英文第 7 章《The Clinic on the Corner》、第 8 章《The Engram That Would Not Close》、第 9 章《Mara, Again》。这三章沿用 classical-fusion 的叙事机制，按用户明确授权发布，但未翻译，也未声称逐句人工改写。
+- 正式发布：第 1–9 章全部 `approved`。第 1–3 章为 classical-fusion 四语言；第 4–6 章为英文；第 7–9 章为四语言。GSC 已验证 `novel-9wi.pages.dev` 并提交 sitemap。
+- 草稿待审：暂无章节草稿。第 10–12 章仍只有大纲。
+- 2026-11-23 完成用户选择的任务 1 和 2：第 7–9 章已翻译为土耳其语、粤语、韩语并发布；第 4–6 章已按用户授权审核发布。未声称逐句人工改写，审核依据均如实写入 `review-log.md`。
 - 扩量铁律：每篇都有人工重写记录 + 披露，0 篇未审校直发；宁可慢，不要被判 scaled content abuse。

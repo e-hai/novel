@@ -2,7 +2,11 @@
 chapter: 5
 title: "A Blue Door in Someone Else's Memory"
 summary: "The same blue door appears in a stranger's damaged engram — and Elias realizes it was never a place."
-status: ai-draft
+status: approved
+reviewer: "apprank studio"
+review_date: "2026-11-23"
+approval_basis: "user-release-request"
+review_notes: "User selected task 2 on 2026-11-23, authorizing review and release of chapters 4-6. No substantive human rewrite was supplied or claimed; continuity and disclosure were verified only."
 words: 570
 ---
 

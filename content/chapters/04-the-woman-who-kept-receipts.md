@@ -2,7 +2,11 @@
 chapter: 4
 title: "The Woman Who Kept Receipts"
 summary: "A client arrives wanting the feeling put back into a memory she once paid to have removed — and learns that some repairs cannot be reversed."
-status: ai-draft
+status: approved
+reviewer: "apprank studio"
+review_date: "2026-11-23"
+approval_basis: "user-release-request"
+review_notes: "User selected task 2 on 2026-11-23, authorizing review and release of chapters 4-6. No substantive human rewrite was supplied or claimed; continuity and disclosure were verified only."
 words: 784
 ---
 
