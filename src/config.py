@@ -12,11 +12,11 @@ import os
 DEFAULT_BASE_URL = "https://novel.pages.dev"
 BASE_URL = os.environ.get("SITE_BASE_URL", DEFAULT_BASE_URL).rstrip("/")
 
-# 作品与作者。作者用真实署名，由人类编辑在 SITE_PUBLISHER 填入，不伪造头像/履历。
+# 作品与作者。发布署名 apprank studio，可由 SITE_AUTHOR 环境变量覆盖，不伪造头像/履历。
 WORK = {
     "title": "The Memory Repairman",
     "subtitle": "Three stories about the things we choose to forget.",
-    "author": os.environ.get("SITE_AUTHOR", "C. Vale").strip(),  # ← 人类编辑改成自己的署名
+    "author": os.environ.get("SITE_AUTHOR", "apprank studio").strip(),  # 发布署名，可被 SITE_AUTHOR 变量覆盖
     "genre": "Science Fiction",
     "language": "en",
     "description": (
