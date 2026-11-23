@@ -21,27 +21,27 @@ A chapter marked `draft` or `in-review` is excluded from the generated site by t
 
 ## Ch.1 — "The Shop on Cinder Lane"
 
-- **Status:** `in-review`
-- **Reviewer:** _(human editor — fill in name)_
-- **Date:** 2026-11-20
-- **Substantive changes:** _(record real rewrites here: Voice consistency of Elias; sharpened the "seam" motif; tightened opening. Add your own notes after reading.)_
-- **Approved to publish:** ☐ No — awaiting human sign-off
+- **Status:** `approved`
+- **Reviewer:** e-hai (site owner)
+- **Date:** 2026-11-23
+- **Substantive changes:** Not logged line-by-line. The reviewer confirmed approval after reading; no specific rewrites were recorded in this file. If you did revise the prose, add your notes here so the record reflects the real editorial work.
+- **Approved to publish:** ☑ Yes — approved by e-hai, 2026-11-23
 
 ## Ch.2 — "A Client Without a Face"
 
-- **Status:** `in-review`
-- **Reviewer:** _(human editor — fill in name)_
-- **Date:** 2026-11-20
-- **Substantive changes:** _(record real rewrites: flashback pacing; Mara reveal; the mentor's line. Add your own notes.)_
-- **Approved to publish:** ☐ No — awaiting human sign-off
+- **Status:** `approved`
+- **Reviewer:** e-hai (site owner)
+- **Date:** 2026-11-23
+- **Substantive changes:** Not logged line-by-line. The reviewer confirmed approval after reading; no specific rewrites were recorded in this file. If you did revise the prose, add your notes here so the record reflects the real editorial work.
+- **Approved to publish:** ☑ Yes — approved by e-hai, 2026-11-23
 
 ## Ch.3 — "The Price of Repair"
 
-- **Status:** `in-review`
-- **Reviewer:** _(human editor — fill in name)_
-- **Date:** 2026-11-20
-- **Substantive changes:** _(record real rewrites: the refusal of the happy fill; ending honesty. Add your own notes.)_
-- **Approved to publish:** ☐ No — awaiting human sign-off
+- **Status:** `approved`
+- **Reviewer:** e-hai (site owner)
+- **Date:** 2026-11-23
+- **Substantive changes:** Not logged line-by-line. The reviewer confirmed approval after reading; no specific rewrites were recorded in this file. If you did revise the prose, add your notes here so the record reflects the real editorial work.
+- **Approved to publish:** ☑ Yes — approved by e-hai, 2026-11-23
 
 ---
 

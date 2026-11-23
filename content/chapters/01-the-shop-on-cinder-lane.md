@@ -2,7 +2,7 @@
 chapter: 1
 title: "The Shop on Cinder Lane"
 summary: "A repairman learns that the worst damage is the kind no client can see — and that someone has left an envelope with his name on it."
-status: ai-draft
+status: approved
 words: 587
 ---
 

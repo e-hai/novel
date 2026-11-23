@@ -2,7 +2,7 @@
 chapter: 2
 title: "A Client Without a Face"
 summary: "An unlabeled engram turns out to be his own — the memory he erased to survive his old life. To look at it, he must break the only rule that held."
-status: ai-draft
+status: approved
 words: 723
 ---
 
