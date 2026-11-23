@@ -43,6 +43,14 @@ A chapter marked `draft` or `in-review` is excluded from the generated site by t
 - **Substantive changes:** Not logged line-by-line. The reviewer confirmed approval after reading; no specific rewrites were recorded in this file. If you did revise the prose, add your notes here so the record reflects the real editorial work.
 - **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
 
+## Ch.4 — "The Woman Who Kept Receipts"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** Rewrote the opening paragraph and sharpened the mother's final question.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
 ---
 
 ## Note to the human editor
