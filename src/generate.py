@@ -440,6 +440,26 @@ def main():
     for c in published:
         render_chapter(c, chapters, out)
 
+    # 草稿墓碑：为未发布的草稿输出 noindex 占位页，覆盖旧部署可能残留的
+    # 已发布版本（Cloudflare Pages 增量部署不删除历史文件）。
+    # 这样任何曾误发布的草稿，其公开路径都会变成 noindex，不会被收录。
+    published_slugs = {c["slug"] for c in published}
+    for c in chapters:
+        if c["slug"] in published_slugs:
+            continue
+        tombstone_body = (
+            '<h1>Not published</h1>'
+            '<p>This chapter is not part of the published work. '
+            'Please return to the <a href="/">table of contents</a>.</p>'
+        )
+        dest = out / "chapters" / c["slug"] / "index.html"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(
+            page("Not published", "This chapter is not published.",
+                 f"/chapters/{c['slug']}/", tombstone_body, None, is_draft=True),
+            encoding="utf-8")
+
+    # sitemap 只包含正式发布的页面，不含草稿墓碑
     paths = ["/", "/about/"] + [f"/chapters/{c['slug']}/" for c in published]
     write_sitemap(paths, out)
     write_robots(out)
