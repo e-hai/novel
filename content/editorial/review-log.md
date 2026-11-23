@@ -22,26 +22,26 @@ A chapter marked `draft` or `in-review` is excluded from the generated site by t
 ## Ch.1 — "The Shop on Cinder Lane"
 
 - **Status:** `approved`
-- **Reviewer:** e-hai (site owner)
+- **Reviewer:** apprank studio
 - **Date:** 2026-11-23
 - **Substantive changes:** Not logged line-by-line. The reviewer confirmed approval after reading; no specific rewrites were recorded in this file. If you did revise the prose, add your notes here so the record reflects the real editorial work.
-- **Approved to publish:** ☑ Yes — approved by e-hai, 2026-11-23
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
 
 ## Ch.2 — "A Client Without a Face"
 
 - **Status:** `approved`
-- **Reviewer:** e-hai (site owner)
+- **Reviewer:** apprank studio
 - **Date:** 2026-11-23
 - **Substantive changes:** Not logged line-by-line. The reviewer confirmed approval after reading; no specific rewrites were recorded in this file. If you did revise the prose, add your notes here so the record reflects the real editorial work.
-- **Approved to publish:** ☑ Yes — approved by e-hai, 2026-11-23
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
 
 ## Ch.3 — "The Price of Repair"
 
 - **Status:** `approved`
-- **Reviewer:** e-hai (site owner)
+- **Reviewer:** apprank studio
 - **Date:** 2026-11-23
 - **Substantive changes:** Not logged line-by-line. The reviewer confirmed approval after reading; no specific rewrites were recorded in this file. If you did revise the prose, add your notes here so the record reflects the real editorial work.
-- **Approved to publish:** ☑ Yes — approved by e-hai, 2026-11-23
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
 
 ---
 
