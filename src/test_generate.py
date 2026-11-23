@@ -219,7 +219,9 @@ class LanguageTests(unittest.TestCase):
         self.assertTrue(all(G.read_doc(c['path'])[0].get('approval_basis') == 'user-release-request'
                             for c in continuation))
         # A scorched cloth and the archive token only exist in the fused edition.
-        first = (G.ROOT / 'site/chapters/the-shop-on-cinder-lane/index.html').read_text()
+        # Build into a temporary directory: CI does not contain the generated site/.
+        output = self.build()
+        first = (output / 'chapters/the-shop-on-cinder-lane/index.html').read_text()
         self.assertIn('scorched', first)
         self.assertNotIn('Nobody ever thanked him for the seam', first)
         # Classical-fusion translations were re-translated from the new source
