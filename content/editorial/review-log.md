@@ -209,6 +209,30 @@ The nine entries below are the current valid approvals for the classical-fusion 
 - **Substantive changes:** User explicitly instructed publish-all on 2026-11-23 to release all four languages of the classical-fusion edition. Re-translated from the current approved English source with matching source_sha256; stray source-language tokens corrected. No sentence-level human rewrite was supplied or claimed.
 - **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
 
+## Ch.7 [en] — "The Clinic on the Corner"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** No substantive human rewrite was supplied or claimed; the user explicitly authorized release of chapters 7-9 on 2026-11-23. Continuity, disclosure and noindex isolation were verified only.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.8 [en] — "The Engram That Would Not Close"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** No substantive human rewrite was supplied or claimed; the user explicitly authorized release of chapters 7-9 on 2026-11-23. Continuity, disclosure and noindex isolation were verified only.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
+## Ch.9 [en] — "Mara, Again"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-23
+- **Substantive changes:** No substantive human rewrite was supplied or claimed; the user explicitly authorized release of chapters 7-9 on 2026-11-23. Continuity, disclosure and noindex isolation were verified only.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-23
+
 ---
 
 ## Note to the human editor

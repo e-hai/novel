@@ -20,7 +20,7 @@ python3 src/generate.py                    # 正式模式：只发布 approved �
 PREVIEW_DRAFTS=1 python3 src/generate.py   # 预览模式：显示草稿（带醒目草稿横幅 + noindex）
 ```
 
-产物在 `site/`。
+正式产物在 `site/`；草稿预览产物在 `preview-site/`，两者隔离。
 
 ## 每日一章：AI 起草 + 人工终审（推荐流程）
 
@@ -76,6 +76,7 @@ tools/
 
 ## 当前状态（2026-11-23）
 
-- 正式发布：第 1–3 章（`approved`）；GSC 已验证 `novel-9wi.pages.dev` 并提交 sitemap。
-- 草稿待审：第 4–6 章（`ai-draft`，公开路径为 noindex 墓碑）。第 7–12 章仅有大纲。
+- 正式发布：第 1–3 章（`approved`，classical-fusion edition，四语言）和第 7–9 章（`approved`，英文）；GSC 已验证 `novel-9wi.pages.dev` 并提交 sitemap。
+- 草稿待审：第 4–6 章（`ai-draft`，公开路径为 noindex 墓碑）。第 10–12 章仍只有大纲。
+- 2026-11-23 新增并发布英文第 7 章《The Clinic on the Corner》、第 8 章《The Engram That Would Not Close》、第 9 章《Mara, Again》。这三章沿用 classical-fusion 的叙事机制，按用户明确授权发布，但未翻译，也未声称逐句人工改写。
 - 扩量铁律：每篇都有人工重写记录 + 披露，0 篇未审校直发；宁可慢，不要被判 scaled content abuse。
