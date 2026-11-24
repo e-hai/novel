@@ -209,11 +209,29 @@ class LanguageTests(unittest.TestCase):
 
     def test_published_edition_is_classical_fusion(self):
         chapters = G.load_chapters('en')
-        self.assertGreaterEqual(len(chapters), 9)
+        self.assertGreaterEqual(len(chapters), 12)
         fused = [c for c in chapters if int(c['num']) <= 3]
         self.assertTrue(all(c['approved'] for c in fused))
         self.assertTrue(all(G.read_doc(c['path'])[0].get('edition') == 'classical-fusion' for c in fused))
-        self.assertTrue(all(c['approved'] for c in chapters))
+        # As of 2026-11-24 all twelve chapters are approved in English. Ch.10-12
+        # were released by explicit user instruction and carry approval fields;
+        # no ai-draft remains and no act-2 draft is silently treated as live.
+        approved = [c for c in chapters if c['approved']]
+        self.assertEqual(len(approved), 12)
+        self.assertEqual(sorted(int(c['num']) for c in approved), list(range(1, 13)))
+        drafts = [c for c in chapters if not c['approved']]
+        self.assertEqual(drafts, [])
+        finale = [c for c in chapters if 10 <= int(c['num']) <= 12]
+        self.assertEqual(len(finale), 3)
+        self.assertTrue(all(c['approved'] for c in finale))
+        for c in finale:
+            meta = G.read_doc(c['path'])[0]
+            self.assertEqual(meta['edition'], 'classical-fusion')
+            self.assertEqual(meta['language'], 'en')
+            self.assertEqual(meta['approval_basis'], 'user-release-request')
+            self.assertEqual(meta['reviewer'], 'apprank studio')
+            self.assertEqual(meta['review_date'], '2026-11-24')
+            self.assertGreater(c['words'], 0)
         act2 = [c for c in chapters if 4 <= int(c['num']) <= 6]
         self.assertEqual(len(act2), 3)
         self.assertTrue(all(c['approved'] for c in act2))

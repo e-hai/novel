@@ -331,6 +331,36 @@ The nine entries below are the current valid approvals for the classical-fusion 
 
 ---
 
+## Act II conclusion — Ch.10–12 [en] (2026-11-24)
+
+The user explicitly instructed "1" on 2026-11-24, authorizing release of the English drafts of chapters 10–12 ("授权发布英文第 10–12 章"). These complete Act II. Each entry below records that instruction as the approval basis. No substantive sentence-level human rewrite was supplied or claimed; continuity, disclosure and noindex isolation were verified only. None of these chapters has been translated or published in any other language.
+
+## Ch.10 [en] — "The Rule, Written Down"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Substantive changes:** User explicitly authorized release of English chapters 10-12 on 2026-11-24. No substantive human rewrite was supplied or claimed; continuity, disclosure and noindex isolation were verified only.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+## Ch.11 [en] — "Two at the Loom"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Substantive changes:** User explicitly authorized release of English chapters 10-12 on 2026-11-24. No substantive human rewrite was supplied or claimed; continuity, disclosure and noindex isolation were verified only.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+## Ch.12 [en] — "Tell Me What She Actually Did"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Substantive changes:** User explicitly authorized release of English chapters 10-12 on 2026-11-24. No substantive human rewrite was supplied or claimed; continuity, disclosure and noindex isolation were verified only.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+---
+
 ## Note to the human editor
 
 The prose in `content/chapters/` is an **AI draft**, not a finished work. Before marking any chapter `approved`:

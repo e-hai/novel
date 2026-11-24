@@ -54,6 +54,7 @@ Continuity rules (from world bible): close third person on Elias; restrained, bu
 - **End beat:** She does not ask forgiveness. She asks him to decide what the truth is worth, now that he has it.
 
 ## Chapter 10 — "The Rule, Written Down"
+**Status:** `approved` and published in English (`content/chapters/10-the-rule-written-down.md`); approved 2026-11-24 by explicit user instruction, recorded in `review-log.md`. Not translated.
 **Function:** Theme made literal; Elias rewrites his rule.
 - Elias re-reads the rule he wrote and placed in the drawer in Ch.3 — "Do not repair your own engrams."
 - He realizes the rule was not protection but avoidance; the fracture he left raw in Ch.3 can be lived with, not just preserved.
@@ -61,6 +62,7 @@ Continuity rules (from world bible): close third person on Elias; restrained, bu
 - **End beat:** He asks Mara to sit with him at the loom — the first shared repair.
 
 ## Chapter 11 — "Two at the Loom"
+**Status:** `approved` and published in English (`content/chapters/11-two-at-the-loom.md`); approved 2026-11-24 by explicit user instruction, recorded in `review-log.md`. Not translated.
 **Function:** Climax of Act II; shared repair as answer to isolation.
 - Elias and Mara open the sealed engram together — the erased incident, seen from two sides.
 - The truth is neither innocence nor guilt: the technology was sold knowing the grey would come, and both signed.
@@ -68,6 +70,7 @@ Continuity rules (from world bible): close third person on Elias; restrained, bu
 - **End beat:** The seam holds. Not clean, but shared. The blue door opens onto an ordinary room.
 
 ## Chapter 12 — "Tell Me What She Actually Did"
+**Status:** `approved` and published in English (`content/chapters/12-tell-me-what-she-actually-did.md`); approved 2026-11-24 by explicit user instruction, recorded in `review-log.md`. Not translated.
 **Function:** Return to the opening; show change through repetition.
 - The old man from Ch.1 returns again, as in Ch.3's end beat, wanting his wife "fixed" once more.
 - This time Elias does the repair differently: he refuses to smooth the seams, and asks the old man to tell the story, not the facts.
@@ -79,4 +82,4 @@ Continuity rules (from world bible): close third person on Elias; restrained, bu
 - These are **draft plans**, not publishable content. Each chapter, once drafted, is marked `status: ai-draft` and is excluded from the site by the generator.
 - Per the human-review gate, a chapter goes live only after a human reads it, makes substantive changes, records those changes in `review-log.md`, and flips the status to `approved`. The publish script enforces this.
 - Do not auto-publish on a timer. The sustainable cadence is daily *drafting* with daily human sign-off — quality over volume.
-- Status as of 2026-11-23: chapters 1–9 are `approved` and published in English. Chapters 1–3 and 7–9 are also published in Turkish, Cantonese and Korean. Chapters 4–6 are English-only. All approvals after the original classical-fusion release are based on explicit user instructions recorded in `review-log.md`, without claiming sentence-level human rewriting. Chapters 10–12 remain outline only.
+- Status as of 2026-11-24: all twelve chapters (1–12) are `approved` and published in English. Chapters 1–3 and 7–9 are also published in Turkish, Cantonese and Korean. Chapters 4–6 and 10–12 are English-only. All approvals after the original classical-fusion release are based on explicit user instructions recorded in `review-log.md`, without claiming sentence-level human rewriting. Chapters 10–12 were approved on 2026-11-24 by the user's explicit release instruction; none has been translated. The novel is now complete in English.
