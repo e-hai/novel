@@ -1,5 +1,6 @@
 """Offline regression tests. Never invoke git, push, or production publishing."""
 import copy
+import html
 import json
 import os
 import re
@@ -92,12 +93,46 @@ class LanguageTests(unittest.TestCase):
         output = self.build()
         root = ET.parse(output / 'sitemap.xml').getroot()
         urls = [item.text for item in root.iter('{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
-        self.assertEqual(len(urls), 2 + sum(c['approved'] for c in self.collection['en']))
+        # 2 (en home/about) + approved en chapters + 4 evergreen pages x 4 languages.
+        evergreen_count = len(G.EV.PAGES) * len(LOCALES)
+        expected = 2 + sum(c['approved'] for c in self.collection['en']) + evergreen_count
+        self.assertEqual(len(urls), expected)
         for url in urls:
-            self.assertFalse(any(f'/{lang}/' in url for lang in ('tr', 'yue', 'ko')))
             path = urlparse(url).path
             document = (output / path.strip('/') / 'index.html').read_text()
             self.assertIn('content="index,follow"', document)
+        # No *chapter* of a pending translation language enters the sitemap
+        # (evergreen companion pages legitimately do).
+        for lang in ('tr', 'yue', 'ko'):
+            for c in self.collection[lang]:
+                if not c['approved']:
+                    self.assertNotIn(G.chapter_path(c), urls)
+
+    def test_evergreen_pages(self):
+        output = self.build()
+        expected_slugs = tuple(G.EV.PAGES)
+        for lang in LOCALES:
+            for slug in expected_slugs:
+                path = route(lang, f"/{slug}/")
+                document = (output / path.strip('/') / 'index.html').read_text()
+                self.assertIn('content="index,follow"', document)
+                self.assertIn(f'<html lang="{LOCALES[lang]["lang"]}"', document)
+                self.assertIn(html.escape(G.EV.TITLES[slug][lang]), document)
+                tags = Tags(document)
+                # Reciprocal hreflang across all four languages for this page.
+                alts = {a['hreflang']: a['href'] for a in tags.attrs('link') if a.get('rel') == 'alternate'}
+                for other in LOCALES:
+                    self.assertEqual(alts[LOCALES[other]['hreflang']],
+                                     G.C.SITE['base_url'] + route(other, f"/{slug}/"))
+                self.assertIn('x-default', alts)
+                # Shared nav links to all four evergreen pages.
+                for other in expected_slugs:
+                    self.assertIn(f'href="{route(lang, f"/{other}/")}"', document)
+
+    def test_evergreen_excluded_from_draft_preview(self):
+        output = self.build(preview=True)
+        for slug in G.EV.PAGES:
+            self.assertFalse((output / slug / 'index.html').exists())
 
     def test_draft_preview_is_all_noindex_with_empty_sitemap(self):
         output = self.build(True)
@@ -176,7 +211,7 @@ class LanguageTests(unittest.TestCase):
             root = Path(temporary)
             for folder in ('tools', 'src', 'content/chapters', 'content/translations/tr', 'content/editorial'):
                 (root / folder).mkdir(parents=True, exist_ok=True)
-            for name in ('generate.py', 'config.py', 'locales.py'):
+            for name in ('generate.py', 'config.py', 'locales.py', 'evergreen.py'):
                 shutil.copyfile(G.ROOT / 'src' / name, root / 'src' / name)
             script = root / 'tools/publish-chapter.sh'
             shutil.copyfile(G.ROOT / 'tools/publish-chapter.sh', script)
@@ -248,18 +283,24 @@ class LanguageTests(unittest.TestCase):
         first = (output / 'chapters/the-shop-on-cinder-lane/index.html').read_text()
         self.assertIn('scorched', first)
         self.assertNotIn('Nobody ever thanked him for the seam', first)
-        # Ch.1-3 and Ch.7-9 are live in all four languages. Ch.4-6 are
-        # English-only. All post-fusion approvals are explicitly recorded as
-        # user release requests without claiming sentence-level human rewrites.
+        # As of 2026-11-24 all twelve chapters are approved and published in
+        # all four languages. Every post-fusion approval is explicitly recorded
+        # as a user release request without claiming sentence-level rewrites.
         for lang in ('tr', 'yue', 'ko'):
             chapters = G.load_chapters(lang)
-            self.assertEqual(len(chapters), 6)
-            self.assertTrue(all(c['approved'] for c in chapters))
-            self.assertTrue(all(int(c['num']) in (1, 2, 3, 7, 8, 9) for c in chapters))
-            for c in chapters:
+            approved = [c for c in chapters if c['approved']]
+            drafts = [c for c in chapters if not c['approved']]
+            self.assertEqual(len(chapters), 12)
+            self.assertEqual(len(approved), 12)
+            self.assertEqual(sorted(int(c['num']) for c in approved), list(range(1, 13)))
+            self.assertEqual(drafts, [])
+            for c in approved:
                 meta = G.read_doc(c['path'])[0]
                 self.assertEqual(meta.get('edition'), 'classical-fusion')
-                if int(c['num']) >= 7:
+                self.assertTrue(meta.get('reviewer', '').strip())
+                self.assertEqual(meta.get('language'), lang)
+                # Chapters released on 2026-11-24 carry an explicit basis.
+                if int(c['num']) in (4, 5, 6, 10, 11, 12):
                     self.assertEqual(meta.get('approval_basis'), 'user-release-request')
                 src = G.ROOT / 'content/chapters' / c['path'].name
                 self.assertTrue(G.translation_approved(

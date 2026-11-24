@@ -24,6 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
 import config as C
+import evergreen as EV
 from locales import LOCALES, route, work
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -174,6 +175,9 @@ STYLE = (
     ".chapter-nav .next{text-align:right}"
     ".chapter-nav .lbl{display:block;color:var(--muted);font-size:.7rem;"
     "letter-spacing:.1em;text-transform:uppercase}"
+    ".evergreen-nav{flex-wrap:wrap;justify-content:flex-start;gap:.5rem 1rem}"
+    ".evergreen-nav a{max-width:none}"
+    ".evergreen-nav a[aria-current=page]{font-weight:700;color:var(--fg)}"
     ".chapter-body>p:first-of-type::first-letter{float:left;font-size:3.6em;line-height:.82;"
     "padding:.08em .12em 0 0;color:var(--accent)}"
     ".chapter-lead{font-style:italic;color:var(--ink-soft);font-size:1.12rem;"
@@ -463,6 +467,42 @@ def render_about(out: Path, language: str = "en", collection: dict | None = None
                switches={lang: route(lang, "/about/") for lang in collection}))
 
 
+def render_evergreen_pages(out: Path, collection: dict, paths: list[str]):
+    """Render evergreen companion pages (world / characters / themes / faq).
+
+    These are editorial content derived from the world bible and outlines. They are
+    not chapters, so they do not pass through the chapter human-review gate; the
+    AI-assisted disclosure is shown by the shared page() skeleton.
+    """
+    for language in collection:
+        w = work(C.WORK, language)
+        for slug in EV.PAGES:
+            title = EV.TITLES[slug][language]
+            desc = EV.DESCRIPTIONS[slug][language]
+            path = route(language, f"/{slug}/")
+            # Shared navigation across the four evergreen pages of this language.
+            links = []
+            for other in EV.PAGES:
+                current = ' aria-current="page"' if other == slug else ''
+                links.append(f'<a href="{html.escape(route(language, f"/{other}/"))}"{current}>'
+                             f'{html.escape(EV.PAGES[other][language])}</a>')
+            nav_html = '<nav class="chapter-nav evergreen-nav">' + " · ".join(links) + "</nav>"
+            blocks = []
+            for heading, paragraphs in EV.CONTENT[language][slug]:
+                blocks.append(f"<h2>{html.escape(heading)}</h2>")
+                for para in paragraphs:
+                    blocks.append(f"<p>{md_inline(para)}</p>")
+            body = (f'<section class="hero"><span class="eyebrow">{html.escape(w["title"])}</span>'
+                    f'<h1>{html.escape(title)}</h1><p class="sub">{html.escape(desc)}</p></section>'
+                    + "".join(blocks) + nav_html)
+            write_page(out, path, page(title, desc, path, body, book_schema(language),
+                       language=language,
+                       alternates={lang: route(lang, f"/{slug}/") for lang in collection},
+                       switches={lang: route(lang, f"/{slug}/") for lang in collection}))
+            if not C.PREVIEW_DRAFTS and not C.REVISION_SET:
+                paths.append(path)
+
+
 def render_chapter(c: dict, chapters: list[dict], out: Path, collection: dict | None = None):
     language = c["language"]
     t = LOCALES[language]
@@ -567,6 +607,8 @@ def main():
             paths.extend(chapter_path(c) for c in approved)
     if revision:
         render_revision_notes(out)
+    if not revision and not C.PREVIEW_DRAFTS:
+        render_evergreen_pages(out, collection, paths)
     write_sitemap(paths, out)
     write_robots(out)
     print(f"[done] {len(paths)} indexable URLs -> {out}/")

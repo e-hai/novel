@@ -359,6 +359,171 @@ The user explicitly instructed "1" on 2026-11-24, authorizing release of the Eng
 - **Substantive changes:** User explicitly authorized release of English chapters 10-12 on 2026-11-24. No substantive human rewrite was supplied or claimed; continuity, disclosure and noindex isolation were verified only.
 - **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
 
+## Complete three-language edition — Ch.4-6 & 10-12 [tr/yue/ko] (2026-11-24)
+Batch approval by explicit user instruction "补三语 + 做常青页" on 2026-11-24. Each translation was re-created from the current approved English source with a matching source_sha256; no substantive human rewrite was supplied or claimed. Mixed-script and residual source-language tokens were checked before release.
+
+### Ch.4 [tr] — "Fişleri Saklayan Kadın"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Source hash re-verified against the approved English chapter; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.5 [tr] — "Bir Başkasının Anısındaki Mavi Kapı"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.6 [tr] — "Grinin Hatırladığı Şeyler"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.10 [tr] — "Yazılı Kural"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.11 [tr] — "Tezgâhta İki Kişi"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.12 [tr] — "Bana Aslında Ne Yaptığını Söyle"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.4 [yue] — "收據的女人"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.5 [yue] — "別人記憶入面嘅一道藍門"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.6 [yue] — "灰化嘅人記得嘅嘢"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.10 [yue] — "寫低嘅規矩"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.11 [yue] — "織機前兩個人"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.12 [yue] — "同我講佢實際上做咗啲乜"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.4 [ko] — "영수증을 간직한 여자"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.5 [ko] — "다른 사람의 기억 속 파란 문"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.6 [ko] — "회색화된 사람이 기억하는 것"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.10 [ko] — "글로 적은 규칙"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.11 [ko] — "직조기 앞의 두 사람"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
+### Ch.12 [ko] — "그녀가 실제로 뭘 했는지 말해 줘"
+
+- **Status:** `approved`
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-24
+- **Approval basis:** user-release-request
+- **Substantive changes:** User authorized completion of all three translated editions on 2026-11-24. Translated from the current approved English source with matching source_sha256; no sentence-level human rewrite was supplied or claimed.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-24
+
 ---
 
 ## Note to the human editor
