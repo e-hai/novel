@@ -108,6 +108,54 @@ class LanguageTests(unittest.TestCase):
                 if not c['approved']:
                     self.assertNotIn(G.chapter_path(c), urls)
 
+    def test_enriched_home_structure(self):
+        output = self.build()
+        for lang in LOCALES:
+            document = (output / route(lang).strip('/') / 'index.html').read_text()
+            # Explore menu with links to all four companion pages.
+            self.assertIn('class="explore"', document)
+            for slug in G.EV.PAGES:
+                self.assertIn(f'href="{route(lang, f"/{slug}/")}"', document)
+            # Three-part grouping labels (English always has approved chapters).
+            if lang == 'en':
+                for label in G.EXTRA[lang]['parts']:
+                    self.assertIn(html.escape(label), document)
+            # Reading-progress hooks present.
+            self.assertIn('data-page-kind="home"', document)
+            self.assertIn('data-resume', document)
+            self.assertIn('data-progress', document)
+            if lang == 'en':
+                self.assertIn('data-chapter=', document)
+
+    def test_enriched_chapter_pages(self):
+        output = self.build()
+        c = self.collection['en'][5]  # chapter 6 -> themes + world
+        document = (output / G.chapter_path(c).strip('/') / 'index.html').read_text()
+        self.assertIn('data-page-kind="chapter"', document)
+        self.assertIn(f'data-chapter-num="{c["num"]}"', document)
+        self.assertIn(G.EXTRA['en']['further'], document)
+        # Breadcrumb + Chapter schemas.
+        raw = [json.loads(x) for x in
+               re.findall(r'<script type="application/ld\+json">(.*?)</script>', document, re.S)]
+        schemas = [item for block in raw for item in (block if isinstance(block, list) else [block])]
+        types = [s.get('@type') for s in schemas]
+        self.assertIn('BreadcrumbList', types)
+        self.assertIn('Chapter', types)
+
+    def test_faq_schema(self):
+        output = self.build()
+        for lang in LOCALES:
+            document = (output / route(lang, '/faq/').strip('/') / 'index.html').read_text()
+            raw = [json.loads(x) for x in
+                   re.findall(r'<script type="application/ld\+json">(.*?)</script>', document, re.S)]
+            schemas = [item for block in raw for item in (block if isinstance(block, list) else [block])]
+            faq = next((s for s in schemas if s.get('@type') == 'FAQPage'), None)
+            self.assertIsNotNone(faq, lang)
+            self.assertEqual(len(faq['mainEntity']), len(G.EV.CONTENT[lang]['faq']))
+            for q in faq['mainEntity']:
+                self.assertEqual(q['@type'], 'Question')
+                self.assertIn('acceptedAnswer', q)
+
     def test_evergreen_pages(self):
         output = self.build()
         expected_slugs = tuple(G.EV.PAGES)

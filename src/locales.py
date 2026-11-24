@@ -100,6 +100,56 @@ LOCALES = {
 }
 
 
+# 站点丰富化文案：探索导航、三部曲分组、延伸阅读、阅读进度。
+# 独立于 LOCALES 主表，便于增量维护；键名统一，四语齐全。
+EXTRA = {
+    "en": {
+        "explore": "Explore",
+        "parts": ["Part I · The Shop", "Part II · The Trade", "Part III · The Witness"],
+        "start_reading": "Start reading →",
+        "continue_reading": "Continue reading",
+        "resume_hint": "You were on chapter {n}.",
+        "further": "Continue exploring",
+        "progress_label": "Reading progress",
+        "progress_hint": "Saved on this device only — no account, no tracking.",
+        "clear_progress": "Clear",
+    },
+    "tr": {
+        "explore": "Keşfet",
+        "parts": ["Bölüm I · Dükkân", "Bölüm II · Meslek", "Bölüm III · Şahit"],
+        "start_reading": "Okumaya başla →",
+        "continue_reading": "Kaldığın yerden oku",
+        "resume_hint": "Bölüm {n} üzerindeydin.",
+        "further": "Keşfetmeye devam et",
+        "progress_label": "Okuma ilerlemesi",
+        "progress_hint": "Yalnızca bu cihazda saklanır — hesap yok, takip yok.",
+        "clear_progress": "Temizle",
+    },
+    "yue": {
+        "explore": "探索",
+        "parts": ["第一部 · 間鋪", "第二部 · 呢行", "第三部 · 證人"],
+        "start_reading": "開始閱讀 →",
+        "continue_reading": "繼續閱讀",
+        "resume_hint": "你上次讀到第 {n} 章。",
+        "further": "繼續探索",
+        "progress_label": "閱讀進度",
+        "progress_hint": "只保存在呢部裝置 —— 冇帳號、冇追蹤。",
+        "clear_progress": "清除",
+    },
+    "ko": {
+        "explore": "둘러보기",
+        "parts": ["1부 · 가게", "2부 · 업계", "3부 · 증인"],
+        "start_reading": "읽기 시작 →",
+        "continue_reading": "이어서 읽기",
+        "resume_hint": "제 {n}장까지 읽었습니다.",
+        "further": "계속 둘러보기",
+        "progress_label": "읽기 진행 상황",
+        "progress_hint": "이 기기에만 저장됩니다 — 계정도, 추적도 없습니다.",
+        "clear_progress": "지우기",
+    },
+}
+
+
 def route(language: str, suffix: str = "/") -> str:
     return suffix if language == "en" else f"/{language}" + suffix
 

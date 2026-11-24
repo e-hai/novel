@@ -25,7 +25,7 @@ from pathlib import Path
 sys.path.insert(0, os.path.dirname(__file__))
 import config as C
 import evergreen as EV
-from locales import LOCALES, route, work
+from locales import LOCALES, EXTRA, route, work
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "content"
@@ -178,6 +178,31 @@ STYLE = (
     ".evergreen-nav{flex-wrap:wrap;justify-content:flex-start;gap:.5rem 1rem}"
     ".evergreen-nav a{max-width:none}"
     ".evergreen-nav a[aria-current=page]{font-weight:700;color:var(--fg)}"
+    # Explore menu
+    ".explore{position:relative}"
+    ".explore-btn{background:none;border:0;color:var(--muted);font-family:system-ui,sans-serif;"
+    "font-size:.82rem;letter-spacing:.04em;cursor:pointer;padding:0}"
+    ".explore-list{display:none;position:absolute;right:0;top:1.6rem;z-index:10;"
+    "background:var(--paper);border:1px solid var(--line);border-radius:6px;"
+    "box-shadow:0 6px 22px rgba(0,0,0,.08);padding:.5rem 0;min-width:150px}"
+    ".explore-list a{display:block;padding:.4rem 1rem;white-space:nowrap}"
+    ".explore:hover .explore-list,.explore:focus-within .explore-list,.explore.open .explore-list{display:block}"
+    # Home: parts, CTA, progress, explore box
+    ".part-title{font-family:system-ui,sans-serif;font-size:.78rem;letter-spacing:.14em;"
+    "text-transform:uppercase;color:var(--accent);margin:2.4rem 0 .4rem;padding-bottom:.5rem;"
+    "border-bottom:1px solid var(--line)}"
+    ".cta{margin:1.6rem 0 .4rem}"
+    ".btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;"
+    "font-family:system-ui,sans-serif;font-size:.9rem;padding:.6rem 1.1rem;border-radius:5px}"
+    ".resume{margin:.8rem 0 0;font-family:system-ui,sans-serif;font-size:.86rem}"
+    ".resume a{font-weight:700}"
+    ".progress-card{background:#f4f1eb;border:1px solid var(--line);border-radius:6px;"
+    "padding:12px 16px;margin:1.4rem 0;font-family:system-ui,sans-serif;font-size:.86rem}"
+    ".progress-card small{display:block;color:var(--muted);margin-top:.5rem;font-size:.74rem}"
+    ".link-btn{background:none;border:0;color:var(--accent);cursor:pointer;font-size:.8rem;"
+    "text-decoration:underline;padding:0 0 0 .4rem}"
+    ".explore-box{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line)}"
+    ".explore-box h2{font-size:1.15rem}"
     ".chapter-body>p:first-of-type::first-letter{float:left;font-size:3.6em;line-height:.82;"
     "padding:.08em .12em 0 0;color:var(--accent)}"
     ".chapter-lead{font-style:italic;color:var(--ink-soft);font-size:1.12rem;"
@@ -215,7 +240,8 @@ def disclosure_banner(is_draft: bool, language: str = "en") -> str:
 def page(title: str, description: str, canonical_path: str, body: str,
          jsonld: dict | list[dict] | None = None, is_draft: bool = False,
          language: str = "en", alternates: dict | None = None,
-         switches: dict | None = None) -> str:
+         switches: dict | None = None, page_kind: str = "",
+         chapter_num: str = "") -> str:
     t = LOCALES[language]
     w = work(C.WORK, language)
     base = C.SITE["base_url"]
@@ -251,6 +277,33 @@ def page(title: str, description: str, canonical_path: str, body: str,
     disclosure = (f'<div class="disclosure" data-ai-disclosure="true"><strong>'
                   f'{html.escape(t["disclosure_title"])}</strong> {html.escape(disclosure_text)} '
                   f'<a href="{route(language, "/about/")}">{html.escape(t["full_disclosure"])}</a>.</div>')
+    # Explore menu: entry points to the evergreen companion pages.
+    ex = EXTRA[language]
+    explore_links = " ".join(
+        f'<a href="{html.escape(route(language, f"/{slug}/"))}">'
+        f'{html.escape(EV.PAGES[slug][language])}</a>' for slug in EV.PAGES)
+    show_explore = not (C.PREVIEW_DRAFTS or C.REVISION_SET)
+    explore_menu = (
+        f'<div class="explore"><button type="button" class="explore-btn" '
+        f'aria-expanded="false" aria-controls="explore-list">{html.escape(ex["explore"])} ▾</button>'
+        f'<div class="explore-list" id="explore-list">{explore_links}</div></div>') if show_explore else ""
+    progress_js = """
+var PK=document.body.getAttribute('data-page-kind');
+var CN=document.body.getAttribute('data-chapter-num')||'';
+var LS={'key':'cinder-progress-'+document.documentElement.lang};
+function readLS(){try{return JSON.parse(localStorage.getItem(LS.key)||'{}')}catch(e){return {}}}
+function writeLS(o){try{localStorage.setItem(LS.key,JSON.stringify(o))}catch(e){}}
+if(PK==='chapter'&&CN){var s=readLS();s.num=CN;s.href=location.pathname;s.title=document.querySelector('h1')?document.querySelector('h1').textContent:'';writeLS(s)}
+if(PK==='home'){
+  var s=readLS();
+  var rc=document.querySelector('[data-resume]');var pc=document.querySelector('[data-progress]');
+  if(s&&s.num&&rc){
+    var link=rc.querySelector('a');if(link&&s.href){link.href=s.href;link.textContent=(__HINT__).replace('{n}',s.num)+' →';rc.hidden=false}
+  }
+  if(s&&s.num&&pc){pc.hidden=false;var pt=pc.querySelector('[data-progress-text]');if(pt)pt.textContent=(s.title||('Ch.'+s.num))}
+  var clr=document.querySelector('[data-clear]');if(clr){clr.addEventListener('click',function(){try{localStorage.removeItem(LS.key)}catch(e){}location.reload()})}
+}
+""".replace('__HINT__', json.dumps(ex["resume_hint"], ensure_ascii=False))
     return f"""<!doctype html>
 <html lang="{t['lang']}">
 <head>
@@ -264,11 +317,11 @@ def page(title: str, description: str, canonical_path: str, body: str,
 {ld}
 <style>{STYLE}</style>
 </head>
-<body>
+<body data-page-kind="{html.escape(page_kind)}" data-chapter-num="{html.escape(chapter_num)}">
 <div class="progress" id="progress"></div>
 <header class="site"><div class="wrap">
   <a class="brand" href="{route(language)}">{html.escape(C.SITE['name'])}</a>
-  <nav><a href="{route(language, '/about/')}">{html.escape(t['about'])}</a></nav>
+  <nav><a href="{route(language, '/about/')}">{html.escape(t['about'])}</a>{explore_menu}</nav>
 </div></header>
 <div class="wrap">
 <nav class="language-switch" aria-label="{html.escape(t['languages'])}">{' '.join(switch_links)}</nav>
@@ -285,6 +338,12 @@ window.addEventListener('scroll',function(){{
   var p=max>0?(h.scrollTop/max)*100:0;
   document.getElementById('progress').style.width=p+'%';
 }});
+var exBtn=document.querySelector('.explore-btn');
+if(exBtn){{exBtn.addEventListener('click',function(){{
+  var box=this.parentElement;var open=box.classList.toggle('open');
+  this.setAttribute('aria-expanded',open?'true':'false');
+}});}}
+{progress_js}
 </script>
 </body>
 </html>"""
@@ -398,33 +457,67 @@ def chapter_switches(collection: dict, slug: str) -> dict:
             for language, chapters in collection.items()}
 
 
+def _chapter_li(c: dict, t: dict) -> str:
+    draft_tag = f' <span class="meta">· {html.escape(t["draft_tag"])}</span>' if not c["approved"] else ""
+    summary = f'<p class="summary">{html.escape(c["summary"])}</p>' if c["summary"] else ""
+    return (f'<li><a href="{chapter_path(c)}" data-chapter="{html.escape(str(c["num"]))}">'
+            f'<span class="num">{html.escape(t["chapter"].format(n=c["num"]))}</span>'
+            f'<h3>{html.escape(c["title"])}{draft_tag}</h3>{summary}'
+            f'<span class="readtime">{html.escape(t["readtime"].format(n=c["readtime"]))}</span></a></li>')
+
+
 def render_home(chapters: list[dict], out: Path, language: str = "en", collection: dict | None = None):
     t = LOCALES[language]
+    ex = EXTRA[language]
     w = work(C.WORK, language)
     collection = collection or {language: chapters}
     visible = [c for c in chapters if c["approved"] or C.PREVIEW_DRAFTS]
     approved = any(c["approved"] for c in chapters)
-    lis = []
-    for c in visible:
-        draft_tag = f' <span class="meta">· {html.escape(t["draft_tag"])}</span>' if not c["approved"] else ""
-        summary = f'<p class="summary">{html.escape(c["summary"])}</p>' if c["summary"] else ""
-        lis.append(f'<li><a href="{chapter_path(c)}">'
-                   f'<span class="num">{html.escape(t["chapter"].format(n=c["num"]))}</span>'
-                   f'<h3>{html.escape(c["title"])}{draft_tag}</h3>{summary}'
-                   f'<span class="readtime">{html.escape(t["readtime"].format(n=c["readtime"]))}</span></a></li>')
-    toc = "\n".join(lis) or f'<li class="meta">{html.escape(t["no_chapters"])}</li>'
+
+    # Group chapters into three parts (1-3 / 4-9 / 10-12).
+    bands = ((1, 3), (4, 9), (10, 12))
+    toc_parts = []
+    for (lo, hi), label in zip(bands, ex["parts"]):
+        group = [c for c in visible if str(c["num"]).isdigit() and lo <= int(c["num"]) <= hi]
+        if not group:
+            continue
+        items = "\n".join(_chapter_li(c, t) for c in group)
+        toc_parts.append(f'<section class="part"><h3 class="part-title">{html.escape(label)}</h3>'
+                         f'<ul class="chapters">{items}</ul></section>')
+    toc = "\n".join(toc_parts) or f'<p class="meta">{html.escape(t["no_chapters"])}</p>'
+
+    # Start / continue reading CTA (progress injected client-side).
+    first = visible[0] if visible else None
+    start = (f'<p class="cta"><a class="btn" href="{chapter_path(first)}">'
+             f'{html.escape(ex["start_reading"])}</a></p>') if first else ""
+    resume = (f'<p class="resume" data-resume hidden><a href="#"></a></p>')
+    progress = (f'<aside class="progress-card" data-progress hidden>'
+                f'<strong>{html.escape(ex["progress_label"])}</strong> '
+                f'<span data-progress-text></span> '
+                f'<button type="button" class="link-btn" data-clear>'
+                f'{html.escape(ex["clear_progress"])}</button>'
+                f'<small>{html.escape(ex["progress_hint"])}</small></aside>')
+
+    # Explore entry points to the companion pages.
+    explore_links = " · ".join(
+        f'<a href="{html.escape(route(language, f"/{slug}/"))}">'
+        f'{html.escape(EV.PAGES[slug][language])}</a>' for slug in EV.PAGES)
+    explore_box = (f'<section class="explore-box"><h2>{html.escape(ex["further"])}</h2>'
+                   f'<p>{explore_links}</p></section>') if not (C.PREVIEW_DRAFTS or C.REVISION_SET) else ""
+
     pending = (f'<p class="banner">{html.escape(t["pending"])} '
                f'<a href="/">{html.escape(t["read_english"])}</a></p>') if language != "en" and not approved else ""
     body = f"""<section class="hero">
 <span class="eyebrow">{html.escape(t['short_story'])} · {html.escape(w['genre'])}</span>
 <h1>{html.escape(w['title'])}</h1><p class="sub">{html.escape(w['subtitle'])}</p>
 <p class="byline meta">{html.escape(t['by'].format(author=w['author']))} · {html.escape(t['stats'].format(n=len(visible)))}</p>
-</section><p>{html.escape(w['description'])}</p>{pending}<hr/>
-<h2>{html.escape(t['chapters'])}</h2><ul class="chapters">{toc}</ul>
+{start}{resume}</section><p>{html.escape(w['description'])}</p>{pending}{progress}<hr/>
+<h2>{html.escape(t['chapters'])}</h2>{toc}
+{explore_box}
 <p class="meta"><a href="{route(language, '/about/')}">{html.escape(t['about_hint'])}</a></p>"""
     write_page(out, route(language), page(f"{w['title']} — {C.SITE['name']}", w["description"],
                route(language), body, book_schema(language), is_draft=not approved,
-               language=language, alternates=page_alternates(collection)))
+               language=language, alternates=page_alternates(collection), page_kind="home"))
 
 
 GLOSSARY = [
@@ -495,12 +588,49 @@ def render_evergreen_pages(out: Path, collection: dict, paths: list[str]):
             body = (f'<section class="hero"><span class="eyebrow">{html.escape(w["title"])}</span>'
                     f'<h1>{html.escape(title)}</h1><p class="sub">{html.escape(desc)}</p></section>'
                     + "".join(blocks) + nav_html)
-            write_page(out, path, page(title, desc, path, body, book_schema(language),
+            schemas = [book_schema(language)]
+            if slug == "faq":
+                # FAQPage schema, only native FAQ content (no fabricated Q&A).
+                qa = [{"@type": "Question", "name": heading,
+                       "acceptedAnswer": {"@type": "Answer",
+                                          "text": " ".join(re.sub(r"\*\*", "", p) for p in paragraphs)}}
+                      for heading, paragraphs in EV.CONTENT[language]["faq"]]
+                schemas.append({"@context": "https://schema.org", "@type": "FAQPage",
+                                "mainEntity": qa})
+            write_page(out, path, page(title, desc, path, body, schemas,
                        language=language,
                        alternates={lang: route(lang, f"/{slug}/") for lang in collection},
                        switches={lang: route(lang, f"/{slug}/") for lang in collection}))
             if not C.PREVIEW_DRAFTS and not C.REVISION_SET:
                 paths.append(path)
+
+
+def chapter_further_slugs(num) -> tuple[str, ...]:
+    """Map a chapter to two companion pages for 'continue exploring'."""
+    try:
+        n = int(num)
+    except (TypeError, ValueError):
+        return ("world", "faq")
+    if n <= 3:
+        return ("world", "characters")
+    if n <= 6:
+        return ("themes", "world")
+    if n <= 9:
+        return ("characters", "themes")
+    return ("themes", "faq")
+
+
+def breadcrumb_schema(language: str, c: dict) -> dict:
+    base = C.SITE["base_url"]
+    t = LOCALES[language]
+    return {
+        "@context": "https://schema.org", "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": C.SITE["name"], "item": base + route(language)},
+            {"@type": "ListItem", "position": 2, "name": t["chapters"], "item": base + route(language)},
+            {"@type": "ListItem", "position": 3, "name": c["title"], "item": base + chapter_path(c)},
+        ],
+    }
 
 
 def render_chapter(c: dict, chapters: list[dict], out: Path, collection: dict | None = None):
@@ -522,15 +652,23 @@ def render_chapter(c: dict, chapters: list[dict], out: Path, collection: dict | 
                        f'<span class="lbl">{html.escape(t[label])}</span>{html.escape(neighbor["title"])}</a>')
     nav_html = '<nav class="chapter-nav">' + "".join(nav) + "</nav>" if nav else ""
     lead = f'<p class="chapter-lead">{html.escape(c["summary"])}</p>' if c["summary"] else ""
+    ex = EXTRA[language]
+    further_links = " · ".join(
+        f'<a href="{html.escape(route(language, f"/{slug}/"))}">'
+        f'{html.escape(EV.PAGES[slug][language])}</a>' for slug in chapter_further_slugs(c["num"]))
+    further = (f'<section class="explore-box"><h2>{html.escape(ex["further"])}</h2>'
+               f'<p>{further_links}</p></section>') if not (C.PREVIEW_DRAFTS or C.REVISION_SET) else ""
     body = (f'<span class="eyebrow">{html.escape(t["chapter"].format(n=c["num"]))}</span>'
             f'<h1>{html.escape(c["title"])}</h1><p class="byline meta">{html.escape(w["title"])} · '
             f'{html.escape(t["by"].format(author=w["author"]))} · '
             f'{html.escape(t["readtime"].format(n=c["readtime"]))}</p>{lead}'
-            f'<div class="chapter-body">{c["html"]}</div>{nav_html}')
+            f'<div class="chapter-body">{c["html"]}</div>{nav_html}{further}')
+    schemas = [schema, breadcrumb_schema(language, c)] if c["approved"] else [schema]
     write_page(out, chapter_path(c), page(f'{c["title"]} — {w["title"]}', c["summary"] or w["description"],
-               chapter_path(c), body, schema, is_draft=not c["approved"], language=language,
+               chapter_path(c), body, schemas, is_draft=not c["approved"], language=language,
                alternates=page_alternates(collection, f'/chapters/{c["slug"]}/'),
-               switches=chapter_switches(collection, c["slug"])))
+               switches=chapter_switches(collection, c["slug"]),
+               page_kind="chapter", chapter_num=str(c["num"])))
 
 
 def write_sitemap(paths: list[str], out: Path):
