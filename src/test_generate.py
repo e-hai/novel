@@ -99,9 +99,10 @@ class LanguageTests(unittest.TestCase):
         evergreen_count = len(G.EV.PAGES) * len(indexable_langs)
         summary_entry = sum(2 for lg in G.C.SUMMARY_LANGS
                             if any(c['approved'] for c in self.collection[lg]))
-        # + 9 editorial pages (glossary index, 5 glossary terms, 3 act pages)
+        # editorial pages: glossary index + glossary terms + act pages + companion pages
+        editorial = 1 + len(G.GX.ORDER) + len(G.AX.ACTS) + len(G.XT.ORDER)
         expected = (2 + sum(c['approved'] for c in self.collection['en'])
-                    + evergreen_count + summary_entry + 9)
+                    + evergreen_count + summary_entry + editorial)
         self.assertEqual(len(urls), expected)
         for url in urls:
             path = urlparse(url).path
@@ -276,7 +277,7 @@ class LanguageTests(unittest.TestCase):
             root = Path(temporary)
             for folder in ('tools', 'src', 'content/chapters', 'content/translations/tr', 'content/editorial'):
                 (root / folder).mkdir(parents=True, exist_ok=True)
-            for name in ('generate.py', 'config.py', 'locales.py', 'evergreen.py', 'glossary.py', 'acts.py'):
+            for name in ('generate.py', 'config.py', 'locales.py', 'evergreen.py', 'glossary.py', 'acts.py', 'extras.py'):
                 shutil.copyfile(G.ROOT / 'src' / name, root / 'src' / name)
             script = root / 'tools/publish-chapter.sh'
             shutil.copyfile(G.ROOT / 'tools/publish-chapter.sh', script)
@@ -317,8 +318,9 @@ class LanguageTests(unittest.TestCase):
         # were released by explicit user instruction and carry approval fields;
         # no ai-draft remains and no act-2 draft is silently treated as live.
         approved = [c for c in chapters if c['approved']]
-        self.assertEqual(len(approved), 12)
-        self.assertEqual(sorted(int(c['num']) for c in approved), list(range(1, 13)))
+        self.assertEqual(len(approved), len(chapters))
+        self.assertEqual(sorted(int(c['num']) for c in approved),
+                         list(range(1, len(chapters) + 1)))
         drafts = [c for c in chapters if not c['approved']]
         self.assertEqual(drafts, [])
         finale = [c for c in chapters if 10 <= int(c['num']) <= 12]
@@ -332,6 +334,17 @@ class LanguageTests(unittest.TestCase):
             self.assertEqual(meta['reviewer'], 'apprank studio')
             self.assertEqual(meta['review_date'], '2026-11-24')
             self.assertGreater(c['words'], 0)
+        # Season two (chapters 13-20) added on 2026-11-25 under the same gate.
+        season_two = [c for c in chapters if int(c['num']) >= 13]
+        self.assertEqual(len(season_two), 8)
+        for c in season_two:
+            meta = G.read_doc(c['path'])[0]
+            self.assertTrue(c['approved'])
+            self.assertEqual(meta['edition'], 'classical-fusion')
+            self.assertEqual(meta['language'], 'en')
+            self.assertEqual(meta['approval_basis'], 'user-content-expansion')
+            self.assertEqual(meta['review_date'], '2026-11-25')
+            self.assertGreater(c['words'], 400)
         act2 = [c for c in chapters if 4 <= int(c['num']) <= 6]
         self.assertEqual(len(act2), 3)
         self.assertTrue(all(c['approved'] for c in act2))

@@ -59,4 +59,42 @@ ACTS = [
             "counts as a repair is the thing the last chapter asks, and it does not answer it for the reader.",
         ],
     },
+    {
+        "slug": "part-iv",
+        "roman": "IV",
+        "title": "Part IV · The Review",
+        "range": (13, 16),
+        "lede": "A wet-stamped letter arrives, and the shop keeps working while the Ward decides what a seam is.",
+        "body": [
+            "The fourth act is the audit. Elias is not suspended and not forgiven; he is reviewed, which turns out "
+            "to be a slower and more thorough kind of pressure. A letter with a crooked seal, a sealed core that "
+            "contains a room he has never stood in, and an archive clerk who signed the record twice because a file "
+            "with one signature can be closed without anyone reading it — the act moves the story from the bench "
+            "to the paperwork behind it.",
+            "It is also where the trade keeps going. Three customers come through in a single day: a boy who wants a "
+            "staircase removed, a widow who wants her husband's laugh taken out, a courier with a parcel of fill "
+            "stamped by a supplier nobody recognises. None of them can wait for the review. By the end of the act "
+            "the rule sheet has a fourth line, and the shop is still open, and that is the point: a review does not "
+            "stop the work, it only changes what the work has to say about itself.",
+        ],
+    },
+    {
+        "slug": "part-v",
+        "roman": "V",
+        "title": "Part V · The Joint",
+        "range": (17, 20),
+        "lede": "An inspector repairs his own doubt, a warehouse sells childhood by the hour, and a hearing decides whether honesty is a defect.",
+        "body": [
+            "The last act is the argument. Inspector Ader brings his own loom into the shop and uses it on himself "
+            "before he writes a finding — an auditor is allowed to repair his own doubt, provided the log is shown "
+            "to the reviewed party. Then the supply chain opens: fill bought by the brick, donor forms with four "
+            "hundred hours of a stranger's back garden and a second signature box left empty. The material turns out "
+            "to be the same argument as the seam, moved upstream.",
+            "The hearing is where the two threads meet. Three board members read the file aloud and cannot decide "
+            "whether a seam is a defect or a category, until Mara puts her suspended licence on the table as the "
+            "second signature the rule now requires. Licence 4-119 survives, conditioned: dual-account repairs, "
+            "joint named before the loom. The shop puts its sign back up, and the last line of the rule sheet is "
+            "written before the repair rather than after it.",
+        ],
+    },
 ]

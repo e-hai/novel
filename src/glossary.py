@@ -157,6 +157,119 @@ PAGES = {
         "see": ["fill", "the-loom"],
         "chapters": ["08-the-engram-that-would-not-close", "10-the-rule-written-down"],
     },
-}
+    "the-ward": {
+        "term": "The Ward",
+        "short": "The district, the trade and the archive that licenses memory repair.",
+        "lede": "The Ward is not a building. It is the part of the city that repairs memory, the "
+                "profession that does the repairing, and the archive on the ninth floor that licenses "
+                "both. People in the trade say it as if it were a place, and it is, in the way that a "
+                "courthouse is a place.",
+        "sections": [
+            ("Three things under one name",
+             ["Geographically, the Ward is the low district around Cinder Lane, where the tram lines stop "
+              "and the refrigerated warehouses begin. Professionally, it is the licensed trade of memory "
+              "repair, which issues numbers like 4-119 and 6-204 and keeps the rule sheets that govern "
+              "both. Administratively, it is the archive on the ninth floor, a corridor of numbered panels "
+              "where each repair becomes a file.",
+              "The three meanings collapse on purpose. A repairman who says \"the Ward won't allow it\" "
+              "may mean the district, the profession or the archive, and usually means all three, because "
+              "the license, the rent and the record are the same institution wearing different coats."]),
+            ("What the archive actually does",
+             ["The archive does not store memories; it stores decisions about memories. Each panel holds a "
+              "file: the intake, the repair log, the signatures, and a light that stays amber while the "
+              "seal holds. A file with one signature closes in nine days and becomes furniture. A file with "
+              "two signatures stays open, which is the only way a record ever gets read again.",
+              "This is why the archive is colder than the corridor it keeps. Records that are never reopened "
+              "do not need to be kept warm, and the Ward has optimized for the ninety-nine per cent."]),
+        ],
+        "see": ["the-audit", "the-loom"],
+        "chapters": ["13-the-letter-from-the-ward", "15-the-woman-who-signed-twice", "19-what-the-ward-forgets"],
+    },
+    "the-audit": {
+        "term": "The Audit",
+        "short": "A review of a repair, entered by letter, decided on the record rather than the work.",
+        "lede": "An audit is the Ward's way of looking at a repair without looking at it. It opens with "
+                "a wet-stamped letter, runs on the loom's log, and closes with a finding that is usually "
+                "about the shape of the file rather than the quality of the work.",
+        "sections": [
+            ("How a review begins",
+             ["A review cannot be requested by a customer and cannot be started by an inspector. It enters "
+              "through a letter, because the Ward accepts letters and not warnings. The letter states the "
+              "license, the date of the repair, and the words unsealed where applicable. Ten days are given, "
+              "nine if the day of receipt is counted, and the reviewed party is expected to bring the log.",
+              "The log is the whole case. A loom writes what the loom did, in a flat official hand, and that "
+              "record cannot be argued with — only read. Repairmen who keep their own notes discover that "
+              "their notes are not evidence and never were."]),
+            ("Findings and their shapes",
+             ["A finding is a sentence an inspector can defend. \"The repair is within specification\" is a "
+              "finding. \"The repairman was careful\" is a mood, and moods are sent back. The distinction is "
+              "the only thing standing between a trade and a set of opinions.",
+              "The complication is that some repairs produce findings that do not fit the available shapes. An "
+              "open seam, kept open on purpose and witnessed by a second license holder, is either a defect or "
+              "a category, and which one it is gets decided in a hearing room on the fourth floor by people "
+              "who have never sat at a loom."]),
+        ],
+        "see": ["the-ward", "the-joint"],
+        "chapters": ["13-the-letter-from-the-ward", "17-the-inspectors-loom", "19-what-the-ward-forgets"],
+    },
+    "the-joint": {
+        "term": "The Joint",
+        "short": "The visible place where a machine's account and a client's account meet.",
+        "lede": "A joint is what the trade used to call a seam. It is the narrow ridge left in a repaired "
+                "memory where the loom's version stops and the client's version begins, kept visible on "
+                "purpose so that both accounts survive in the same core.",
+        "sections": [
+            ("A seam is what you mend",
+             ["A closed repair has no joint. The fill goes in, the track evens out, the client watches the "
+              "scene run and cannot tell where the machine stopped working. That is what the specification "
+              "asks for, and it is genuinely what most customers want: a memory that behaves, that does not "
+              "catch on the broken place every time they return to it.",
+              "The cost is that the machine's account becomes the only account. Whatever the client could "
+              "still say about the damaged moment — a name, a hand, whether the cup was in the left or the "
+              "right — is overwritten by a plausible replacement, and after a year the client remembers the "
+              "replacement as their own."]),
+            ("Why joints are structural",
+             ["Renaming the seam a joint was a legal move before it was a poetic one. A seam is a defect in "
+              "a repair; a joint is a feature of a structure. Once the Ward accepts the second word, a repair "
+              "can carry two accounts and still be within specification, provided the joint is named before "
+              "the loom and a second license holder is present.",
+              "Practically, joints change the paperwork more than the machine. The rule sheet grows a line, "
+              "the intake slip grows a field, and the repairman has to say out loud, before he starts, that "
+              "he intends to leave something open. Saying it first is the whole discipline."]),
+        ],
+        "see": ["the-audit", "fill"],
+        "chapters": ["19-what-the-ward-forgets", "20-the-joint-in-writing"],
+    },
+    "donor-form": {
+        "term": "Donor Form",
+        "short": "The paper behind a brick of fill: hours sold, one signature, one empty box.",
+        "lede": "Fill is not manufactured from nothing. It is bought by the brick, and each brick is wrapped "
+                "in a form that records who sold the hours inside it — how many, at what rate, and who "
+                "certified the sale.",
+        "sections": [
+            ("What the form records",
+             ["A donor form carries a reference, a material grade, an emotional specification, the number of "
+              "hours contributed, and a single signature. The hours are sold by the unit, not by the object: "
+              "a donor who wants to sell one afternoon with a swing in a back garden is told that the form "
+              "does not do single objects, only hours.",
+              "The specification is the part the trade talks about least. Grade C fill is certified for "
+              "emotional inertness within a tolerance, which means the material will hold a memory together "
+              "without returning its feeling. The donor's feeling is not destroyed; it is separated out and "
+              "priced, and what remains is connective tissue."]),
+            ("The empty second box",
+             ["Every form has a box for a second signature, and in practice the box is empty. A single "
+              "signature closes the file, and a closed file is a file nobody has to read again. The result is "
+              "a supply chain that is fully documented and almost entirely unread — which is exactly the "
+              "condition the archive on the ninth floor was built to produce.",
+              "A repairman who reads the forms discovers that the material in his own shop has a history: "
+              "four hundred and twelve hours of somebody's childhood, ages six to eleven, compensated at the "
+              "standard rate. There is no way to use the brick and not know this, once you have read the "
+              "paper it came in."]),
+        ],
+        "see": ["fill", "the-ward"],
+        "chapters": ["18-fill-ordered-in-bulk"],
+    },}
 
-ORDER = ["engram", "the-loom", "fill", "the-grey", "memory-architect"]
+
+ORDER = ["engram", "the-loom", "fill", "the-grey", "memory-architect",
+         "the-ward", "the-audit", "the-joint", "donor-form"]

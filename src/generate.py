@@ -29,6 +29,7 @@ import config as C
 import evergreen as EV
 from locales import LOCALES, EXTRA, route, work
 import glossary as GX
+import extras as XT
 import acts as AX
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -316,6 +317,8 @@ def page(title: str, description: str, canonical_path: str, body: str,
             f'<a href="{html.escape(a["slug"].join(["/", "/"]))}">{html.escape(a["title"])}</a>'
             for a in AX.ACTS)
         explore_links += '<a href="/glossary/">Glossary</a>'
+        explore_links += "".join(
+            f'<a href="/{slug}/">{html.escape(XT.PAGES[slug]["title"])}</a>' for slug in XT.ORDER)
     show_explore = not (C.PREVIEW_DRAFTS or C.REVISION_SET)
     explore_menu = (
         f'<div class="explore"><button type="button" class="explore-btn" '
@@ -549,18 +552,23 @@ def render_home(chapters: list[dict], out: Path, language: str = "en", collectio
     visible = [c for c in chapters if c["approved"] or C.PREVIEW_DRAFTS]
     approved = any(c["approved"] for c in chapters)
 
-    # Group chapters into three parts (1-3 / 4-9 / 10-12).
-    bands = ((1, 3), (4, 9), (10, 12))
+    # Group chapters by act. English follows AX.ACTS (five parts after the season-two
+    # expansion); translated editions only carry the first twelve chapters, so they
+    # keep the original three bands and their localized labels.
+    if language == "en":
+        groups = [(act["range"], act["title"], act["slug"]) for act in AX.ACTS]
+    else:
+        groups = [((1, 3), ex["parts"][0], None), ((4, 9), ex["parts"][1], None),
+                  ((10, 12), ex["parts"][2], None)]
     toc_parts = []
-    for (lo, hi), label in zip(bands, ex["parts"]):
+    for (lo, hi), label, slug in groups:
         group = [c for c in visible if str(c["num"]).isdigit() and lo <= int(c["num"]) <= hi]
         if not group:
             continue
         items = "\n".join(_chapter_li(c, t) for c in group)
-        act = AX.ACTS[len(toc_parts)] if len(toc_parts) < len(AX.ACTS) else None
         title = html.escape(label)
-        if language == "en" and act and not C.PREVIEW_DRAFTS:
-            title = f'<a href="{html.escape(act["slug"].join(["/", "/"]))}">{title}</a>'
+        if slug and not C.PREVIEW_DRAFTS:
+            title = f'<a href="/{html.escape(slug)}/">{title}</a>'
         toc_parts.append(f'<section class="part"><h3 class="part-title">{title}</h3>'
                          f'<ul class="chapters">{items}</ul></section>')
     toc = "\n".join(toc_parts) or f'<p class="meta">{html.escape(t["no_chapters"])}</p>'
@@ -892,6 +900,33 @@ def render_acts(out: Path, chapters: list[dict]):
             body, schema, language="en", page_kind="act"))
 
 
+def render_extras(out: Path):
+    """补充页：/timeline/、/who-is-who/、/reading-guide/、/season-two/（英文）。"""
+    base = C.SITE["base_url"]
+    w = work(C.WORK, "en")
+    for slug in XT.ORDER:
+        p = XT.PAGES[slug]
+        blocks = [f'<section class="hero"><span class="eyebrow">Companion</span>'
+                  f'<h1>{html.escape(p["title"])}</h1>'
+                  f'<p class="sub">{html.escape(p["lede"])}</p></section>']
+        for heading, paras in p["sections"]:
+            blocks.append(f"<h2>{html.escape(heading)}</h2>")
+            blocks += [f"<p>{html.escape(x)}</p>" for x in paras]
+        others = " · ".join(
+            f'<a href="{base}/{o}/">{html.escape(XT.PAGES[o]["title"])}</a>'
+            for o in XT.ORDER if o != slug)
+        blocks.append(f'<section class="explore-box"><h2>More companion pages</h2><p>{others}</p>'
+                      f'<p><a href="{base}/">Full contents</a> · <a href="{base}/glossary/">Glossary</a></p></section>')
+        schema = {"@context": "https://schema.org", "@type": "Article",
+                  "headline": p["title"], "description": p["description"],
+                  "url": f"{base}/{slug}/",
+                  "isPartOf": {"@type": "Book", "name": w["title"],
+                               "author": {"@type": "Organization", "name": w["author"]}}}
+        write_page(out, f"/{slug}/", page(
+            f"{p['title']} — {w['title']}", p["description"], f"/{slug}/",
+            "".join(blocks), schema, language="en", page_kind="extra"))
+
+
 def write_sitemap(paths: list[str], out: Path):
     base = C.SITE["base_url"]
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -1005,8 +1040,10 @@ def main():
         render_evergreen_pages(out, collection, paths)
         render_glossary(out)
         render_acts(out, collection["en"])
+        render_extras(out)
         paths.extend(["/glossary/"] + [f"/glossary/{slug}/" for slug in GX.ORDER])
         paths.extend([f"/{act['slug']}/" for act in AX.ACTS])
+        paths.extend([f"/{slug}/" for slug in XT.ORDER])
     if not revision:
         for language, chapters in collection.items():
             write_feed(language, chapters, out)
