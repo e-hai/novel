@@ -552,14 +552,14 @@ def render_home(chapters: list[dict], out: Path, language: str = "en", collectio
     visible = [c for c in chapters if c["approved"] or C.PREVIEW_DRAFTS]
     approved = any(c["approved"] for c in chapters)
 
-    # Group chapters by act. English follows AX.ACTS (five parts after the season-two
-    # expansion); translated editions only carry the first twelve chapters, so they
-    # keep the original three bands and their localized labels.
+    # Group chapters by act. English links to the five /part-*/ pages; translated
+    # editions carry localized part labels only (no act pages), so they use the same
+    # five ranges with their own labels.
     if language == "en":
         groups = [(act["range"], act["title"], act["slug"]) for act in AX.ACTS]
     else:
-        groups = [((1, 3), ex["parts"][0], None), ((4, 9), ex["parts"][1], None),
-                  ((10, 12), ex["parts"][2], None)]
+        bands = [(1, 3), (4, 9), (10, 12), (13, 16), (17, 20)]
+        groups = [(band, ex["parts"][i], None) for i, band in enumerate(bands)]
     toc_parts = []
     for (lo, hi), label, slug in groups:
         group = [c for c in visible if str(c["num"]).isdigit() and lo <= int(c["num"]) <= hi]

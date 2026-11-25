@@ -361,16 +361,17 @@ class LanguageTests(unittest.TestCase):
         first = (output / 'chapters/the-shop-on-cinder-lane/index.html').read_text()
         self.assertIn('scorched', first)
         self.assertNotIn('Nobody ever thanked him for the seam', first)
-        # As of 2026-11-24 all twelve chapters are approved and published in
-        # all four languages. Every post-fusion approval is explicitly recorded
-        # as a user release request without claiming sentence-level rewrites.
+        # As of 2026-11-25 all twenty chapters are approved and published in
+        # all four languages (season two added 13-20). Every post-fusion approval
+        # is explicitly recorded as a user release request or a multilingual
+        # completion without claiming sentence-level rewrites.
         for lang in ('tr', 'yue', 'ko'):
             chapters = G.load_chapters(lang)
             approved = [c for c in chapters if c['approved']]
             drafts = [c for c in chapters if not c['approved']]
-            self.assertEqual(len(chapters), 12)
-            self.assertEqual(len(approved), 12)
-            self.assertEqual(sorted(int(c['num']) for c in approved), list(range(1, 13)))
+            self.assertEqual(len(chapters), 20)
+            self.assertEqual(len(approved), 20)
+            self.assertEqual(sorted(int(c['num']) for c in approved), list(range(1, 21)))
             self.assertEqual(drafts, [])
             for c in approved:
                 meta = G.read_doc(c['path'])[0]

@@ -123,7 +123,7 @@ LOCALES = {
 EXTRA = {
     "en": {
         "explore": "Explore",
-        "parts": ["Part I · The Shop", "Part II · The Trade", "Part III · The Witness"],
+        "parts": ["Part I · The Shop", "Part II · The Trade", "Part III · The Witness", "Part IV · The Review", "Part V · The Joint"],
         "start_reading": "Start reading →",
         "continue_reading": "Continue reading",
         "resume_hint": "You were on chapter {n}.",
@@ -134,7 +134,7 @@ EXTRA = {
     },
     "tr": {
         "explore": "Keşfet",
-        "parts": ["Bölüm I · Dükkân", "Bölüm II · Meslek", "Bölüm III · Şahit"],
+        "parts": ["Bölüm I · Dükkân", "Bölüm II · Meslek", "Bölüm III · Şahit", "Bölüm IV · Denetim", "Bölüm V · Eklem"],
         "start_reading": "Okumaya başla →",
         "continue_reading": "Kaldığın yerden oku",
         "resume_hint": "Bölüm {n} üzerindeydin.",
@@ -145,7 +145,7 @@ EXTRA = {
     },
     "yue": {
         "explore": "探索",
-        "parts": ["第一部 · 間鋪", "第二部 · 呢行", "第三部 · 證人"],
+        "parts": ["第一部 · 間鋪", "第二部 · 呢行", "第三部 · 證人", "第四部 · 審查", "第五部 · 接駁"],
         "start_reading": "開始閱讀 →",
         "continue_reading": "繼續閱讀",
         "resume_hint": "你上次讀到第 {n} 章。",
@@ -156,7 +156,7 @@ EXTRA = {
     },
     "ko": {
         "explore": "둘러보기",
-        "parts": ["1부 · 가게", "2부 · 업계", "3부 · 증인"],
+        "parts": ["1부 · 가게", "2부 · 업계", "3부 · 증인", "4부 · 심사", "5부 · 이음"],
         "start_reading": "읽기 시작 →",
         "continue_reading": "이어서 읽기",
         "resume_hint": "제 {n}장까지 읽었습니다.",
