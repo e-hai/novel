@@ -687,6 +687,40 @@ def write_robots(out: Path):
         encoding="utf-8")
 
 
+def write_not_found(out: Path):
+    """真 404 页，避免未知路径回落成首页副本（软 404）。"""
+    t = LOCALES["en"]
+    w = work(C.WORK, "en")
+    base = C.SITE["base_url"]
+    body = ('<span class="eyebrow">404</span><h1>This page is not in the book</h1>'
+            '<p>The address you opened does not match any chapter or companion page. '
+            'You can start from the beginning, or jump to the contents.</p>'
+            f'<p><a href="{base}/">Read from Chapter 1</a> · '
+            f'<a href="{base}/about/">About this novel</a></p>')
+    doc = f"""<!doctype html>
+<html lang="{t['lang']}">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Page not found — {html.escape(w['title'])}</title>
+<meta name="robots" content="noindex,follow"/>
+<style>{STYLE}</style>
+</head>
+<body data-page-kind="notfound">
+<header class="site"><div class="wrap">
+  <a class="brand" href="{base}/">{html.escape(C.SITE['name'])}</a>
+  <nav><a href="{base}/about/">{html.escape(t['about'])}</a></nav>
+</div></header>
+<div class="wrap">
+{body}
+<footer>&copy; {html.escape(w['author'])} · {html.escape(w['title'])}. {html.escape(t['fiction'])}</footer>
+</div>
+</body>
+</html>
+"""
+    (out / "404.html").write_text(doc, encoding="utf-8")
+
+
 def render_revision_notes(out: Path):
     notes = revision_notes()
     blocks = [f'<section class="hero"><span class="eyebrow">修订工作台 · 未审核草稿</span>'
@@ -749,6 +783,7 @@ def main():
         render_evergreen_pages(out, collection, paths)
     write_sitemap(paths, out)
     write_robots(out)
+    write_not_found(out)
     print(f"[done] {len(paths)} indexable URLs -> {out}/")
 
 
