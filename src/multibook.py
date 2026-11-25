@@ -20,6 +20,7 @@ from pathlib import Path
 
 import books as BK
 import bookcopy as BC
+import booknotes as BN
 import config as C
 import generate as G
 from locales import LOCALES, route
@@ -44,6 +45,10 @@ def book_path(slug: str, language: str) -> str:
 
 def chapter_url(slug: str, c: dict, language: str) -> str:
     return route(language, f"/novels/{slug}/chapters/{c['slug']}/")
+
+
+def notes_path(slug: str, language: str) -> str:
+    return route(language, f"/novels/{slug}/notes/")
 
 
 def feed_url(slug: str, language: str) -> str:
@@ -209,6 +214,8 @@ def render_book(out: Path, book: dict, language: str):
             f'{html.escape(cc["start_first"])}</a></p>'
             f'<section class="part"><h2 class="part-title">{html.escape(cc["book_toc"])}</h2>'
             f'<ul class="chapters">{items}</ul></section>'
+            f'<p class="meta"><a href="{html.escape(notes_path(book["slug"], language))}">'
+            f'{html.escape(cc["notes"])}</a></p>'
             f'<p class="meta">{html.escape(cc["book_note"])}</p>{rss}')
     G.write_page(out, book_path(book["slug"], language), G.page(
         f'{book["title"]} — {C.SITE["name"]}',
@@ -248,6 +255,47 @@ def render_book(out: Path, book: dict, language: str):
                            else route(lg, "/novels/")) for lg in LOCALES},
             page_kind="chapter", chapter_num=str(c["num"]),
             noindex=language in C.SUMMARY_LANGS))
+
+
+def render_notes(out: Path, book: dict, language: str):
+    """每部书的「背景与手记」页：题材来源、写法、阅读引导。"""
+    note = BN.NOTES.get(book["slug"], {}).get(language)
+    if not note:
+        return
+    cc = BC.COPY[language]
+    body = (f'<p class="meta"><a href="{html.escape(book_path(book["slug"], language))}">'
+            f'← {html.escape(cc["back_book"])}</a></p>'
+            f'<h1>{html.escape(note["title"])}</h1>'
+            f'<p class="lede">{html.escape(cc["notes_lede"])}</p>'
+            f'<p class="meta"><a href="{html.escape(book_path(book["slug"], language))}">'
+            f'{html.escape(book["title"])}</a> · {html.escape(book["genre"][language])}</p>'
+            + "".join(f'<p>{html.escape(p)}</p>' for p in note["paras"]) +
+            f'<p class="meta"><a href="{html.escape(book_path(book["slug"], language))}">'
+            f'{html.escape(cc["book_toc"])}</a> · '
+            f'<a href="{html.escape(route(language, "/novels/"))}">'
+            f'{html.escape(cc["back_hub"])}</a></p>')
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": note["title"],
+        "about": book["title"],
+        "inLanguage": LOCALES[language]["lang"],
+        "url": C.SITE["base_url"] + notes_path(book["slug"], language),
+        "author": {"@type": "Organization", "name": G.C.WORK["author"]},
+        "isPartOf": {"@type": "Book", "name": book["title"],
+                     "url": C.SITE["base_url"] + book_path(book["slug"], language)},
+    }
+    usable = {lg for lg in LOCALES
+              if lg not in C.SUMMARY_LANGS and BN.NOTES.get(book["slug"], {}).get(lg)
+              and _lang_has(book["slug"], lg)}
+    alternates = {lg: notes_path(book["slug"], lg) for lg in usable}
+    G.write_page(out, notes_path(book["slug"], language), G.page(
+        f'{note["title"]} — {book["title"]}', cc["notes_lede"],
+        notes_path(book["slug"], language), body, schema, False, language,
+        alternates=alternates,
+        switches={lg: (notes_path(book["slug"], lg) if lg in usable
+                       else route(lg, "/novels/")) for lg in LOCALES},
+        page_kind="notes", noindex=language in C.SUMMARY_LANGS))
 
 
 def write_feed(book: dict, chapters: list[dict], language: str, out: Path):
@@ -297,6 +345,8 @@ def sitemap_paths() -> list[str]:
             result.append(book_path(book["slug"], language))
             if language not in C.SUMMARY_LANGS:
                 result.extend(chapter_url(book["slug"], c, language) for c in chapters)
+                if BN.NOTES.get(book["slug"], {}).get(language):
+                    result.append(notes_path(book["slug"], language))
     return result
 
 
@@ -311,7 +361,10 @@ def render(out: Path, paths: list[str], flagships: dict | None = None):
             if not chapters:
                 continue
             render_book(out, book, language)
+            render_notes(out, book, language)
             write_feed(book, chapters, language, out)
             paths.append(book_path(book["slug"], language))
             if language not in C.SUMMARY_LANGS:
                 paths.extend(chapter_url(book["slug"], c, language) for c in chapters)
+                if BN.NOTES.get(book["slug"], {}).get(language):
+                    paths.append(notes_path(book["slug"], language))

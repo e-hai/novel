@@ -20,6 +20,10 @@ COPY = {
         "prev_book": "← Previous novel",
         "next_book": "Next novel →",
         "book_feed": "Novel feed",
+        "notes": "Background & notes",
+        "notes_title": "About this book",
+        "notes_lede": "Why it is written this way, and how to read it.",
+        "back_book": "Book page",
     },
     "tr": {
         "novels": "Romanlar",
@@ -39,6 +43,10 @@ COPY = {
         "prev_book": "← Önceki roman",
         "next_book": "Sonraki roman →",
         "book_feed": "Roman akışı",
+        "notes": "Arka plan ve notlar",
+        "notes_title": "Bu kitap hakkında",
+        "notes_lede": "Neden böyle yazıldı ve nasıl okunmalı.",
+        "back_book": "Kitap sayfası",
     },
     "ko": {
         "novels": "소설",
@@ -58,6 +66,10 @@ COPY = {
         "prev_book": "← 이전 소설",
         "next_book": "다음 소설 →",
         "book_feed": "소설 피드",
+        "notes": "배경과 노트",
+        "notes_title": "이 책에 대하여",
+        "notes_lede": "왜 이렇게 썼는지, 어떻게 읽으면 좋은지.",
+        "back_book": "책 페이지",
     },
     "yue": {
         "novels": "小說",
@@ -75,5 +87,9 @@ COPY = {
         "prev_book": "← 上一部",
         "next_book": "下一部 →",
         "book_feed": "小說訂閱",
+        "notes": "背景與手記",
+        "notes_title": "關於呢本書",
+        "notes_lede": "點解咁寫，點樣讀。",
+        "back_book": "書頁",
     },
 }
