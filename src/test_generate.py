@@ -15,6 +15,7 @@ from urllib.parse import urlparse
 import xml.etree.ElementTree as ET
 
 import generate as G
+import multibook as MB
 from locales import LOCALES, route
 
 
@@ -41,6 +42,14 @@ class LanguageTests(unittest.TestCase):
         for lang in ('tr', 'yue', 'ko'):
             for chapter in self.collection[lang]:
                 chapter['approved'] = False
+        # 多书页同样按"只有英文已批准"来测，不依赖真实译本状态。
+        real_book_loader = MB.load_chapters
+        self.addCleanup(setattr, MB, 'load_chapters', real_book_loader)
+
+        def pending_book_loader(slug, language='en'):
+            chapters = real_book_loader(slug, language)
+            return [dict(c, approved=(language == 'en' and c['approved'])) for c in chapters]
+        MB.load_chapters = pending_book_loader
 
     def build(self, preview=False, collection=None):
         temporary = tempfile.TemporaryDirectory()
@@ -102,7 +111,8 @@ class LanguageTests(unittest.TestCase):
         # editorial pages: glossary index + glossary terms + act pages + companion pages
         editorial = 1 + len(G.GX.ORDER) + len(G.AX.ACTS) + len(G.XT.ORDER)
         expected = (2 + sum(c['approved'] for c in self.collection['en'])
-                    + evergreen_count + summary_entry + editorial)
+                    + evergreen_count + summary_entry + editorial
+                    + len(MB.sitemap_paths()))
         self.assertEqual(len(urls), expected)
         for url in urls:
             path = urlparse(url).path
@@ -227,7 +237,9 @@ class LanguageTests(unittest.TestCase):
             for path in output.rglob('index.html'):
                 for a in Tags(path.read_text()).attrs('a'):
                     href = a.get('href', '')
-                    if href.startswith('/'):
+                    if href.startswith('/') and href.endswith(('.xml', '.txt')):
+                        self.assertTrue((output / href.strip('/')).exists(), (path, href))
+                    elif href.startswith('/'):
                         self.assertTrue((output / href.strip('/') / 'index.html').exists(), (path, href))
 
     def test_chapter_switch_preserves_chapter_when_available(self):
@@ -275,9 +287,10 @@ class LanguageTests(unittest.TestCase):
         # Only copy explicitly required files. In particular, NEVER copy .git or origin.
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            for folder in ('tools', 'src', 'content/chapters', 'content/translations/tr', 'content/editorial'):
+            for folder in ('tools', 'src', 'content/chapters', 'content/translations/tr', 'content/editorial', 'content/books'):
                 (root / folder).mkdir(parents=True, exist_ok=True)
-            for name in ('generate.py', 'config.py', 'locales.py', 'evergreen.py', 'glossary.py', 'acts.py', 'extras.py'):
+            for name in ('generate.py', 'config.py', 'locales.py', 'evergreen.py', 'glossary.py', 'acts.py', 'extras.py',
+             'books.py', 'bookcopy.py', 'multibook.py'):
                 shutil.copyfile(G.ROOT / 'src' / name, root / 'src' / name)
             script = root / 'tools/publish-chapter.sh'
             shutil.copyfile(G.ROOT / 'tools/publish-chapter.sh', script)
@@ -426,7 +439,9 @@ class LanguageTests(unittest.TestCase):
                 self.assertNotIn('hreflang=', document)
                 for a in Tags(document).attrs('a'):
                     href = a.get('href', '')
-                    if href.startswith('/'):
+                    if href.startswith('/') and href.endswith(('.xml', '.txt')):
+                        self.assertTrue((output / href.strip('/')).exists(), (path, href))
+                    elif href.startswith('/'):
                         self.assertTrue((output / href.strip('/') / 'index.html').exists(), (path, href))
 
     def test_revision_cannot_replace_original_preview(self):

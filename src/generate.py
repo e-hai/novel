@@ -31,6 +31,7 @@ from locales import LOCALES, EXTRA, route, work
 import glossary as GX
 import extras as XT
 import acts as AX
+import bookcopy as BC
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "content"
@@ -320,6 +321,9 @@ def page(title: str, description: str, canonical_path: str, body: str,
         explore_links += "".join(
             f'<a href="/{slug}/">{html.escape(XT.PAGES[slug]["title"])}</a>' for slug in XT.ORDER)
     show_explore = not (C.PREVIEW_DRAFTS or C.REVISION_SET)
+    novels_link = (f'<a href="{route(language, "/novels/")}">'
+                   f'{html.escape(BC.COPY[language]["novels"])}</a>'
+                   if not (C.PREVIEW_DRAFTS or C.REVISION_SET) else "")
     explore_menu = (
         f'<div class="explore"><button type="button" class="explore-btn" '
         f'aria-expanded="false" aria-controls="explore-list">{html.escape(ex["explore"])} ▾</button>'
@@ -396,7 +400,7 @@ if(PK==='home'){
 <div class="progress" id="progress"></div>
 <header class="site"><div class="wrap">
   <a class="brand" href="{route(language)}">{html.escape(C.SITE['name'])}</a>
-  <nav><a href="{route(language, '/about/')}">{html.escape(t['about'])}</a>{explore_menu}</nav>
+  <nav>{novels_link}<a href="{route(language, '/about/')}">{html.escape(t['about'])}</a>{explore_menu}</nav>
 </div></header>
 <div class="wrap">
 <nav class="language-switch" aria-label="{html.escape(t['languages'])}">{' '.join(switch_links)}</nav>
@@ -1047,6 +1051,22 @@ def main():
     if not revision:
         for language, chapters in collection.items():
             write_feed(language, chapters, out)
+    if not revision and not C.PREVIEW_DRAFTS:
+        import multibook as MB
+        flagships = {}
+        for language, chapters in collection.items():
+            approved = [c for c in chapters if c["approved"]]
+            if not approved:
+                continue
+            t = LOCALES[language]
+            flagships[language] = [{
+                "href": route(language),
+                "title": t["title"],
+                "tagline": t["subtitle"],
+                "meta": t["stats"].format(n=len(approved)) + " · " + " · ".join(
+                    p for p in [t["genre"]] if p),
+            }]
+        MB.render(out, paths, flagships)
     write_sitemap(paths, out)
     write_robots(out)
     write_not_found(out)
