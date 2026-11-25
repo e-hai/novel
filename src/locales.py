@@ -7,7 +7,7 @@ Translation chapters are reviewed separately, never inherit English approval.
 LOCALES = {
     "en": {
         "label": "English", "lang": "en", "hreflang": "en",
-        "title": "The Memory Repairman", "subtitle": "Three stories about the things we choose to forget.",
+        "title": "The Memory Repairman", "subtitle": "Five parts, one shop: stories about the things we choose to forget.",
         "genre": "Science Fiction",
         "description": "A near-future science fiction short story about a man who repairs other people's memories — and the one memory he is forbidden to touch.",
         "about": "About", "behind": "Behind the story", "chapters": "Chapters", "chapter": "Chapter {n}",
