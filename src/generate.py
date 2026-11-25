@@ -28,7 +28,6 @@ sys.path.insert(0, os.path.dirname(__file__))
 import config as C
 import evergreen as EV
 from locales import LOCALES, EXTRA, route, work
-import pages_functions as PF
 import glossary as GX
 import acts as AX
 
@@ -893,16 +892,6 @@ def render_acts(out: Path, chapters: list[dict]):
             body, schema, language="en", page_kind="act"))
 
 
-def write_page_functions(out: Path):
-    """站内订阅端点：/api/subscribe 与 /api/subscribers（需要 Pages 项目绑定 KV 变量 SUBS）。"""
-    if not C.SUBSCRIBE_ENDPOINT.startswith("/"):
-        return
-    api = out / "functions" / "api"
-    api.mkdir(parents=True, exist_ok=True)
-    (api / "subscribe.js").write_text(PF.SUBSCRIBE.lstrip(), encoding="utf-8")
-    (api / "subscribers.js").write_text(PF.SUBSCRIBERS.lstrip(), encoding="utf-8")
-
-
 def write_sitemap(paths: list[str], out: Path):
     base = C.SITE["base_url"]
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -1013,7 +1002,6 @@ def main():
     if revision:
         render_revision_notes(out)
     if not revision and not C.PREVIEW_DRAFTS:
-        write_page_functions(out)
         render_evergreen_pages(out, collection, paths)
         render_glossary(out)
         render_acts(out, collection["en"])

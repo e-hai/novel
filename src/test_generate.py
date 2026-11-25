@@ -276,7 +276,7 @@ class LanguageTests(unittest.TestCase):
             root = Path(temporary)
             for folder in ('tools', 'src', 'content/chapters', 'content/translations/tr', 'content/editorial'):
                 (root / folder).mkdir(parents=True, exist_ok=True)
-            for name in ('generate.py', 'config.py', 'locales.py', 'evergreen.py', 'glossary.py', 'acts.py', 'pages_functions.py'):
+            for name in ('generate.py', 'config.py', 'locales.py', 'evergreen.py', 'glossary.py', 'acts.py'):
                 shutil.copyfile(G.ROOT / 'src' / name, root / 'src' / name)
             script = root / 'tools/publish-chapter.sh'
             shutil.copyfile(G.ROOT / 'tools/publish-chapter.sh', script)
