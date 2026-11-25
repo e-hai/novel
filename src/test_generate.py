@@ -93,9 +93,14 @@ class LanguageTests(unittest.TestCase):
         output = self.build()
         root = ET.parse(output / 'sitemap.xml').getroot()
         urls = [item.text for item in root.iter('{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
-        # 2 (en home/about) + approved en chapters + 4 evergreen pages x 4 languages.
-        evergreen_count = len(G.EV.PAGES) * len(LOCALES)
-        expected = 2 + sum(c['approved'] for c in self.collection['en']) + evergreen_count
+        # 2 (en home/about) + approved en chapters + 4 evergreen pages x indexable languages
+        # + 2 entry pages of the summary-edition language (yue home/about only).
+        indexable_langs = [lg for lg in LOCALES if lg not in G.C.SUMMARY_LANGS]
+        evergreen_count = len(G.EV.PAGES) * len(indexable_langs)
+        summary_entry = sum(2 for lg in G.C.SUMMARY_LANGS
+                            if any(c['approved'] for c in self.collection[lg]))
+        expected = (2 + sum(c['approved'] for c in self.collection['en'])
+                    + evergreen_count + summary_entry)
         self.assertEqual(len(urls), expected)
         for url in urls:
             path = urlparse(url).path
@@ -144,7 +149,7 @@ class LanguageTests(unittest.TestCase):
 
     def test_faq_schema(self):
         output = self.build()
-        for lang in LOCALES:
+        for lang in [lg for lg in LOCALES if lg not in G.C.SUMMARY_LANGS]:
             document = (output / route(lang, '/faq/').strip('/') / 'index.html').read_text()
             raw = [json.loads(x) for x in
                    re.findall(r'<script type="application/ld\+json">(.*?)</script>', document, re.S)]
@@ -163,6 +168,12 @@ class LanguageTests(unittest.TestCase):
             for slug in expected_slugs:
                 path = route(lang, f"/{slug}/")
                 document = (output / path.strip('/') / 'index.html').read_text()
+                if lang in G.C.SUMMARY_LANGS:
+                    # 节录语言：可读但不进索引，也不参与 hreflang 集群
+                    self.assertIn('content="noindex,follow"', document)
+                    self.assertNotIn('hreflang=', document)
+                    self.assertIn(html.escape(G.EV.TITLES[slug][lang]), document)
+                    continue
                 self.assertIn('content="index,follow"', document)
                 self.assertIn(f'<html lang="{LOCALES[lang]["lang"]}"', document)
                 self.assertIn(html.escape(G.EV.TITLES[slug][lang]), document)
@@ -170,6 +181,8 @@ class LanguageTests(unittest.TestCase):
                 # Reciprocal hreflang across all four languages for this page.
                 alts = {a['hreflang']: a['href'] for a in tags.attrs('link') if a.get('rel') == 'alternate'}
                 for other in LOCALES:
+                    if other in G.C.SUMMARY_LANGS:
+                        continue
                     self.assertEqual(alts[LOCALES[other]['hreflang']],
                                      G.C.SITE['base_url'] + route(other, f"/{slug}/"))
                 self.assertIn('x-default', alts)
@@ -233,13 +246,16 @@ class LanguageTests(unittest.TestCase):
         slug = collection['en'][0]['slug']
         suffix = f'/chapters/{slug}/'
         expected = G.page_alternates(collection, suffix)
-        for lang in ('en', 'tr', 'yue'):
+        for lang in ('en', 'tr'):
             document = (output / route(lang, suffix).strip('/') / 'index.html').read_text()
             alternates = {a['hreflang']: a['href'] for a in Tags(document).attrs('link') if a.get('rel') == 'alternate'}
             self.assertEqual(alternates['x-default'], G.C.SITE['base_url'] + suffix)
             for candidate, path in expected.items():
+                if candidate in G.C.SUMMARY_LANGS:
+                    continue
                 self.assertEqual(alternates[LOCALES[candidate]['hreflang']], G.C.SITE['base_url'] + path)
             self.assertNotIn('ko', alternates)
+            self.assertNotIn(LOCALES['yue']['hreflang'], alternates)
             schema = json.loads(document.split('<script type="application/ld+json">')[1].split('</script>')[0])
             self.assertEqual(schema[0]['inLanguage'], LOCALES[lang]['lang'])
 

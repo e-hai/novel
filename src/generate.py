@@ -241,12 +241,12 @@ def page(title: str, description: str, canonical_path: str, body: str,
          jsonld: dict | list[dict] | None = None, is_draft: bool = False,
          language: str = "en", alternates: dict | None = None,
          switches: dict | None = None, page_kind: str = "",
-         chapter_num: str = "") -> str:
+         chapter_num: str = "", noindex: bool = False) -> str:
     t = LOCALES[language]
     w = work(C.WORK, language)
     base = C.SITE["base_url"]
     canonical = base + canonical_path
-    noindex = is_draft or C.PREVIEW_DRAFTS or bool(C.REVISION_SET)
+    noindex = is_draft or noindex or C.PREVIEW_DRAFTS or bool(C.REVISION_SET)
     ld = ""
     if jsonld is not None and not noindex:
         obj = jsonld if isinstance(jsonld, list) else [jsonld]
@@ -256,6 +256,8 @@ def page(title: str, description: str, canonical_path: str, body: str,
     alternate_tags = []
     if not noindex and alternates:
         for lang, path in alternates.items():
+            if lang in C.SUMMARY_LANGS:
+                continue  # 概要节录页不进 hreflang 集群
             alternate_tags.append(f'<link rel="alternate" hreflang="{LOCALES[lang]["hreflang"]}" '
                                   f'href="{html.escape(base + path)}"/>')
         if "en" in alternates:
@@ -271,6 +273,9 @@ def page(title: str, description: str, canonical_path: str, body: str,
                        "classical Chinese fiction. It has not been human-reviewed. Earlier approvals "
                        "cover the earlier text only; existing translations do not represent this revision."
                        if C.REVISION_SET else t["disclosure"])
+    summary_banner = (f'<div class="banner" data-summary-edition="true">'
+                      f'<strong>{html.escape(t["summary_title"])}</strong> '
+                      f'{html.escape(t["summary_notice"])}</div>') if language in C.SUMMARY_LANGS else ""
     revision_banner = ('<div class="banner"><strong>Classical-fiction fusion — revised draft.</strong> '
                        'Independent local preview. Not approved and not published. '
                        '<a href="/revision-notes/">创作来源、实质变化与审核要点</a></div>') if C.REVISION_SET else ""
@@ -327,6 +332,7 @@ if(PK==='home'){
 <nav class="language-switch" aria-label="{html.escape(t['languages'])}">{' '.join(switch_links)}</nav>
 {revision_banner}
 {disclosure_banner(is_draft, language)}
+{summary_banner}
 {body}
 {disclosure}
 <footer>&copy; {html.escape(w['author'])} · {html.escape(w['title'])}. {html.escape(t['fiction'])}</footer>
@@ -600,8 +606,10 @@ def render_evergreen_pages(out: Path, collection: dict, paths: list[str]):
             write_page(out, path, page(title, desc, path, body, schemas,
                        language=language,
                        alternates={lang: route(lang, f"/{slug}/") for lang in collection},
-                       switches={lang: route(lang, f"/{slug}/") for lang in collection}))
-            if not C.PREVIEW_DRAFTS and not C.REVISION_SET:
+                       switches={lang: route(lang, f"/{slug}/") for lang in collection},
+                       noindex=language in C.SUMMARY_LANGS))
+            if (not C.PREVIEW_DRAFTS and not C.REVISION_SET
+                    and language not in C.SUMMARY_LANGS):
                 paths.append(path)
 
 
@@ -668,7 +676,8 @@ def render_chapter(c: dict, chapters: list[dict], out: Path, collection: dict | 
                chapter_path(c), body, schemas, is_draft=not c["approved"], language=language,
                alternates=page_alternates(collection, f'/chapters/{c["slug"]}/'),
                switches=chapter_switches(collection, c["slug"]),
-               page_kind="chapter", chapter_num=str(c["num"])))
+               page_kind="chapter", chapter_num=str(c["num"]),
+               noindex=language in C.SUMMARY_LANGS))
 
 
 def write_sitemap(paths: list[str], out: Path):
@@ -776,7 +785,8 @@ def main():
                        switches=chapter_switches(collection, c["slug"])))
         if approved and not C.PREVIEW_DRAFTS:
             paths.extend([route(language), route(language, "/about/")])
-            paths.extend(chapter_path(c) for c in approved)
+            if language not in C.SUMMARY_LANGS:  # 节录版章节不进 sitemap
+                paths.extend(chapter_path(c) for c in approved)
     if revision:
         render_revision_notes(out)
     if not revision and not C.PREVIEW_DRAFTS:

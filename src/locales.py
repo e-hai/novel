@@ -52,7 +52,9 @@ LOCALES = {
         "toc": "İçindekiler", "contact": "İletişim",
     },
     "yue": {
-        "label": "粵語", "lang": "yue-Hant-HK", "hreflang": "zh-HK",
+        "label": "粵語（節錄）", "lang": "yue-Hant-HK", "hreflang": "zh-HK",
+        "summary_title": "呢個係節錄版：",
+        "summary_notice": "每章只譯咗開頭嘅段落，未係全文，亦唔會出現在搜尋結果。想睇完整故事，請讀英文原文。",
         "title": "記憶修補師", "subtitle": "三個關於我哋選擇忘記啲乜嘢嘅故事。",
         "genre": "科幻",
         "description": "一個近未來科幻短篇：一個替人修補記憶嘅男人，同埋嗰段佢唔可以掂嘅記憶。",
