@@ -43,6 +43,12 @@ PREVIEW_DRAFTS = os.environ.get("PREVIEW_DRAFTS", "").strip() in ("1", "true", "
 # 这类页面保留给人读（有语言切换和阅读路径），但不参与索引与 sitemap，避免薄页稀释站点质量。
 SUMMARY_LANGS = {"yue"}
 
+# 邮件订阅：填 Buttondown 的 embed 地址即可自动在页脚出现订阅表单，例如
+#   SITE_SUBSCRIBE_ENDPOINT=https://buttondown.email/api/emails/embed-subscribe/<username>
+# 未设置时页面只显示 RSS，不渲染任何空表单。
+SUBSCRIBE_ENDPOINT = os.environ.get("SITE_SUBSCRIBE_ENDPOINT", "").strip()
+
+
 # 古典融合等修订只能独立预览，不替换已审核原稿和对应译文。
 REVISION_SET = os.environ.get("NOVEL_REVISION_SET", "").strip()
 # 草稿预览独立输出，不能意外覆盖生产构建。

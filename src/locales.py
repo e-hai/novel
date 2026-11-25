@@ -27,6 +27,8 @@ LOCALES = {
         "authorship": "Authorship & AI disclosure", "byline_notice": "Published under the byline {author}. Translation drafts do not imply approval by the editor.",
         "unpublished": "Not published", "unpublished_description": "This chapter is not part of the published work in this language.",
         "toc": "Table of contents", "contact": "Contact",
+        "subscribe": "Get new chapters by email", "subscribe_button": "Subscribe",
+        "subscribe_hint": "No account needed, unsubscribe in one click.",
     },
     "tr": {
         "label": "Türkçe", "lang": "tr", "hreflang": "tr",
@@ -50,6 +52,8 @@ LOCALES = {
         "authorship": "Yazarlık ve yapay zekâ açıklaması", "byline_notice": "Eser {author} adıyla yayımlanır. Çeviri taslakları editörün onay verdiği anlamına gelmez.",
         "unpublished": "Yayımlanmadı", "unpublished_description": "Bu bölüm, eserin bu dilde yayımlanmış hâline dâhil değildir.",
         "toc": "İçindekiler", "contact": "İletişim",
+        "subscribe": "Yeni bölümleri e-postayla al", "subscribe_button": "Abone ol",
+        "subscribe_hint": "Hesap gerekmez, tek tıkla ayrılabilirsin.",
     },
     "yue": {
         "label": "粵語（節錄）", "lang": "yue-Hant-HK", "hreflang": "zh-HK",
@@ -75,6 +79,8 @@ LOCALES = {
         "authorship": "署名同 AI 披露", "byline_notice": "作品以 {author} 署名出版。譯文草稿唔代表編輯已經批准。",
         "unpublished": "未出版", "unpublished_description": "呢一章唔屬於呢種語言已正式出版嘅內容。",
         "toc": "章節目錄", "contact": "聯絡",
+        "subscribe": "有新章節用電郵通知你", "subscribe_button": "訂閱",
+        "subscribe_hint": "唔需要帳號，一鍵可以退訂。",
     },
     "ko": {
         "label": "한국어", "lang": "ko", "hreflang": "ko",
@@ -98,6 +104,8 @@ LOCALES = {
         "authorship": "저자 및 AI 사용 안내", "byline_notice": "작품은 {author}라는 이름으로 출판됩니다. 번역 초안이 편집자의 승인을 뜻하지는 않습니다.",
         "unpublished": "미출판", "unpublished_description": "이 장은 이 언어로 정식 출판된 작품에 포함되지 않습니다.",
         "toc": "목차로 돌아가기", "contact": "연락처",
+        "subscribe": "새 장을 이메일로 받아보기", "subscribe_button": "구독",
+        "subscribe_hint": "계정 필요 없이 한 번에 해지할 수 있습니다.",
     },
 }
 

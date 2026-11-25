@@ -15,6 +15,8 @@ generate.py — 精品小说静态站生成器（零第三方依赖）
 from __future__ import annotations
 
 import hashlib
+from datetime import datetime, timezone
+from email.utils import format_datetime
 import html
 import json
 import os
@@ -26,6 +28,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 import config as C
 import evergreen as EV
 from locales import LOCALES, EXTRA, route, work
+import glossary as GX
+import acts as AX
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "content"
@@ -202,6 +206,24 @@ STYLE = (
     ".link-btn{background:none;border:0;color:var(--accent);cursor:pointer;font-size:.8rem;"
     "text-decoration:underline;padding:0 0 0 .4rem}"
     ".explore-box{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line)}"
+    ".part-title a{color:inherit;text-decoration:none}.part-title a:hover{color:var(--accent)}"
+    ".glossary-list{list-style:none;padding:0;margin:2rem 0}"
+    ".glossary-list li{margin:0 0 1rem}"
+    ".glossary-list a{display:block;text-decoration:none;color:var(--fg);border-bottom:1px solid var(--line);padding-bottom:.8rem}"
+    ".glossary-list strong{display:block;font-size:1.1rem;margin-bottom:.25rem}"
+    ".glossary-list span{color:var(--muted);font-size:.92rem}"
+    ".glossary-list a:hover strong{color:var(--accent)}"
+    ".acts-chapters{list-style:none;padding:0;margin:2.5rem 0}"
+    ".acts-chapters li{margin-bottom:1.2rem}"
+    ".acts-chapters a{display:block;text-decoration:none;color:var(--fg)}"
+    ".acts-chapters .num{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}"
+    ".acts-chapters h3{margin:.2rem 0 .3rem;font-size:1.05rem}"
+    ".acts-chapters p{margin:0;color:var(--muted);font-size:.92rem}"
+    ".subscribe{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:2.5rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.9rem}"
+    ".subscribe label{color:var(--muted);width:100%}"
+    ".subscribe input{flex:1 1 14rem;padding:.5rem .6rem;border:1px solid var(--line);background:#fff;font:inherit}"
+    ".subscribe button{padding:.5rem .9rem;border:1px solid var(--accent);background:var(--accent);color:#fff;font:inherit;cursor:pointer}"
+    ".subscribe small{color:var(--muted-2,#8b8680);width:100%}"
     ".explore-box h2{font-size:1.15rem}"
     ".chapter-body>p:first-of-type::first-letter{float:left;font-size:3.6em;line-height:.82;"
     "padding:.08em .12em 0 0;color:var(--accent)}"
@@ -246,6 +268,8 @@ def page(title: str, description: str, canonical_path: str, body: str,
     w = work(C.WORK, language)
     base = C.SITE["base_url"]
     canonical = base + canonical_path
+    feed_path = route(language, "/feed.xml")
+    rss_ok = language not in C.SUMMARY_LANGS
     noindex = is_draft or noindex or C.PREVIEW_DRAFTS or bool(C.REVISION_SET)
     ld = ""
     if jsonld is not None and not noindex:
@@ -287,11 +311,29 @@ def page(title: str, description: str, canonical_path: str, body: str,
     explore_links = " ".join(
         f'<a href="{html.escape(route(language, f"/{slug}/"))}">'
         f'{html.escape(EV.PAGES[slug][language])}</a>' for slug in EV.PAGES)
+    if language == "en" and not (C.PREVIEW_DRAFTS or C.REVISION_SET):
+        explore_links += "".join(
+            f'<a href="{html.escape(a["slug"].join(["/", "/"]))}">{html.escape(a["title"])}</a>'
+            for a in AX.ACTS)
+        explore_links += '<a href="/glossary/">Glossary</a>'
     show_explore = not (C.PREVIEW_DRAFTS or C.REVISION_SET)
     explore_menu = (
         f'<div class="explore"><button type="button" class="explore-btn" '
         f'aria-expanded="false" aria-controls="explore-list">{html.escape(ex["explore"])} ▾</button>'
         f'<div class="explore-list" id="explore-list">{explore_links}</div></div>') if show_explore else ""
+    rss_link = (f'<link rel="alternate" type="application/rss+xml" '
+                f'title="{html.escape(w["title"])} — chapters" '
+                f'href="{html.escape(base + feed_path)}"/>') if rss_ok else ""
+    sub_form = ""
+    rss_text = f'<a href="{html.escape(base + feed_path)}">RSS</a>' if rss_ok else ""
+    if C.SUBSCRIBE_ENDPOINT and rss_ok:
+        sub_form = (f'<form class="subscribe" method="post" '
+                    f'action="{html.escape(C.SUBSCRIBE_ENDPOINT)}" target="_blank">'
+                    f'<label for="sub-email">{html.escape(t["subscribe"])}</label>'
+                    f'<input id="sub-email" type="email" name="email" '
+                    f'placeholder="you@example.com" required/>'
+                    f'<button type="submit">{html.escape(t["subscribe_button"])}</button>'
+                    f'<small>{html.escape(t["subscribe_hint"])}</small></form>')
     progress_js = """
 var PK=document.body.getAttribute('data-page-kind');
 var CN=document.body.getAttribute('data-chapter-num')||'';
@@ -318,6 +360,7 @@ if(PK==='home'){
 <meta name="description" content="{html.escape(description)}"/>
 <meta name="robots" content="{'noindex,follow' if noindex else 'index,follow'}"/>
 <link rel="canonical" href="{html.escape(canonical)}"/>
+{rss_link}
 {chr(10).join(alternate_tags)}
 {ld}
 <style>{STYLE}</style>
@@ -335,7 +378,8 @@ if(PK==='home'){
 {summary_banner}
 {body}
 {disclosure}
-<footer>&copy; {html.escape(w['author'])} · {html.escape(w['title'])}. {html.escape(t['fiction'])}</footer>
+<footer>&copy; {html.escape(w['author'])} · {html.escape(w['title'])}. {html.escape(t['fiction'])} · {rss_text}</footer>
+{sub_form}
 </div>
 <script>
 window.addEventListener('scroll',function(){{
@@ -407,7 +451,7 @@ def load_chapters(language: str = "en") -> list[dict]:
             "num": num, "slug": slug, "title": meta.get("title", p.stem),
             "summary": meta.get("summary", ""), "status": status, "approved": approved,
             "words": units, "readtime": readtime, "html": body_html, "path": p,
-            "language": language,
+            "language": language, "review_date": meta.get("review_date", ""),
         })
     chapters.sort(key=lambda c: int(c["num"]) if str(c["num"]).isdigit() else 999)
     return chapters
@@ -488,7 +532,11 @@ def render_home(chapters: list[dict], out: Path, language: str = "en", collectio
         if not group:
             continue
         items = "\n".join(_chapter_li(c, t) for c in group)
-        toc_parts.append(f'<section class="part"><h3 class="part-title">{html.escape(label)}</h3>'
+        act = AX.ACTS[len(toc_parts)] if len(toc_parts) < len(AX.ACTS) else None
+        title = html.escape(label)
+        if language == "en" and act and not C.PREVIEW_DRAFTS:
+            title = f'<a href="{html.escape(act["slug"].join(["/", "/"]))}">{title}</a>'
+        toc_parts.append(f'<section class="part"><h3 class="part-title">{title}</h3>'
                          f'<ul class="chapters">{items}</ul></section>')
     toc = "\n".join(toc_parts) or f'<p class="meta">{html.escape(t["no_chapters"])}</p>'
 
@@ -550,7 +598,16 @@ def render_about(out: Path, language: str = "en", collection: dict | None = None
         disclosure = ('<p>This revised text was drafted with AI assistance and is awaiting new human '
                       'editorial review. Earlier approvals do not cover this version.</p>')
     glossary = GLOSSARY if language == "en" else t["terms"]
-    terms = "\n".join(f"<dt>{html.escape(term)}</dt><dd>{html.escape(desc)}</dd>" for term, desc in glossary)
+    by_term = {p["term"]: slug for slug, p in GX.PAGES.items()}
+    if language == "en" and not C.PREVIEW_DRAFTS:
+        terms = "\n".join(
+            f'<dt><a href="/glossary/{by_term.get(term, "")}/">{html.escape(term)}</a></dt>'
+            f"<dd>{html.escape(desc)}</dd>" if term in by_term
+            else f"<dt>{html.escape(term)}</dt><dd>{html.escape(desc)}</dd>"
+            for term, desc in glossary)
+    else:
+        terms = "\n".join(f"<dt>{html.escape(term)}</dt><dd>{html.escape(desc)}</dd>"
+                           for term, desc in glossary)
     contact = (f'<p class="meta">{html.escape(t["contact"])}: '
                f'<a href="mailto:{html.escape(C.SITE["contact"])}">{html.escape(C.SITE["contact"])}</a></p>'
                if C.SITE["contact"] else "")
@@ -650,6 +707,9 @@ def render_chapter(c: dict, chapters: list[dict], out: Path, collection: dict | 
               "isPartOf": {"@type": "Book", "name": w["title"],
                            "author": {"@type": "Organization", "name": w["author"]}},
               "inLanguage": w["language"]}
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(c.get("review_date", ""))):
+        schema["datePublished"] = c["review_date"]
+        schema["dateModified"] = c["review_date"]
     visible = [x for x in chapters if x["approved"] or C.PREVIEW_DRAFTS]
     idx = next(i for i, x in enumerate(visible) if x["slug"] == c["slug"])
     nav = []
@@ -678,6 +738,133 @@ def render_chapter(c: dict, chapters: list[dict], out: Path, collection: dict | 
                switches=chapter_switches(collection, c["slug"]),
                page_kind="chapter", chapter_num=str(c["num"]),
                noindex=language in C.SUMMARY_LANGS))
+
+
+def feed_path(language: str) -> str:
+    return route(language, "/feed.xml")
+
+
+def write_feed(language: str, chapters: list[dict], out: Path):
+    """RSS 2.0：只收录已批准章节，按 review_date 倒序。摘要语言页不产出 feed。"""
+    if language in C.SUMMARY_LANGS:
+        return
+    w = work(C.WORK, language)
+    t = LOCALES[language]
+    base = C.SITE["base_url"]
+    approved = [c for c in chapters if c["approved"]]
+    approved.sort(key=lambda c: (c.get("review_date", ""), int(c["num"])), reverse=True)
+    items = []
+    for c in approved:
+        d = str(c.get("review_date", ""))
+        try:
+            dt = datetime.strptime(d, "%Y-%m-%d").replace(hour=9, tzinfo=timezone.utc)
+            pub = format_datetime(dt)
+        except ValueError:
+            pub = ""
+        link = base + chapter_path(c)
+        items.append(
+            "<item>"
+            f"<title>{html.escape(c['title'])}</title>"
+            f"<link>{html.escape(link)}</link>"
+            f'<guid isPermaLink="true">{html.escape(link)}</guid>'
+            + (f"<pubDate>{pub}</pubDate>" if pub else "")
+            + f"<description>{html.escape(c.get('summary', ''))}</description>"
+            "</item>")
+    last = approved[0].get("review_date", "") if approved else ""
+    try:
+        last_build = format_datetime(
+            datetime.strptime(last, "%Y-%m-%d").replace(hour=9, tzinfo=timezone.utc))
+    except ValueError:
+        last_build = ""
+    rss = ('<?xml version="1.0" encoding="UTF-8"?>'
+           '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>'
+           f"<title>{html.escape(w['title'])} — chapters</title>"
+           f"<link>{html.escape(base + route(language))}</link>"
+           f"<description>{html.escape(w['description'])}</description>"
+           f"<language>{html.escape(t['lang'])}</language>"
+           + (f"<lastBuildDate>{last_build}</lastBuildDate>" if last_build else "")
+           + f'<atom:link href="{html.escape(base + feed_path(language))}" rel="self" type="application/rss+xml"/>'
+           + "".join(items) + "</channel></rss>")
+    dest = out / feed_path(language).lstrip("/")
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(rss, encoding="utf-8")
+
+
+def render_glossary(out: Path):
+    """设定词条：/glossary/ 索引 + 5 个详情页（英文）。"""
+    base = C.SITE["base_url"]
+    w = work(C.WORK, "en")
+    cards = "".join(
+        f'<li><a href="{base}/glossary/{slug}/"><strong>{html.escape(GX.PAGES[slug]["term"])}</strong>'
+        f'<span>{html.escape(GX.PAGES[slug]["short"])}</span></a></li>'
+        for slug in GX.ORDER)
+    body = (f'<section class="hero"><span class="eyebrow">Glossary</span>'
+            f'<h1>Terms in {html.escape(w["title"])}</h1>'
+            f'<p class="sub">The five words the story keeps using, explained without spoilers.</p></section>'
+            f'<ul class="glossary-list">{cards}</ul>')
+    schema = {"@context": "https://schema.org", "@type": "DefinedTermSet",
+              "name": f"Glossary — {w['title']}",
+              "url": base + "/glossary/",
+              "hasDefinedTerm": [
+                  {"@type": "DefinedTerm", "name": GX.PAGES[s]["term"],
+                   "description": GX.PAGES[s]["short"],
+                   "url": base + f"/glossary/{s}/"} for s in GX.ORDER]}
+    write_page(out, "/glossary/", page(
+        f"Glossary — {w['title']}", "Definitions of engram, the Loom, fill, the Grey and memory architect.",
+        "/glossary/", body, schema, language="en", page_kind="glossary"))
+
+    for slug in GX.ORDER:
+        p = GX.PAGES[slug]
+        blocks = [f'<section class="hero"><span class="eyebrow">Glossary</span>'
+                  f'<h1>{html.escape(p["term"])}</h1>'
+                  f'<p class="sub">{html.escape(p["lede"])}</p></section>']
+        for heading, paras in p["sections"]:
+            blocks.append(f"<h2>{html.escape(heading)}</h2>")
+            blocks += [f"<p>{html.escape(x)}</p>" for x in paras]
+        read_more = " · ".join(
+            f'<a href="{base}/chapters/{c}/">{html.escape(c.replace("-", " ").title())}</a>'
+            for c in p["chapters"])
+        related = " · ".join(
+            f'<a href="{base}/glossary/{r}/">{html.escape(GX.PAGES[r]["term"])}</a>'
+            for r in p["see"] if r in GX.PAGES)
+        blocks.append(f'<section class="explore-box"><h2>Where it appears</h2><p>{read_more}</p>'
+                      f'<h2>Related terms</h2><p>{related} · <a href="{base}/glossary/">All terms</a></p></section>')
+        schema = {"@context": "https://schema.org", "@type": "DefinedTerm",
+                  "name": p["term"], "description": p["short"],
+                  "url": f"{base}/glossary/{slug}/",
+                  "inDefinedTermSet": {"@type": "DefinedTermSet", "name": "Glossary", "url": f"{base}/glossary/"}}
+        write_page(out, f"/glossary/{slug}/", page(
+            f"{p['term']} — glossary", p["short"], f"/glossary/{slug}/",
+            "".join(blocks), schema, language="en", page_kind="glossary"))
+
+
+def render_acts(out: Path, chapters: list[dict]):
+    """三幕入口页：每幕一个可索引、可分享的摘要页，向下链接本幕章节。"""
+    w = work(C.WORK, "en")
+    base = C.SITE["base_url"]
+    for act in AX.ACTS:
+        lo, hi = act["range"]
+        group = [c for c in chapters
+                 if str(c["num"]).isdigit() and lo <= int(c["num"]) <= hi and c["approved"]]
+        items = "".join(
+            f'<li><a href="{base}/chapters/{c["slug"]}/">'
+            f'<span class="num">Chapter {c["num"]}</span>'
+            f'<h3>{html.escape(c["title"])}</h3>'
+            f'<p>{html.escape(c.get("summary", ""))}</p></a></li>' for c in group)
+        body = (f'<section class="hero"><span class="eyebrow">{html.escape(act["title"])}</span>'
+                f'<h1>{html.escape(act["title"])}</h1>'
+                f'<p class="sub">{html.escape(act["lede"])}</p></section>'
+                + "".join(f"<p>{html.escape(x)}</p>" for x in act["body"])
+                + (f'<ul class="acts-chapters">{items}</ul>' if items else "")
+                + f'<p><a href="{base}/">Full contents</a> · <a href="{base}/glossary/">Glossary</a></p>')
+        schema = {"@context": "https://schema.org", "@type": "CreativeWork",
+                  "name": act["title"], "description": act["lede"],
+                  "url": f"{base}/{act['slug']}/",
+                  "isPartOf": {"@type": "Book", "name": w["title"],
+                               "author": {"@type": "Organization", "name": w["author"]}}}
+        write_page(out, f"/{act['slug']}/", page(
+            f"{act['title']} — {w['title']}", act["lede"], f"/{act['slug']}/",
+            body, schema, language="en", page_kind="act"))
 
 
 def write_sitemap(paths: list[str], out: Path):
@@ -791,6 +978,13 @@ def main():
         render_revision_notes(out)
     if not revision and not C.PREVIEW_DRAFTS:
         render_evergreen_pages(out, collection, paths)
+        render_glossary(out)
+        render_acts(out, collection["en"])
+        paths.extend(["/glossary/"] + [f"/glossary/{slug}/" for slug in GX.ORDER])
+        paths.extend([f"/{act['slug']}/" for act in AX.ACTS])
+    if not revision:
+        for language, chapters in collection.items():
+            write_feed(language, chapters, out)
     write_sitemap(paths, out)
     write_robots(out)
     write_not_found(out)

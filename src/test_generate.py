@@ -99,8 +99,9 @@ class LanguageTests(unittest.TestCase):
         evergreen_count = len(G.EV.PAGES) * len(indexable_langs)
         summary_entry = sum(2 for lg in G.C.SUMMARY_LANGS
                             if any(c['approved'] for c in self.collection[lg]))
+        # + 9 editorial pages (glossary index, 5 glossary terms, 3 act pages)
         expected = (2 + sum(c['approved'] for c in self.collection['en'])
-                    + evergreen_count + summary_entry)
+                    + evergreen_count + summary_entry + 9)
         self.assertEqual(len(urls), expected)
         for url in urls:
             path = urlparse(url).path
@@ -179,7 +180,7 @@ class LanguageTests(unittest.TestCase):
                 self.assertIn(html.escape(G.EV.TITLES[slug][lang]), document)
                 tags = Tags(document)
                 # Reciprocal hreflang across all four languages for this page.
-                alts = {a['hreflang']: a['href'] for a in tags.attrs('link') if a.get('rel') == 'alternate'}
+                alts = {a['hreflang']: a['href'] for a in tags.attrs('link') if a.get('rel') == 'alternate' and 'hreflang' in a}
                 for other in LOCALES:
                     if other in G.C.SUMMARY_LANGS:
                         continue
@@ -248,7 +249,7 @@ class LanguageTests(unittest.TestCase):
         expected = G.page_alternates(collection, suffix)
         for lang in ('en', 'tr'):
             document = (output / route(lang, suffix).strip('/') / 'index.html').read_text()
-            alternates = {a['hreflang']: a['href'] for a in Tags(document).attrs('link') if a.get('rel') == 'alternate'}
+            alternates = {a['hreflang']: a['href'] for a in Tags(document).attrs('link') if a.get('rel') == 'alternate' and 'hreflang' in a}
             self.assertEqual(alternates['x-default'], G.C.SITE['base_url'] + suffix)
             for candidate, path in expected.items():
                 if candidate in G.C.SUMMARY_LANGS:
@@ -275,7 +276,7 @@ class LanguageTests(unittest.TestCase):
             root = Path(temporary)
             for folder in ('tools', 'src', 'content/chapters', 'content/translations/tr', 'content/editorial'):
                 (root / folder).mkdir(parents=True, exist_ok=True)
-            for name in ('generate.py', 'config.py', 'locales.py', 'evergreen.py'):
+            for name in ('generate.py', 'config.py', 'locales.py', 'evergreen.py', 'glossary.py', 'acts.py'):
                 shutil.copyfile(G.ROOT / 'src' / name, root / 'src' / name)
             script = root / 'tools/publish-chapter.sh'
             shutil.copyfile(G.ROOT / 'tools/publish-chapter.sh', script)
