@@ -28,6 +28,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import config as C
 import evergreen as EV
 from locales import LOCALES, EXTRA, route, work
+import pages_functions as PF
 import glossary as GX
 import acts as AX
 
@@ -326,14 +327,38 @@ def page(title: str, description: str, canonical_path: str, body: str,
                 f'href="{html.escape(base + feed_path)}"/>') if rss_ok else ""
     sub_form = ""
     rss_text = f'<a href="{html.escape(base + feed_path)}">RSS</a>' if rss_ok else ""
-    if C.SUBSCRIBE_ENDPOINT and rss_ok:
-        sub_form = (f'<form class="subscribe" method="post" '
-                    f'action="{html.escape(C.SUBSCRIBE_ENDPOINT)}" target="_blank">'
-                    f'<label for="sub-email">{html.escape(t["subscribe"])}</label>'
-                    f'<input id="sub-email" type="email" name="email" '
-                    f'placeholder="you@example.com" required/>'
-                    f'<button type="submit">{html.escape(t["subscribe_button"])}</button>'
-                    f'<small>{html.escape(t["subscribe_hint"])}</small></form>')
+    sub_js = ""
+    internal = bool(C.SUBSCRIBE_ENDPOINT) and C.SUBSCRIBE_ENDPOINT.startswith("/")
+    if C.SUBSCRIBE_ENDPOINT and rss_ok and not C.PREVIEW_DRAFTS:
+        form_attrs = ('data-internal'
+                      if internal else
+                      f'method="post" action="{html.escape(C.SUBSCRIBE_ENDPOINT)}" target="_blank"')
+        sub_form = (f'<form class="subscribe" {form_attrs}>' if not internal else
+                    f'<form class="subscribe" {form_attrs} novalidate>')
+        sub_form += (f'<label for="sub-email">{html.escape(t["subscribe"])}</label>'
+                     f'<input id="sub-email" type="email" name="email" '
+                     f'placeholder="you@example.com" required/>'
+                     f'<button type="submit">{html.escape(t["subscribe_button"])}</button>'
+                     f'<small data-msg aria-live="polite">{html.escape(t["subscribe_hint"])}</small></form>')
+    if internal and rss_ok:
+        sub_js = """
+var sf=document.querySelector('form.subscribe[data-internal]');
+if(sf){sf.addEventListener('submit',function(e){e.preventDefault();
+  if(sf.dataset.busy==='1')return;
+  var box=sf.querySelector('[data-msg]'); var btn=sf.querySelector('button');
+  var em=sf.querySelector('input[type=email]').value||'';
+  sf.dataset.busy='1'; btn.disabled=true;
+  fetch('%s',{method:'POST',headers:{'content-type':'application/json'},
+    body:JSON.stringify({email:em,source:location.pathname})})
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d&&d.ok){box.textContent=%s;sf.querySelector('input[type=email]').value='';}
+    else{box.textContent=%s;}
+  })
+  .catch(function(){box.textContent=%s;})
+  .then(function(){sf.dataset.busy='0';btn.disabled=false;});
+});}
+""" % ("/api/subscribe", repr(t["subscribe_ok"]), repr(t["subscribe_err"]), repr(t["subscribe_err"]))
     progress_js = """
 var PK=document.body.getAttribute('data-page-kind');
 var CN=document.body.getAttribute('data-chapter-num')||'';
@@ -378,8 +403,8 @@ if(PK==='home'){
 {summary_banner}
 {body}
 {disclosure}
-<footer>&copy; {html.escape(w['author'])} · {html.escape(w['title'])}. {html.escape(t['fiction'])} · {rss_text}</footer>
 {sub_form}
+<footer>&copy; {html.escape(w['author'])} · {html.escape(w['title'])}. {html.escape(t['fiction'])} · {rss_text}</footer>
 </div>
 <script>
 window.addEventListener('scroll',function(){{
@@ -394,6 +419,7 @@ if(exBtn){{exBtn.addEventListener('click',function(){{
   this.setAttribute('aria-expanded',open?'true':'false');
 }});}}
 {progress_js}
+{sub_js}
 </script>
 </body>
 </html>"""
@@ -867,6 +893,16 @@ def render_acts(out: Path, chapters: list[dict]):
             body, schema, language="en", page_kind="act"))
 
 
+def write_page_functions(out: Path):
+    """站内订阅端点：/api/subscribe 与 /api/subscribers（需要 Pages 项目绑定 KV 变量 SUBS）。"""
+    if not C.SUBSCRIBE_ENDPOINT.startswith("/"):
+        return
+    api = out / "functions" / "api"
+    api.mkdir(parents=True, exist_ok=True)
+    (api / "subscribe.js").write_text(PF.SUBSCRIBE.lstrip(), encoding="utf-8")
+    (api / "subscribers.js").write_text(PF.SUBSCRIBERS.lstrip(), encoding="utf-8")
+
+
 def write_sitemap(paths: list[str], out: Path):
     base = C.SITE["base_url"]
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -977,6 +1013,7 @@ def main():
     if revision:
         render_revision_notes(out)
     if not revision and not C.PREVIEW_DRAFTS:
+        write_page_functions(out)
         render_evergreen_pages(out, collection, paths)
         render_glossary(out)
         render_acts(out, collection["en"])

@@ -46,7 +46,7 @@ SUMMARY_LANGS = {"yue"}
 # 邮件订阅：填 Buttondown 的 embed 地址即可自动在页脚出现订阅表单，例如
 #   SITE_SUBSCRIBE_ENDPOINT=https://buttondown.email/api/emails/embed-subscribe/<username>
 # 未设置时页面只显示 RSS，不渲染任何空表单。
-SUBSCRIBE_ENDPOINT = os.environ.get("SITE_SUBSCRIBE_ENDPOINT", "").strip()
+SUBSCRIBE_ENDPOINT = os.environ.get("SITE_SUBSCRIBE_ENDPOINT", "/api/subscribe").strip()
 
 
 # 古典融合等修订只能独立预览，不替换已审核原稿和对应译文。

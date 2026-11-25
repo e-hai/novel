@@ -28,7 +28,9 @@ LOCALES = {
         "unpublished": "Not published", "unpublished_description": "This chapter is not part of the published work in this language.",
         "toc": "Table of contents", "contact": "Contact",
         "subscribe": "Get new chapters by email", "subscribe_button": "Subscribe",
-        "subscribe_hint": "No account needed, unsubscribe in one click.",
+        "subscribe_hint": "No account needed. Reply to any chapter email to unsubscribe.",
+        "subscribe_ok": "You are on the list. A new chapter will land in your inbox.",
+        "subscribe_err": "That email did not go through. Check it and try again.",
     },
     "tr": {
         "label": "Türkçe", "lang": "tr", "hreflang": "tr",
@@ -53,7 +55,9 @@ LOCALES = {
         "unpublished": "Yayımlanmadı", "unpublished_description": "Bu bölüm, eserin bu dilde yayımlanmış hâline dâhil değildir.",
         "toc": "İçindekiler", "contact": "İletişim",
         "subscribe": "Yeni bölümleri e-postayla al", "subscribe_button": "Abone ol",
-        "subscribe_hint": "Hesap gerekmez, tek tıkla ayrılabilirsin.",
+        "subscribe_hint": "Hesap gerekmez. Herhangi bir e-postayı yanıtlayarak ayrılabilirsin.",
+        "subscribe_ok": "Listedesin. Yeni bölüm e-postana gelecek.",
+        "subscribe_err": "E-posta kaydedilemedi. Kontrol edip tekrar dene.",
     },
     "yue": {
         "label": "粵語（節錄）", "lang": "yue-Hant-HK", "hreflang": "zh-HK",
@@ -80,7 +84,9 @@ LOCALES = {
         "unpublished": "未出版", "unpublished_description": "呢一章唔屬於呢種語言已正式出版嘅內容。",
         "toc": "章節目錄", "contact": "聯絡",
         "subscribe": "有新章節用電郵通知你", "subscribe_button": "訂閱",
-        "subscribe_hint": "唔需要帳號，一鍵可以退訂。",
+        "subscribe_hint": "唔需要帳號，回覆任何一封電郵就可以退訂。",
+        "subscribe_ok": "已經加入名單，有新章會寄去你信箱。",
+        "subscribe_err": "電郵登記唔成功，檢查一下再試。",
     },
     "ko": {
         "label": "한국어", "lang": "ko", "hreflang": "ko",
@@ -105,7 +111,9 @@ LOCALES = {
         "unpublished": "미출판", "unpublished_description": "이 장은 이 언어로 정식 출판된 작품에 포함되지 않습니다.",
         "toc": "목차로 돌아가기", "contact": "연락처",
         "subscribe": "새 장을 이메일로 받아보기", "subscribe_button": "구독",
-        "subscribe_hint": "계정 필요 없이 한 번에 해지할 수 있습니다.",
+        "subscribe_hint": "계정 필요 없습니다. 받은 메일에 답장하면 해지됩니다.",
+        "subscribe_ok": "목록에 추가되었습니다. 새 장이 메일로 발송됩니다.",
+        "subscribe_err": "이메일을 등록하지 못했습니다. 다시 확인해 주세요.",
     },
 }
 
