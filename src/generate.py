@@ -337,7 +337,7 @@ def page(title: str, description: str, canonical_path: str, body: str,
                     f'<form class="subscribe" {form_attrs} novalidate>')
         sub_form += (f'<label for="sub-email">{html.escape(t["subscribe"])}</label>'
                      f'<input id="sub-email" type="email" name="email" '
-                     f'placeholder="you@example.com" required/>'
+                     f'placeholder="you@yourmail.com" required/>'
                      f'<button type="submit">{html.escape(t["subscribe_button"])}</button>'
                      f'<small data-msg aria-live="polite">{html.escape(t["subscribe_hint"])}</small></form>')
     if internal and rss_ok:
