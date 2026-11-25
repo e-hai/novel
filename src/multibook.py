@@ -177,6 +177,9 @@ def render_book(out: Path, book: dict, language: str):
     cc = BC.COPY[language]
     t = LOCALES[language]
     chapters = _approved(load_chapters(book["slug"], language))
+    if not chapters and language in C.SUMMARY_LANGS:
+        # 节录语言沿用站点既有口径：照样出页，但整页 noindex、不进 sitemap。
+        chapters = load_chapters(book["slug"], language)
     if not chapters:
         return
     alternates = {lg: book_path(book["slug"], lg) for lg in LOCALES
