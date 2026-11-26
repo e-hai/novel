@@ -766,7 +766,8 @@ def render_home(chapters: list[dict], out: Path, language: str = "en", collectio
         items = "\n".join(_chapter_li(c, t) for c in group)
         title = html.escape(label)
         if slug and not C.PREVIEW_DRAFTS:
-            title = f'<a href="{route(language, f'/{slug}/')}">{title}</a>'
+            href = route(language, "/" + slug + "/")
+            title = f'<a href="{href}">{title}</a>'
         toc_parts.append(f'<section class="part"><h3 class="part-title">{title}</h3>'
                          f'<ul class="chapters">{items}</ul></section>')
     toc = "\n".join(toc_parts) or f'<p class="meta">{html.escape(t["no_chapters"])}</p>'
