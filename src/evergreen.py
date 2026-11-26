@@ -48,7 +48,7 @@ DESCRIPTIONS = {
         "en": "How engrams, the Loom, synthetic fill and the grey work in The Memory Repairman.",
         "tr": "Hafıza Tamircisi'nde engram, Tezgâh, sentetik dolgu ve grinin nasıl işlediği.",
         "yue": "《記憶修補師》入面記憶核、織機、合成填料同灰化係點運作。",
-        "ko": "『기억 수리공』에서 엔그램, 직조기, 합성 충전재, 회색화가 어떻게 작동하는지.",
+        "ko": "『기억 수리공』에서 엔그램, 직조기, 채움, 회색화와 관리청이 어떻게 작동하는지.",
     },
     "characters": {
         "en": "Elias Vane, Mara, Wren Adey, Inspector Ader, Halloway and the people named on the register.",
