@@ -87,4 +87,20 @@ BOOKS = [
             "yue": "反烏托邦語言小說",
         },
     },
+    {
+        "slug": "weather-for-a-town-that-isnt-there",
+        "title": "Weather for a Town That Isn't There",
+        "tagline": {
+            "en": "A night-shift forecaster keeps finding a drowned parish in the model, three o'clock sharp.",
+            "tr": "Gece vardiyasındaki bir hava tahmincisi, modelin içinde su altında kalmış bir köyü her gece üçte buluyor.",
+            "ko": "야간 근무 예보관이 매일 새벽 세 시, 모델 속에서 물에 잠긴 마을을 발견한다.",
+            "yue": "夜班預報員每個凌晨三點，都會喺模型入面見到一條沉咗落水嘅村。",
+        },
+        "genre": {
+            "en": "Quiet speculative fiction",
+            "tr": "Sakin spekülatif kurgu",
+            "ko": "조용한 사변 소설",
+            "yue": "靜默科幻小品",
+        },
+    },
 ]

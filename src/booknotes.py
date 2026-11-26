@@ -115,4 +115,26 @@ NOTES = {
 "所以結局係行政性而唔係英雄性。冇人靠講得靚救返 Vesh。佢活落去，係因為本嘢交到九個普通人手上，同埋有一張表寫明：呢種語言係被某幾隻手弄壞嘅。",
 "六章，一場聆訊。附錄你當佢係乜就係乜：語言唯一仲被使用、而唔係被描述嘅地方。"]},
 },
+"weather-for-a-town-that-isnt-there": {
+"en": {"title": "Behind Weather for a Town That Isn't There", "paras": [
+"This is a story about record-keeping before it is a story about weather. The tension is not supernatural: a water authority flooded a valley in 1974, a station closed, and the paperwork that should have described the closure was filed somewhere that a forecasting model never reads.",
+"The meteorological detail is deliberately unglamorous — dew points, gauge comparisons, a four-tenths-of-a-millimetre bias — because the horror in the book is administrative. A town can be drowned in an afternoon and still be qualified as a reporting station eighty years later, provided somebody keeps typing the archive in.",
+"Read the six chapters as one night shift after another. Each ends with a figure that has already been logged somewhere else, which is the pattern the story is about: the record exists before the person knows it exists.",
+"The buoy in the last chapter is the only new thing in the book. Everything else was already on paper, in a hand nobody had bothered to identify."]},
+"tr": {"title": "Weather for a Town That Isn't There'ın arkasında", "paras": [
+"Bu, hava durumu hikâyesi olmadan önce bir kayıt tutma hikâyesidir. Gerilim doğaüstü değil: bir su idaresi 1974'te bir vadiyi su altında bıraktı, bir istasyon kapandı ve kapanışı anlatması gereken kâğıtlar bir tahmin modelinin hiç okumadığı bir yere kaldırıldı.",
+"Meteoroloji ayrıntısı bilerek gösterişsiz — çiy noktaları, ölçek karşılaştırmaları, milimetrenin onda dördü kadar bir sapma — çünkü kitaptaki korku idari. Bir kasaba bir öğleden sonra su altında kalabilir ve seksen yıl sonra hâlâ bir rasat istasyonu olarak kayıtlı kalabilir; yeter ki biri arşivi geceleri yazmaya devam etsin.",
+"Altı bölümü birbirini izleyen gece vardiyaları olarak okuyun. Her biri, başka bir yerde çoktan kaydedilmiş bir sayıyla kapanır; hikâyenin deseni de budur: kayıt, kişi onun varlığını öğrenmeden önce vardır.",
+"Son bölümdeki şamandıra kitaptaki tek yeni şey. Geri kalan her şey zaten kâğıttaydı, kimsenin kim olduğunu merak etmediği bir el yazısıyla."]},
+"ko": {"title": "『Weather for a Town That Isn't There』뒤에 있는 것", "paras": [
+"이 소설은 날씨 이야기가 되기 전에 기록 이야기다. 긴장은 초자연적이지 않다. 1974년 수자원 당국이 계곡 하나를 물에 잠기게 했고, 관측소 하나가 문을 닫았으며, 폐쇄를 설명해야 할 서류는 예보 모델이 절대 읽지 않는 어딘가에 들어갔다.",
+"기상 디테일은 일부러 눈에 띄지 않게 처리했다. 이슬점, 우량계 비교, 0.4밀리미터의 편향. 이 소설의 공포는 행정적이기 때문이다. 한 마을은 오후 한나절에 물에 잠길 수 있고, 팔십 년 뒤에도 관측소로 남을 수 있다. 누군가 밤마다 아카이브를 입력하는 한.",
+"여섯 장을 이어지는 야간 근무처럼 읽어라. 각 장은 이미 다른 곳에 기록된 숫자로 끝난다. 이 소설의 패턴이 그것이다. 기록은 사람이 그 기록의 존재를 알기 전에 이미 있다.",
+"마지막 장의 부표가 이 책에서 유일하게 새로운 물건이다. 나머지는 모두 종이 위에 있었고, 필체가 누구의 것인지 아무도 확인하지 않았다."]},
+"yue": {"title": "《Weather for a Town That Isn't There》背後", "paras": [
+"呢個故事講嘅係記帳，先至講天氣。張力唔係超自然：1974 年水務局淹咗一條山谷，一個觀測站收檔，而應該講明「收檔」嘅文件，放入咗一個預報模型永遠唔會讀嘅地方。",
+"氣象細節特登做到唔起眼——露點、雨量計比較、零點四毫米嘅偏差——因為本書嘅恐怖係行政性嘅。一條村可以一個下晝就沉落水，八十年後仲可以掛住「觀測站」個牌，只要有人繼續每夜將檔案打落系統。",
+"六章你當係一更接一更咁讀。每一章都停喺一個喺第度已經入咗帳嘅數字——呢個就係本書嘅紋路：紀錄喺人知道之前就已經存在。",
+"最後一章嘅浮標，係全書唯一一樣新嘢。其餘全部一早喺紙上面，用一隻冇人得閒去查係邊個嘅手寫。"]},
+},
 }
