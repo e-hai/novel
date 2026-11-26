@@ -349,7 +349,7 @@ class LanguageTests(unittest.TestCase):
             self.assertEqual(meta['review_date'], '2026-11-24')
             self.assertGreater(c['words'], 0)
         # Season two (chapters 13-20) added on 2026-11-25 under the same gate.
-        season_two = [c for c in chapters if int(c['num']) >= 13]
+        season_two = [c for c in chapters if 13 <= int(c['num']) <= 20]
         self.assertEqual(len(season_two), 8)
         for c in season_two:
             meta = G.read_doc(c['path'])[0]
@@ -375,17 +375,30 @@ class LanguageTests(unittest.TestCase):
         first = (output / 'chapters/the-shop-on-cinder-lane/index.html').read_text()
         self.assertIn('scorched', first)
         self.assertNotIn('Nobody ever thanked him for the seam', first)
-        # As of 2026-11-25 all twenty chapters are approved and published in
-        # all four languages (season two added 13-20). Every post-fusion approval
+        # Season three (21-100) added on 2026-11-26: the book becomes one hundred
+        # chapters, the back half written as dated ledger entries.
+        season_three = [c for c in chapters if int(c['num']) >= 21]
+        self.assertEqual(len(season_three), 80)
+        self.assertEqual(sorted(int(c['num']) for c in season_three), list(range(21, 101)))
+        for c in season_three:
+            meta = G.read_doc(c['path'])[0]
+            self.assertTrue(c['approved'])
+            self.assertEqual(meta['edition'], 'classical-fusion')
+            self.assertEqual(meta['language'], 'en')
+            self.assertEqual(meta['approval_basis'], 'user-release-request')
+            self.assertEqual(meta['review_date'], '2026-11-26')
+            self.assertGreater(c['words'], 120)
+        # As of 2026-11-26 all one hundred chapters are approved and published in
+        # all four languages. Every post-fusion approval
         # is explicitly recorded as a user release request or a multilingual
         # completion without claiming sentence-level rewrites.
         for lang in ('tr', 'yue', 'ko'):
             chapters = G.load_chapters(lang)
             approved = [c for c in chapters if c['approved']]
             drafts = [c for c in chapters if not c['approved']]
-            self.assertEqual(len(chapters), 20)
-            self.assertEqual(len(approved), 20)
-            self.assertEqual(sorted(int(c['num']) for c in approved), list(range(1, 21)))
+            self.assertEqual(len(chapters), 100)
+            self.assertEqual(len(approved), 100)
+            self.assertEqual(sorted(int(c['num']) for c in approved), list(range(1, 101)))
             self.assertEqual(drafts, [])
             for c in approved:
                 meta = G.read_doc(c['path'])[0]

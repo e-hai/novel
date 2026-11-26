@@ -712,8 +712,8 @@ def render_home(chapters: list[dict], out: Path, language: str = "en", collectio
     if language == "en":
         groups = [(act["range"], act["title"], act["slug"]) for act in AX.ACTS]
     else:
-        bands = [(1, 3), (4, 9), (10, 12), (13, 16), (17, 20)]
-        groups = [(band, ex["parts"][i], None) for i, band in enumerate(bands)]
+        groups = [(act["range"], ex["parts"][i], None)
+                  for i, act in enumerate(AX.ACTS) if i < len(ex["parts"])]
     toc_parts = []
     for (lo, hi), label, slug in groups:
         group = [c for c in visible if str(c["num"]).isdigit() and lo <= int(c["num"]) <= hi]

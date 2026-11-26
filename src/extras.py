@@ -87,7 +87,9 @@ PAGES = {
         "title": "Reading guide",
         "description": "Where to start, how long each chapter takes, and which chapters carry the "
                        "argument — a spoiler-light guide to The Memory Repairman.",
-        "lede": "The book is twenty chapters in five parts, roughly six to eight minutes per chapter. "
+        "lede": "The book is one hundred chapters in thirteen parts: twenty narrative chapters, then eighty "
+                "dated ledger entries written from a bench. The early chapters run six to eight minutes; the "
+                "ledger entries run two to three. "
                 "This page is for readers deciding where to begin and for anyone returning after a gap.",
         "sections": [
             ("If you have ten minutes",
@@ -132,6 +134,36 @@ PAGES = {
               "to be read in three or four sittings, and every chapter is legible on its own."]),
         ],
     },
+    "season-three": {
+        "title": "Season three: one hundred chapters",
+        "description": "The Memory Repairman, expanded from twenty chapters to one hundred in thirteen "
+                       "parts, with the back half written as dated ledger entries rather than scenes.",
+        "lede": "On 2026-11-26 the book became one hundred chapters. The first twenty are scenes. The "
+                "last eighty are entries: dated pages in the shop's own ledger, two to three minutes "
+                "each, in the voice of the man writing them down at the end of a day.",
+        "sections": [
+            ("What the change is",
+             ["Chapters 21 to 100 continue the story without changing its mode of address. Nothing is "
+              "restaged and nothing is re-explained: the ledger picks up the week after the joint is "
+              "written down and carries the trade from one bench to a district, an office, a warehouse, "
+              "and back.",
+              "Eight new parts were added — Part VI · The Dual Signature through Part XIII · The Last "
+              "Entry — so the book now runs in thirteen movements of about eight to ten chapters."]),
+            ("How to read the ledger half",
+             ["Every entry opens with a number and a date, and most of them are short. Read them as a "
+              "sequence of afternoons rather than as chapters with a cliffhanger: the shape is cumulative, "
+              "and the recurring object is the record itself — what a shop writes down, what it leaves "
+              "out, and who is allowed to read it later."]),
+            ("What has not changed",
+             ["One bench, one district, the same five terms of art, and the same refusal to explain the "
+              "trade to the reader. The four-language editions carry the same one hundred chapters, "
+              "translated from the English source and recorded with the same approval fields."]),
+            ("Where it stops",
+             ["Entry 100 is the last page and it is a page about the page. The shop is still open at the "
+              "end, which is the only ending the trade allows: a decision, a date, two signatures, and "
+              "whatever was left standing."]),
+        ],
+    },
 }
 
-ORDER = ["timeline", "who-is-who", "reading-guide", "season-two"]
+ORDER = ["timeline", "who-is-who", "reading-guide", "season-two", "season-three"]

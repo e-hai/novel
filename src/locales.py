@@ -7,7 +7,7 @@ Translation chapters are reviewed separately, never inherit English approval.
 LOCALES = {
     "en": {
         "label": "English", "lang": "en", "hreflang": "en",
-        "title": "The Memory Repairman", "subtitle": "Five parts, one shop: stories about the things we choose to forget.",
+        "title": "The Memory Repairman", "subtitle": "Thirteen parts, one shop: stories about the things we choose to forget.",
         "genre": "Science Fiction",
         "description": "A near-future science fiction short story about a man who repairs other people's memories — and the one memory he is forbidden to touch.",
         "about": "About", "behind": "Behind the story", "chapters": "Chapters", "chapter": "Chapter {n}",
@@ -34,7 +34,7 @@ LOCALES = {
     },
     "tr": {
         "label": "Türkçe", "lang": "tr", "hreflang": "tr",
-        "title": "Hafıza Tamircisi", "subtitle": "Unutmayı seçtiğimiz şeyler üzerine üç hikâye.",
+        "title": "Hafıza Tamircisi", "subtitle": "On üç bölüm, tek dükkân: unutmayı seçtiğimiz şeyler üzerine.",
         "genre": "Bilimkurgu",
         "description": "Başkalarının anılarını onaran bir adamı ve dokunması yasak olan tek anıyı anlatan, yakın gelecekte geçen bir bilimkurgu öyküsü.",
         "about": "Hakkında", "behind": "Hikâyenin arka planı", "chapters": "Bölümler", "chapter": "Bölüm {n}",
@@ -63,7 +63,7 @@ LOCALES = {
         "label": "粵語（節錄）", "lang": "yue-Hant-HK", "hreflang": "zh-HK",
         "summary_title": "呢個係節錄版：",
         "summary_notice": "每章只譯咗開頭嘅段落，未係全文，亦唔會出現在搜尋結果。想睇完整故事，請讀英文原文。",
-        "title": "記憶修補師", "subtitle": "三個關於我哋選擇忘記啲乜嘢嘅故事。",
+        "title": "記憶修補師", "subtitle": "十三部，一間鋪：關於我哋選擇忘記啲乜嘢。",
         "genre": "科幻",
         "description": "一個近未來科幻短篇：一個替人修補記憶嘅男人，同埋嗰段佢唔可以掂嘅記憶。",
         "about": "關於", "behind": "故事背後", "chapters": "章節", "chapter": "第 {n} 章",
@@ -90,7 +90,7 @@ LOCALES = {
     },
     "ko": {
         "label": "한국어", "lang": "ko", "hreflang": "ko",
-        "title": "기억 수리공", "subtitle": "우리가 잊기로 선택한 것들에 관한 세 이야기.",
+        "title": "기억 수리공", "subtitle": "열세 부, 가게 하나: 우리가 잊기로 선택한 것들에 관한 이야기.",
         "genre": "공상과학",
         "description": "다른 사람의 기억을 고치는 남자와 그가 건드려서는 안 되는 단 하나의 기억을 다룬 근미래 공상과학 단편.",
         "about": "소개", "behind": "이야기 뒤편", "chapters": "목차", "chapter": "제 {n}장",
@@ -123,7 +123,7 @@ LOCALES = {
 EXTRA = {
     "en": {
         "explore": "Explore",
-        "parts": ["Part I · The Shop", "Part II · The Trade", "Part III · The Witness", "Part IV · The Review", "Part V · The Joint"],
+        "parts": ["Part I · The Shop", "Part II · The Trade", "Part III · The Witness", "Part IV · The Review", "Part V · The Joint", "Part VI · The Dual Signature", "Part VII · The Apprentice", "Part VIII · The Grey Spreads", "Part IX · The Warehouse", "Part X · The Loom, Twice", "Part XI · The Audit of the Audit", "Part XII · The Testimony", "Part XIII · The Last Entry"],
         "start_reading": "Start reading →",
         "continue_reading": "Continue reading",
         "resume_hint": "You were on chapter {n}.",
@@ -134,7 +134,7 @@ EXTRA = {
     },
     "tr": {
         "explore": "Keşfet",
-        "parts": ["Bölüm I · Dükkân", "Bölüm II · Meslek", "Bölüm III · Şahit", "Bölüm IV · Denetim", "Bölüm V · Eklem"],
+        "parts": ["Bölüm I · Dükkân", "Bölüm II · Meslek", "Bölüm III · Şahit", "Bölüm IV · Denetim", "Bölüm V · Eklem", "Bölüm VI · Çift İmza", "Bölüm VII · Çırak", "Bölüm VIII · Grinin Yayılışı", "Bölüm IX · Depo", "Bölüm X · Tezgâh, İki Kez", "Bölüm XI · Denetimin Denetimi", "Bölüm XII · Tanıklık", "Bölüm XIII · Son Kayıt"],
         "start_reading": "Okumaya başla →",
         "continue_reading": "Kaldığın yerden oku",
         "resume_hint": "Bölüm {n} üzerindeydin.",
@@ -145,7 +145,7 @@ EXTRA = {
     },
     "yue": {
         "explore": "探索",
-        "parts": ["第一部 · 間鋪", "第二部 · 呢行", "第三部 · 證人", "第四部 · 審查", "第五部 · 接駁"],
+        "parts": ["第一部 · 間鋪", "第二部 · 呢行", "第三部 · 證人", "第四部 · 審查", "第五部 · 接駁", "第六部 · 雙簽", "第七部 · 學師", "第八部 · 灰蔓延", "第九部 · 倉", "第十部 · 織機，兩次", "第十一部 · 查審查", "第十二部 · 證詞", "第十三部 · 最後一筆"],
         "start_reading": "開始閱讀 →",
         "continue_reading": "繼續閱讀",
         "resume_hint": "你上次讀到第 {n} 章。",
@@ -156,7 +156,7 @@ EXTRA = {
     },
     "ko": {
         "explore": "둘러보기",
-        "parts": ["1부 · 가게", "2부 · 업계", "3부 · 증인", "4부 · 심사", "5부 · 이음"],
+        "parts": ["1부 · 가게", "2부 · 업계", "3부 · 증인", "4부 · 심사", "5부 · 이음", "6부 · 이중 서명", "7부 · 견습", "8부 · 회색의 확산", "9부 · 창고", "10부 · 직조기, 두 번", "11부 · 심사의 심사", "12부 · 증언", "13부 · 마지막 기록"],
         "start_reading": "읽기 시작 →",
         "continue_reading": "이어서 읽기",
         "resume_hint": "제 {n}장까지 읽었습니다.",

@@ -97,4 +97,123 @@ ACTS = [
             "written before the repair rather than after it.",
         ],
     },
+    {
+        "slug": "part-vi",
+        "roman": "VI",
+        "title": "Part VI · The Dual Signature",
+        "range": (21, 30),
+        "lede": "The rule is now two hands on every core, and the shop has to learn what a second signature is for.",
+        "body": [
+            "From chapter twenty-one the book changes its hand: after the hearing, Elias starts keeping the "
+            "shop's log himself, and the log is what you read. Entries are dated, shorter than the chapters before "
+            "them, and written at the end of the day by someone who has decided that the record is part of the "
+            "repair rather than an admission about it.",
+            "The first ten entries are the new rule in practice. Mara signs beside him, which is not the same as "
+            "agreeing with him; two customers are refused because the second name will not go on the line; and the "
+            "shop discovers that a joint signature done properly costs a day it cannot bill for.",
+        ],
+    },
+    {
+        "slug": "part-vii",
+        "roman": "VII",
+        "title": "Part VII · The Apprentice",
+        "range": (31, 40),
+        "lede": "Wren Adey comes to learn the trade, and the ledger acquires a second handwriting whether Elias likes it or not.",
+        "body": [
+            "A shop with two names on every repair needs someone to hold the second pen. Wren is nineteen, "
+            "fast, and better with the Loom than Elias was at that age, which is its own kind of review.",
+            "The apprentice chapters are the trade taught out loud: what a seam looks like before it is one, why "
+            "fill has no taste, how to refuse a customer without making the refusal a repair. Halfway through the "
+            "part, Wren makes an error that the joint rule catches, and the shop's first shared mistake is filed "
+            "under both names.",
+        ],
+    },
+    {
+        "slug": "part-viii",
+        "roman": "VIII",
+        "title": "Part VIII · The Grey Spreads",
+        "range": (41, 50),
+        "lede": "The Grey stops being a condition of individual customers and becomes weather over a district.",
+        "body": [
+            "Ten entries, and the grey patches move out of the shop: a school corridor, a bus shelter, the "
+            "waiting room of a clinic, a street that has been repaved twice and still photographs wrong.",
+            "The Ward issues guidance instead of a diagnosis, which is what an institution does when it cannot "
+            "afford to name a thing. Elias keeps repairing, and starts writing down the addresses, because a "
+            "pattern is the only kind of evidence the trade is allowed to produce.",
+        ],
+    },
+    {
+        "slug": "part-ix",
+        "roman": "IX",
+        "title": "Part IX · The Warehouse",
+        "range": (51, 60),
+        "lede": "Fill is bought by the brick, and the shop finally meets the people who sell other people's afternoons.",
+        "body": [
+            "The supply chain opens in the middle of the book, the way a floor gives way in the middle of a room. "
+            "A warehouse outside the ring road sells fill in weighed lots: four hundred hours of a stranger's back "
+            "garden, a wedding nobody in the buyer's family attended, a summer that was donated twice.",
+            "Elias goes there to buy nothing and comes back with a donor form that has two signature boxes, one "
+            "of them empty, and the empty box is the whole argument of the following ten years compressed into a "
+            "rectangle of paper.",
+        ],
+    },
+    {
+        "slug": "part-x",
+        "roman": "X",
+        "title": "Part X · The Loom, Twice",
+        "range": (61, 70),
+        "lede": "Dual-account repair becomes a technique rather than a rule, and the shop runs the Loom for two people at once.",
+        "body": [
+            "The Loom was built to hold one account. Running it twice is not twice the work; it is a different "
+            "trade, with its own failures — beating, drift, and the specific silence of two memories that will "
+            "not agree about a room they both remember.",
+            "Mara and Elias run the first legal dual-account repair in the Ward, and it works, and neither of them "
+            "can say afterwards which of the two memories was repaired. That question is not resolved in this "
+            "part, or in the next one.",
+        ],
+    },
+    {
+        "slug": "part-xi",
+        "roman": "XI",
+        "title": "Part XI · The Audit of the Audit",
+        "range": (71, 80),
+        "lede": "Inspector Ader's own file is opened, and the shop is asked to review the man who reviewed it.",
+        "body": [
+            "An inspector who repairs his own doubt in order to write a finding has produced a document that "
+            "cannot be audited by anyone who trusts documents. The board sends the file back to the shop, which is "
+            "either an appeal or a joke depending on which paragraph you read first.",
+            "Elias reads Ader's seams the way Ader read his, and the ledger records the uncomfortable symmetry: "
+            "two men, one technique, and a Ward that has no procedure for a reviewer who is also a customer.",
+        ],
+    },
+    {
+        "slug": "part-xii",
+        "roman": "XII",
+        "title": "Part XII · The Testimony",
+        "range": (81, 90),
+        "lede": "Nine customers come back to say what the repair did, and the shop has to sit still and listen.",
+        "body": [
+            "The book turns the bench around: instead of customers bringing damage, the ledger records people "
+            "returning to describe the years after a repair. A man who cannot remember his mother's voice and "
+            "does not want to. A woman whose seam held and made her life smaller. A boy who asked for a staircase "
+            "to be removed and now climbs it every day without knowing why.",
+            "None of it is a complaint. That is the difficulty. The shop has kept its records honestly and the "
+            "records say the trade works, and the testimony says something the records were never built to hold.",
+        ],
+    },
+    {
+        "slug": "part-xiii",
+        "roman": "XIII",
+        "title": "Part XIII · The Last Entry",
+        "range": (91, 100),
+        "lede": "Elias's own core goes on the bench, Wren holds the second pen, and the ledger gets a last page.",
+        "body": [
+            "The last ten entries close the book the way the trade closes a core: not with a repair but with a "
+            "decision about what to leave standing. Elias's own memory — the one he has kept exactly where he left "
+            "it for the whole book — is opened, read, and signed for by two people.",
+            "What happens to the shop is not a twist. It is an entry with a date at the top, a second signature "
+            "beside the first, and a line at the bottom that says the ledger is complete. The last page is the "
+            "shortest in the book and the only one written in two hands.",
+        ],
+    },
 ]
