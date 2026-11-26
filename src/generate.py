@@ -26,6 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
 import config as C
+import series as SR
 import evergreen as EV
 from locales import LOCALES, EXTRA, route, work
 import glossary as GX
@@ -213,6 +214,10 @@ STYLE = (
     "text-decoration:underline;padding:0 0 0 .4rem}"
     ".explore-box{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line)}"
     ".part-title a{color:inherit;text-decoration:none}.part-title a:hover{color:var(--accent)}"
+    ".kicker{font-family:system-ui,sans-serif;font-size:.76rem;letter-spacing:.14em;"
+    "text-transform:uppercase;color:var(--accent);margin:1rem 0 .3rem}"
+    "[data-page-kind=series] .part-title{margin-top:2rem}"
+    "[data-page-kind=series] .chapters li{padding:1rem 0}"
     ".glossary-list{list-style:none;padding:0;margin:2rem 0}"
     ".glossary-list li{margin:0 0 1rem}"
     ".glossary-list a{display:block;text-decoration:none;color:var(--fg);border-bottom:1px solid var(--line);padding-bottom:.8rem}"
@@ -375,6 +380,11 @@ def page(title: str, description: str, canonical_path: str, body: str,
     novels_link = (f'<a href="{route(language, "/novels/")}">'
                    f'{html.escape(BC.COPY[language]["novels"])}</a>'
                    if not (C.PREVIEW_DRAFTS or C.REVISION_SET) else "")
+    series_link = (f'<a href="{route(language, "/series/")}">'
+                   f'{html.escape(SR.COPY[language]["title"])}</a>'
+                   if not (C.PREVIEW_DRAFTS or C.REVISION_SET) else "")
+    if series_link:
+        explore_links = series_link + explore_links
     explore_menu = (
         f'<div class="explore"><button type="button" class="explore-btn" '
         f'aria-expanded="false" aria-controls="explore-list">{html.escape(ex["explore"])} ▾</button>'

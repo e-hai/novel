@@ -4,11 +4,12 @@
 COPY = {
     "en": {
         "novels": "Novels",
-        "hub_title": "Novels — six standalone stories",
-        "hub_intro": ("Six standalone novels, each complete in six short chapters. "
-                      "One shop of memories, one ageing space station, one village orchard, "
-                      "one repeating Sunday, one dying language, one drowned parish still "
-                      "reporting the weather."),
+        "hub_title": "Novels — six volumes of The Register",
+        "hub_intro": ("Six volumes of The Register, each complete in six short chapters and "
+                      "readable on its own: one shop of memories, one ageing space station, "
+                      "one village orchard, one repeating Sunday, one dying language, one "
+                      "drowned parish still reporting the weather. Read one and the "
+                      "handwriting starts to show."),
         "hub_meta": "{n} chapters · {genre}",
         "read_book": "Read the novel",
         "start_first": "Start with chapter one",
@@ -28,11 +29,12 @@ COPY = {
     },
     "tr": {
         "novels": "Romanlar",
-        "hub_title": "Romanlar — altı bağımsız hikâye",
-        "hub_intro": ("Altı bağımsız roman, her biri altı kısa bölümde tamamlanıyor. "
-                      "Bir anı dükkânı, bir yaşlı uzay istasyonu, bir köy bahçesi, "
-                      "tekrar eden bir pazar, ölmekte olan bir dil, bir de su altında "
-                      "kalmış ama hava durumunu hâlâ bildiren bir kasaba."),
+        "hub_title": "Romanlar — The Register'ın altı cildi",
+        "hub_intro": ("The Register'ın altı cildi; her biri altı kısa bölümde tamamlanan ve "
+                      "tek başına okunabilen dosyalar: bir anı dükkânı, bir yaşlı uzay "
+                      "istasyonu, bir köy bahçesi, tekrar eden bir pazar, ölmekte olan bir "
+                      "dil, bir de su altında kalmış ama hava durumunu hâlâ bildiren bir "
+                      "kasaba. Birini okuduğunuzda el yazısı kendini göstermeye başlar."),
         "hub_meta": "{n} bölüm · {genre}",
         "read_book": "Romanı oku",
         "start_first": "Birinci bölümden başla",
@@ -52,11 +54,11 @@ COPY = {
     },
     "ko": {
         "novels": "소설",
-        "hub_title": "소설 — 여섯 편의 독립 이야기",
-        "hub_intro": ("여섯 편의 독립 소설, 각각 여섯 개의 짧은 장으로 완결된다. "
-                      "기억을 고치는 가게, 낡은 우주 정거장, 한 마을의 과수원, "
-                      "반복되는 일요일, 사라지는 언어, 그리고 물에 잠겼는데도 "
-                      "아직 날씨를 보고하는 마을."),
+        "hub_title": "소설 — 등록부 여섯 권",
+        "hub_intro": ("등록부의 여섯 권. 각 권은 여섯 개의 짧은 장으로 완결되고 혼자 읽어도 "
+                      "된다. 기억을 고치는 가게, 낡은 우주 정거장, 한 마을의 과수원, "
+                      "반복되는 일요일, 사라지는 언어, 그리고 물에 잠겼는데도 아직 날씨를 "
+                      "보고하는 마을. 한 권을 읽으면 필체가 드러나기 시작한다."),
         "hub_meta": "{n}장 · {genre}",
         "read_book": "소설 읽기",
         "start_first": "1장부터 읽기",
@@ -76,10 +78,11 @@ COPY = {
     },
     "yue": {
         "novels": "小說",
-        "hub_title": "小說 — 六個獨立故事",
-        "hub_intro": ("六部獨立小說，每部六個短章就完。一間修記憶嘅舖、一個舊太空站、"
-                      "一條村嘅果園、一個不停重複嘅星期日、一種將死嘅語言、"
-                      "同一條沉咗落水但仍然報天氣嘅村。"),
+        "hub_title": "小說 — 登記冊六卷",
+        "hub_intro": ("登記冊嘅六卷，每卷六個短章就完，單獨讀都得。一間修記憶嘅舖、"
+                      "一個舊太空站、一條村嘅果園、一個不停重複嘅星期日、"
+                      "一種將死嘅語言、同一條沉咗落水但仍然報天氣嘅村。"
+                      "讀一卷，筆跡就開始露。"),
         "hub_meta": "{n} 章 · {genre}",
         "read_book": "讀呢部小說",
         "start_first": "由第一章開始",

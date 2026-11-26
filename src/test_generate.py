@@ -16,6 +16,7 @@ import xml.etree.ElementTree as ET
 
 import generate as G
 import multibook as MB
+import series as S
 from locales import LOCALES, route
 
 
@@ -290,7 +291,7 @@ class LanguageTests(unittest.TestCase):
             for folder in ('tools', 'src', 'content/chapters', 'content/translations/tr', 'content/editorial', 'content/books'):
                 (root / folder).mkdir(parents=True, exist_ok=True)
             for name in ('generate.py', 'config.py', 'locales.py', 'evergreen.py', 'glossary.py', 'acts.py', 'extras.py',
-             'books.py', 'bookcopy.py', 'multibook.py'):
+             'books.py', 'bookcopy.py', 'multibook.py', 'series.py'):
                 shutil.copyfile(G.ROOT / 'src' / name, root / 'src' / name)
             script = root / 'tools/publish-chapter.sh'
             shutil.copyfile(G.ROOT / 'tools/publish-chapter.sh', script)
@@ -471,6 +472,28 @@ class ReaderUITests(unittest.TestCase):
 
     def read(self, path):
         return (self.out / path.lstrip('/') / 'index.html').read_text(encoding='utf-8')
+
+    def test_series_page_lists_all_six_volumes(self):
+        """《The Register》系列页四语齐备，且把六卷按卷次列全。"""
+        for lang in LOCALES:
+            page = self.read(route(lang, "/series/"))
+            self.assertIn(S.COPY[lang]["title"], page, lang)
+            for book in MB.BK.BOOKS:
+                self.assertIn(MB.book_path(book["slug"], lang), page, (lang, book["slug"]))
+            self.assertIn(S.COPY[lang]["volume_short"].format(n=len(S.SERIES["order"])), page, lang)
+
+    def test_volumes_declare_their_place_in_the_series(self):
+        """每部书的书页、章节页、笔记页都写明自己是第几卷并能回到系列页。"""
+        for lang in LOCALES:
+            for book in MB.BK.BOOKS:
+                n = S.volume(book["slug"])
+                self.assertGreater(n, 0)
+                stamp = S.COPY[lang]["volume"].format(n=n)
+                for path in (MB.book_path(book["slug"], lang),
+                             MB.notes_path(book["slug"], lang)):
+                    page = self.read(path)
+                    self.assertIn(route(lang, "/series/"), page, (lang, book["slug"], path))
+                    self.assertIn(stamp, page, (lang, book["slug"], path))
 
     def test_short_story_chapter_links_to_sibling_novels(self):
         """短篇章节页也能横向走到其余四部，而不只在书页底部。"""

@@ -22,6 +22,7 @@ import books as BK
 import bookcopy as BC
 import booknotes as BN
 import config as C
+import series as SR
 import generate as G
 from locales import LOCALES, route
 
@@ -29,6 +30,10 @@ from locales import LOCALES, route
 # ---------------------------------------------------------------------------
 # 读取与门禁
 # ---------------------------------------------------------------------------
+def series_path(language: str) -> str:
+    return route(language, "/series/")
+
+
 def book_dir(slug: str) -> Path:
     return G.CONTENT / "books" / slug
 
@@ -162,11 +167,14 @@ def render_hub(out: Path, flagships: dict | None = None):
             meta = cc["hub_meta"].format(n=len(chapters), genre=b["genre"][language])
             cards.append(
                 f'<li><a href="{html.escape(book_path(b["slug"], language))}">'
-                f'<span class="num">{html.escape(b["genre"][language])}</span>'
+                f'<span class="num">{html.escape(SR.COPY[language]["volume_short"].format(n=SR.volume(b["slug"])) if SR.volume(b["slug"]) else b["genre"][language])}</span>'
                 f'<h3>{html.escape(b["title"])}</h3>'
                 f'<p class="summary">{html.escape(b["tagline"][language])}</p>'
                 f'<span class="readtime">{html.escape(meta)}</span></a></li>')
-        body = (f'<h1>{html.escape(cc["hub_title"])}</h1>'
+        sc = SR.COPY[language]
+        body = (f'<p class="meta series-strip"><a href="{html.escape(series_path(language))}">'
+                f'{html.escape(sc["title"])} · {html.escape(sc["kicker"])}</a></p>'
+                f'<h1>{html.escape(cc["hub_title"])}</h1>'
                 f'<p class="lede">{html.escape(cc["hub_intro"])}</p>'
                 f'<ul class="chapters hub-list">{"".join(cards)}</ul>'
                 f'<p class="meta">{html.escape(cc["book_note"])}</p>')
@@ -176,6 +184,56 @@ def render_hub(out: Path, flagships: dict | None = None):
             route(language, "/novels/"), body, None, False, language,
             alternates=alternates, switches={lg: route(lg, "/novels/") for lg in LOCALES},
             page_kind="hub", noindex=language in C.SUMMARY_LANGS and False))
+
+
+def render_series(out: Path, language: str):
+    """系列页：共享机构、六卷说明、阅读次序。"""
+    sc = SR.COPY[language]
+    volumes = [b for b in BK.BOOKS
+               if SR.volume(b["slug"]) and _approved(load_chapters(b["slug"], language))]
+    volumes.sort(key=lambda b: SR.volume(b["slug"]))
+    items = "".join(
+        f'<li><a href="{html.escape(book_path(b["slug"], language))}">'
+        f'<span class="num">{html.escape(sc["volume_short"].format(n=SR.volume(b["slug"])))}</span>'
+        f'<h3>{html.escape(b["title"])}</h3>'
+        f'<p class="summary">{html.escape(b["tagline"][language])}</p>'
+        f'<span class="readtime">{html.escape(b["genre"][language])}</span></a></li>'
+        for b in volumes)
+    body = (f'<p class="kicker">{html.escape(sc["kicker"])}</p>'
+            f'<h1>{html.escape(sc["title"])}</h1>'
+            f'<p class="lede">{html.escape(sc["lede"])}</p>'
+            + "".join(f'<p>{html.escape(p)}</p>' for p in sc["paras"]) +
+            f'<section class="part"><h2 class="part-title">{html.escape(sc["order_title"])}</h2>'
+            f'<ul class="chapters hub-list">{items}</ul></section>'
+            f'<p class="meta">{html.escape(sc["order_note"])}</p>'
+            f'<p class="meta"><a href="{html.escape(route(language, "/novels/"))}">'
+            f'{html.escape(sc["all_novels"])}</a></p>')
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": sc["title"],
+        "description": sc["lede"],
+        "inLanguage": LOCALES[language]["lang"],
+        "url": C.SITE["base_url"] + series_path(language),
+        "hasPart": [{"@type": "Book", "name": b["title"],
+                     "url": C.SITE["base_url"] + book_path(b["slug"], language)}
+                    for b in volumes],
+    }
+    G.write_page(out, series_path(language), G.page(
+        f'{sc["title"]} — {C.SITE["name"]}', sc["lede"], series_path(language), body,
+        schema, False, language,
+        alternates={lg: series_path(lg) for lg in LOCALES},
+        switches={lg: series_path(lg) for lg in LOCALES}, page_kind="series"))
+
+
+def series_strip(book: dict, language: str) -> str:
+    sc = SR.COPY[language]
+    n = SR.volume(book["slug"])
+    if not n:
+        return ""
+    return (f'<p class="meta series-strip"><a href="{html.escape(series_path(language))}">'
+            f'{html.escape(sc["title"])} · '
+            f'{html.escape(sc["volume"].format(n=n))}</a></p>')
 
 
 def _also(book: dict, language: str) -> str:
@@ -218,6 +276,7 @@ def render_book(out: Path, book: dict, language: str):
            if language not in C.SUMMARY_LANGS else "")
     body = (f'<p class="meta"><a href="{html.escape(route(language, "/novels/"))}">'
             f'← {html.escape(cc["back_hub"])}</a></p>'
+            f'{series_strip(book, language)}'
             f'<h1>{html.escape(book["title"])}</h1>'
             f'<p class="lede">{html.escape(book["tagline"][language])}</p>'
             f'<p class="meta">{html.escape(book["genre"][language])} · '
@@ -258,7 +317,9 @@ def render_book(out: Path, book: dict, language: str):
                 f'<p class="meta"><a href="{html.escape(book_path(book["slug"], language))}">'
                 f'{html.escape(cc["book_toc"])}</a> · '
                 f'<a href="{html.escape(route(language, "/novels/"))}">'
-                f'{html.escape(cc["back_hub"])}</a></p>'
+                f'{html.escape(cc["back_hub"])}</a>'
+                f'</p>'
+                f'{series_strip(book, language)}'
                 f'{_also(book, language)}')
         G.write_page(out, chapter_url(book["slug"], c, language), G.page(
             f'{c["title"]} — {book["title"]}', c["summary"], chapter_url(book["slug"], c, language),
@@ -289,6 +350,12 @@ def render_notes(out: Path, book: dict, language: str):
             f'<p class="meta"><a href="{html.escape(book_path(book["slug"], language))}">'
             f'{html.escape(book["title"])}</a> · {html.escape(book["genre"][language])}</p>'
             + "".join(f'<p>{html.escape(p)}</p>' for p in note["paras"]) +
+            (f'<h2>{html.escape(SR.COPY[language]["connect_title"])}</h2>'
+             f'<p>{html.escape(SR.CONNECT[book["slug"]][language])}</p>'
+             f'<p class="meta"><a href="{html.escape(series_path(language))}">'
+             f'{html.escape(SR.COPY[language]["title"])} · '
+             f'{html.escape(SR.COPY[language]["volume"].format(n=SR.volume(book["slug"])))}</a></p>'
+             if SR.CONNECT.get(book["slug"], {}).get(language) else "") +
             f'<p class="meta"><a href="{html.escape(book_path(book["slug"], language))}">'
             f'{html.escape(cc["book_toc"])}</a> · '
             f'<a href="{html.escape(route(language, "/novels/"))}">'
@@ -356,6 +423,7 @@ def write_feed(book: dict, chapters: list[dict], language: str, out: Path):
 def sitemap_paths() -> list[str]:
     """与 render() 一致的可索引路径列表（供 sitemap 与测试共用）。"""
     result = [route(language, "/novels/") for language in LOCALES]
+    result.extend(series_path(language) for language in LOCALES)
     for book in BK.BOOKS:
         for language in LOCALES:
             chapters = _approved(load_chapters(book["slug"], language))
@@ -374,6 +442,8 @@ def render(out: Path, paths: list[str], flagships: dict | None = None):
     render_hub(out, flagships)
     for language in LOCALES:
         paths.append(route(language, "/novels/"))
+        render_series(out, language)
+        paths.append(series_path(language))
     for book in BK.BOOKS:
         for language in LOCALES:
             chapters = _approved(load_chapters(book["slug"], language))
