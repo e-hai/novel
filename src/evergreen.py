@@ -52,7 +52,7 @@ DESCRIPTIONS = {
     },
     "characters": {
         "en": "Elias Vane, Mara, Wren Adey, Inspector Ader, Halloway and the people named on the register.",
-        "tr": "Elias Vane, Mara, Wren Adey, Müfettiş Ader, Halloway ve sicile geçen insanlar.",
+        "tr": "Elias Vane, Mara, Wren Adey, Müfettiş Ader, Halloway ve sicildeki insanlar.",
         "yue": "Elias Vane、Mara、Wren Adey、督察 Ader、Halloway，同埋名冊上嘅人。",
         "ko": "Elias Vane, Mara, Wren Adey, 조사관 Ader, Halloway와 명부 위의 사람들.",
     },
