@@ -111,8 +111,10 @@ class LanguageTests(unittest.TestCase):
                             if any(c['approved'] for c in self.collection[lg]))
         # editorial pages: glossary index + glossary terms + act pages + companion pages
         editorial = 1 + len(G.GX.ORDER) + len(G.AX.ACTS) + len(G.XT.ORDER)
+        part_locales = sum(1 for part_no in G.OP.OPENERS for lg in ('tr', 'ko', 'yue')
+                           if G.OP.OPENERS[part_no].get(lg))
         expected = (2 + sum(c['approved'] for c in self.collection['en'])
-                    + evergreen_count + summary_entry + editorial
+                    + evergreen_count + summary_entry + editorial + part_locales
                     + len(MB.sitemap_paths()))
         self.assertEqual(len(urls), expected)
         for url in urls:
@@ -173,6 +175,33 @@ class LanguageTests(unittest.TestCase):
             for q in faq['mainEntity']:
                 self.assertEqual(q['@type'], 'Question')
                 self.assertIn('acceptedAnswer', q)
+
+    def test_part_opening_scenes(self):
+        """账簿各幕：幕页承载开篇场景，四语齐备，章页可跳到本幕场景。"""
+        output = self.build()
+        for part_no, block in G.OP.OPENERS.items():
+            act = G.AX.ACTS[part_no - 1]
+            for lang in ('en', 'tr', 'ko', 'yue'):
+                self.assertIn(lang, block, 'part %d missing %s' % (part_no, lang))
+                self.assertGreaterEqual(len(block[lang]['blocks']), 15,
+                                        'part %d %s too short' % (part_no, lang))
+                path = G.part_path(lang, part_no)
+                document = (output / path.strip('/') / 'index.html').read_text()
+                self.assertIn('content="index,follow"', document)
+                self.assertIn('data-part-scene="%d"' % part_no, document)
+                self.assertIn(html.escape(block[lang]['title']), document)
+                alts = {a['hreflang'] for a in Tags(document).attrs('link')
+                        if a.get('rel') == 'alternate' and 'hreflang' in a}
+                for other in ('en', 'tr', 'ko', 'yue'):
+                    self.assertIn(G.LOCALES[other]['hreflang'], alts)
+            words = sum(len(x.split()) for x in block['en']['blocks'])
+            self.assertGreaterEqual(words, 600, 'part %d en scene too short' % part_no)
+        # 本幕第一章带可点击入口
+        first = act['range'][0]
+        c = next(x for x in self.collection['en'] if int(x['num']) == int(first))
+        document = (output / G.chapter_path(c).strip('/') / 'index.html').read_text()
+        self.assertIn('class="part-hint"', document)
+        self.assertIn(G.part_path('en', part_no), document)
 
     def test_evergreen_pages(self):
         output = self.build()
@@ -293,7 +322,7 @@ class LanguageTests(unittest.TestCase):
             for folder in ('tools', 'src', 'content/chapters', 'content/translations/tr', 'content/editorial', 'content/books'):
                 (root / folder).mkdir(parents=True, exist_ok=True)
             for name in ('generate.py', 'config.py', 'locales.py', 'evergreen.py', 'glossary.py', 'acts.py', 'extras.py',
-             'books.py', 'bookcopy.py', 'multibook.py', 'series.py'):
+             'books.py', 'bookcopy.py', 'multibook.py', 'series.py', 'openers.py'):
                 shutil.copyfile(G.ROOT / 'src' / name, root / 'src' / name)
             script = root / 'tools/publish-chapter.sh'
             shutil.copyfile(G.ROOT / 'tools/publish-chapter.sh', script)

@@ -33,6 +33,7 @@ import glossary as GX
 import extras as XT
 import acts as AX
 import bookcopy as BC
+import openers as OP
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "content"
@@ -214,6 +215,11 @@ STYLE = (
     "text-decoration:underline;padding:0 0 0 .4rem}"
     ".explore-box{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line)}"
     ".part-title a{color:inherit;text-decoration:none}.part-title a:hover{color:var(--accent)}"
+    ".part-scene{margin:1.2rem 0 2.6rem}"
+    ".part-scene h2{font-size:1.45rem;margin:.5rem 0 1rem}"
+    ".part-scene p{margin:0 0 1.05rem}"
+    ".part-hint{margin:1.4rem 0 0;font-size:.82rem}"
+    ".part-hint a{color:var(--accent)}"
     ".kicker{font-family:system-ui,sans-serif;font-size:.76rem;letter-spacing:.14em;"
     "text-transform:uppercase;color:var(--accent);margin:1rem 0 .3rem}"
     "[data-page-kind=series] .part-title{margin-top:2rem}"
@@ -314,6 +320,43 @@ def disclosure_banner(is_draft: bool, language: str = "en") -> str:
     t = LOCALES[language]
     return (f'<div class="banner"><strong>{html.escape(t["draft_title"])}</strong> '
             f'{html.escape(t["draft_notice"])}</div>')
+
+
+PART_SCENE_COPY = {
+    "en": {"label": "Opening scene", "hint": "This part opens with a scene"},
+    "tr": {"label": "Açılış sahnesi", "hint": "Bu kısım bir sahneyle açılıyor"},
+    "yue": {"label": "開場場景", "hint": "本部由一場場景開始"},
+    "ko": {"label": "여는 장면", "hint": "이 부는 장면으로 시작합니다"},
+}
+
+
+def part_index(num) -> int | None:
+    """章号 -> 幕序号（0 起），用于把开篇场景挂到幕页与第一章上。"""
+    try:
+        n = int(num)
+    except (TypeError, ValueError):
+        return None
+    for i, act in enumerate(AX.ACTS):
+        lo, hi = act["range"]
+        if lo <= n <= hi:
+            return i
+    return None
+
+
+def scene_html(language: str, part_no: int) -> str:
+    """幕前场景正文：挂在幕页顶部，不占章节编号。"""
+    block = OP.OPENERS.get(part_no, {}).get(language)
+    if not block:
+        return ""
+    copy = PART_SCENE_COPY.get(language, PART_SCENE_COPY["en"])
+    paras = "".join(f"<p>{md_inline(x)}</p>" for x in block["blocks"])
+    return (f'<section class="part-scene" data-part-scene="{part_no}">'
+            f'<span class="eyebrow">{html.escape(copy["label"])} · {html.escape(block["when"])}</span>'
+            f'<h2>{html.escape(block["title"])}</h2>{paras}</section>')
+
+
+def part_path(language: str, part_no: int) -> str:
+    return route(language, f"/{AX.ACTS[part_no - 1]['slug']}/")
 
 
 def page(title: str, description: str, canonical_path: str, body: str,
@@ -712,7 +755,8 @@ def render_home(chapters: list[dict], out: Path, language: str = "en", collectio
     if language == "en":
         groups = [(act["range"], act["title"], act["slug"]) for act in AX.ACTS]
     else:
-        groups = [(act["range"], ex["parts"][i], None)
+        groups = [(act["range"], ex["parts"][i],
+                   act["slug"] if ((i + 1) in OP.OPENERS and OP.OPENERS[i + 1].get(language)) else None)
                   for i, act in enumerate(AX.ACTS) if i < len(ex["parts"])]
     toc_parts = []
     for (lo, hi), label, slug in groups:
@@ -722,7 +766,7 @@ def render_home(chapters: list[dict], out: Path, language: str = "en", collectio
         items = "\n".join(_chapter_li(c, t) for c in group)
         title = html.escape(label)
         if slug and not C.PREVIEW_DRAFTS:
-            title = f'<a href="/{html.escape(slug)}/">{title}</a>'
+            title = f'<a href="{route(language, f'/{slug}/')}">{title}</a>'
         toc_parts.append(f'<section class="part"><h3 class="part-title">{title}</h3>'
                          f'<ul class="chapters">{items}</ul></section>')
     toc = "\n".join(toc_parts) or f'<p class="meta">{html.escape(t["no_chapters"])}</p>'
@@ -935,10 +979,16 @@ def render_chapter(c: dict, chapters: list[dict], out: Path, collection: dict | 
         f'{html.escape(EV.PAGES[slug][language])}</a>' for slug in chapter_further_slugs(c["num"]))
     further = (f'<section class="explore-box"><h2>{html.escape(ex["further"])}</h2>'
                f'<p>{further_links}</p></section>') if not (C.PREVIEW_DRAFTS or C.REVISION_SET) else ""
+    idx = part_index(c["num"])
+    scene_hint = ""
+    if idx is not None and OP.OPENERS.get(idx + 1, {}).get(language) and not C.PREVIEW_DRAFTS:
+        scene_hint = (f'<p class="part-hint"><a href="{part_path(language, idx + 1)}">'
+                      f'{html.escape(PART_SCENE_COPY[language]["hint"])} · '
+                      f'{html.escape(OP.OPENERS[idx + 1][language]["title"])}</a></p>')
     body = (f'<span class="eyebrow">{html.escape(t["chapter"].format(n=c["num"]))}</span>'
             f'<h1>{html.escape(c["title"])}</h1><p class="byline meta">{html.escape(w["title"])} · '
             f'{html.escape(t["by"].format(author=w["author"]))} · '
-            f'{html.escape(t["readtime"].format(n=c["readtime"]))}</p>{lead}'
+            f'{html.escape(t["readtime"].format(n=c["readtime"]))}</p>{scene_hint}{lead}'
             f'<div class="chapter-body">{c["html"]}</div>{nav_html}'
             f'<p class="kbd-hint">{html.escape(t["keyboard_hint"])}</p>{further}')
     schemas = [schema, breadcrumb_schema(language, c)] if c["approved"] else [schema]
@@ -1050,10 +1100,10 @@ def render_glossary(out: Path):
 
 
 def render_acts(out: Path, chapters: list[dict]):
-    """三幕入口页：每幕一个可索引、可分享的摘要页，向下链接本幕章节。"""
+    """幕入口页：本幕摘要 + 幕前场景（若该幕有）+ 本幕章节列表。"""
     w = work(C.WORK, "en")
     base = C.SITE["base_url"]
-    for act in AX.ACTS:
+    for idx, act in enumerate(AX.ACTS):
         lo, hi = act["range"]
         group = [c for c in chapters
                  if str(c["num"]).isdigit() and lo <= int(c["num"]) <= hi and c["approved"]]
@@ -1062,9 +1112,11 @@ def render_acts(out: Path, chapters: list[dict]):
             f'<span class="num">Chapter {c["num"]}</span>'
             f'<h3>{html.escape(c["title"])}</h3>'
             f'<p>{html.escape(c.get("summary", ""))}</p></a></li>' for c in group)
+        scene = scene_html("en", idx + 1)
         body = (f'<section class="hero"><span class="eyebrow">{html.escape(act["title"])}</span>'
                 f'<h1>{html.escape(act["title"])}</h1>'
                 f'<p class="sub">{html.escape(act["lede"])}</p></section>'
+                + scene
                 + "".join(f"<p>{html.escape(x)}</p>" for x in act["body"])
                 + (f'<ul class="acts-chapters">{items}</ul>' if items else "")
                 + f'<p><a href="{base}/">Full contents</a> · <a href="{base}/glossary/">Glossary</a></p>')
@@ -1073,9 +1125,56 @@ def render_acts(out: Path, chapters: list[dict]):
                   "url": f"{base}/{act['slug']}/",
                   "isPartOf": {"@type": "Book", "name": w["title"],
                                "author": {"@type": "Organization", "name": w["author"]}}}
+        alternates = {lang: part_path(lang, idx + 1)
+                      for lang in ("en", "tr", "ko", "yue") if OP.OPENERS.get(idx + 1, {}).get(lang)}
+        switches = {lang: part_path(lang, idx + 1) for lang in alternates} or None
         write_page(out, f"/{act['slug']}/", page(
             f"{act['title']} — {w['title']}", act["lede"], f"/{act['slug']}/",
-            body, schema, language="en", page_kind="act"))
+            body, schema, language="en", page_kind="act",
+            alternates=alternates if len(alternates) > 1 else None,
+            switches=switches))
+
+
+def render_part_locales(out: Path, collection: dict):
+    """账簿各幕的本地化幕页：tr/ko/yue 各一页，承载同语幕前场景 + 本幕章节。"""
+    base = C.SITE["base_url"]
+    for part_no in sorted(OP.OPENERS):
+        act = AX.ACTS[part_no - 1]
+        idx = part_no - 1
+        lo, hi = act["range"]
+        for language in ("tr", "ko", "yue"):
+            if not OP.OPENERS[part_no].get(language):
+                continue
+            w = work(C.WORK, language)
+            copy = PART_SCENE_COPY[language]
+            group = [c for c in collection.get(language, [])
+                     if str(c["num"]).isdigit() and lo <= int(c["num"]) <= hi and c["approved"]]
+            items = "".join(
+                f'<li><a href="{base}{chapter_path(c)}">'
+                f'<span class="num">{html.escape(LOCALES[language]["chapter"].format(n=c["num"]))}</span>'
+                f'<h3>{html.escape(c["title"])}</h3>'
+                f'<p>{html.escape(c.get("summary", ""))}</p></a></li>' for c in group)
+            label = EXTRA[language]["parts"][idx]
+            block = OP.OPENERS[part_no][language]
+            path = part_path(language, part_no)
+            body = (f'<section class="hero"><span class="eyebrow">{html.escape(label)}</span>'
+                    f'<h1>{html.escape(label)}</h1>'
+                    '</section>'
+                    + scene_html(language, part_no)
+                    + (f'<ul class="acts-chapters">{items}</ul>' if items else "")
+                    + f'<p><a href="{base}{route(language)}">{html.escape(LOCALES[language]["toc"])}</a>'
+                      f' · <a href="{base}{route(language, "/series/")}">{html.escape(SR.COPY[language]["title"])}</a></p>')
+            schema = {"@context": "https://schema.org", "@type": "CreativeWork",
+                      "name": label, "description": block["title"],
+                      "url": base + path, "inLanguage": w["language"],
+                      "isPartOf": {"@type": "Book", "name": w["title"],
+                                   "author": {"@type": "Organization", "name": w["author"]}}}
+            alternates = {lang: part_path(lang, part_no)
+                          for lang in ("en", "tr", "ko", "yue") if OP.OPENERS.get(part_no, {}).get(lang)}
+            write_page(out, path, page(
+                f'{label} — {w["title"]}', block["title"], path, body, schema,
+                language=language, alternates=alternates, switches=alternates,
+                page_kind="act"))
 
 
 def render_extras(out: Path):
@@ -1218,9 +1317,14 @@ def main():
         render_evergreen_pages(out, collection, paths)
         render_glossary(out)
         render_acts(out, collection["en"])
+        render_part_locales(out, collection)
         render_extras(out)
         paths.extend(["/glossary/"] + [f"/glossary/{slug}/" for slug in GX.ORDER])
         paths.extend([f"/{act['slug']}/" for act in AX.ACTS])
+        paths.extend(part_path(lang, part_no)
+                     for part_no in OP.OPENERS
+                     for lang in ("tr", "ko", "yue")
+                     if OP.OPENERS[part_no].get(lang))
         paths.extend([f"/{slug}/" for slug in XT.ORDER])
     if not revision:
         for language, chapters in collection.items():
