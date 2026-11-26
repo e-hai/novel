@@ -450,5 +450,79 @@ class LanguageTests(unittest.TestCase):
                 G.main()
 
 
+class ReaderUITests(unittest.TestCase):
+    """阅读交互：字号、夜间模式、目录抽屉、复制链接，四语齐备。"""
+
+    def setUp(self):
+        revision_patch = patch.object(G.C, 'REVISION_SET', '')
+        revision_patch.start()
+        self.addCleanup(revision_patch.stop)
+        self.collection = {lang: G.load_chapters(lang) for lang in LOCALES}
+        self.out = self.build()
+
+    def build(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        output = Path(temporary.name)
+        with patch.object(G.C, 'OUTPUT_DIR', str(output)), patch.object(G.C, 'PREVIEW_DRAFTS', False):
+            with patch.object(G, 'load_chapters', side_effect=lambda lang: self.collection[lang]):
+                G.main()
+        return output
+
+    def read(self, path):
+        return (self.out / path.lstrip('/') / 'index.html').read_text(encoding='utf-8')
+
+    def test_short_story_chapter_links_to_sibling_novels(self):
+        """短篇章节页也能横向走到其余四部，而不只在书页底部。"""
+        page = self.read('/novels/the-salt-ledger/chapters/the-ledger-at-low-tide/')
+        others = set(re.findall(r'href="(/novels/[a-z-]+/)"', page))
+        self.assertGreaterEqual(len(others), 4, sorted(others))
+
+    def test_reader_bar_localized_on_every_language(self):
+        for lang in LOCALES:
+            home = self.read(route(lang, '/'))
+            self.assertIn('class="reader-bar"', home, lang)
+            self.assertIn(LOCALES[lang]['reader_tools'], home, lang)
+            self.assertLessEqual(home.count('id="toast"'), 1)
+
+    def test_font_scale_and_night_mode_rules_present(self):
+        home = self.read('/')
+        for scale in ('xs', 'sm', 'md', 'lg', 'xl'):
+            self.assertIn(f'html[data-fs={scale}]', home)
+        self.assertIn('html[data-theme=dark]', home)
+        self.assertIn("cinder-fs", home)
+        self.assertIn("cinder-theme", home)
+        self.assertIn("data-toc-btn", home.replace("data-toc-btn", "data-toc-btn"))
+
+    def test_chapter_toc_lists_current_chapter(self):
+        chapters = [c for c in self.collection['en'] if c['approved']]
+        first = chapters[0]
+        html_text = self.read(G.chapter_path(first))
+        self.assertIn('id="toc-panel"', html_text)
+        self.assertIn('aria-current="page"', html_text)
+        self.assertIn(G.chapter_path(first), html_text)
+        self.assertIn('data-toc-btn', html_text)
+
+    def test_chapter_toc_localized_labels(self):
+        chapter = [c for c in self.collection['ko'] if c['approved']][0]
+        html_text = self.read(G.chapter_path(chapter))
+        self.assertIn(LOCALES['ko']['toc_open'], html_text)
+        self.assertIn(LOCALES['ko']['night_mode'], html_text)
+
+    def test_book_page_cross_links_all_languages(self):
+        import books as BK
+        for lang in LOCALES:
+            for book in BK.BOOKS:
+                path = MB.book_path(book['slug'], lang)
+                page = (self.out / path.lstrip('/') / 'index.html')
+                if not page.exists():
+                    continue
+                text = page.read_text(encoding='utf-8')
+                self.assertIn('class="reader-bar"', text)
+                others = [b for b in BK.BOOKS if b['slug'] != book['slug']]
+                for other in others:
+                    self.assertIn(MB.book_path(other['slug'], lang), text)
+
+
 if __name__ == '__main__':
     unittest.main()

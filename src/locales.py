@@ -176,3 +176,9 @@ def work(base: dict, language: str) -> dict:
     data = LOCALES[language]
     return {**base, **{key: data[key] for key in ("title", "subtitle", "genre", "description")},
             "language": data["lang"]}
+
+
+# 阅读交互文案（字号 / 夜间模式 / 目录 / 复制链接），四语齐备。
+_READER_COPY = {'en': {'reader_tools': 'Reading options', 'font_smaller': 'Smaller text', 'font_larger': 'Larger text', 'night_mode': 'Night mode', 'day_mode': 'Day mode', 'copy_link': 'Copy link', 'copied': 'Link copied', 'toc_open': 'Contents', 'toc_close': 'Close contents', 'keyboard_hint': 'Use the arrow keys to move between chapters'}, 'tr': {'reader_tools': 'Okuma seçenekleri', 'font_smaller': 'Daha küçük yazı', 'font_larger': 'Daha büyük yazı', 'night_mode': 'Gece modu', 'day_mode': 'Gündüz modu', 'copy_link': 'Bağlantıyı kopyala', 'copied': 'Bağlantı kopyalandı', 'toc_open': 'İçindekiler', 'toc_close': 'İçindekileri kapat', 'keyboard_hint': 'Bölümler arasında geçmek için ok tuşlarını kullan'}, 'ko': {'reader_tools': '읽기 설정', 'font_smaller': '글자 작게', 'font_larger': '글자 크게', 'night_mode': '야간 모드', 'day_mode': '주간 모드', 'copy_link': '링크 복사', 'copied': '링크가 복사되었습니다', 'toc_open': '차례', 'toc_close': '차례 닫기', 'keyboard_hint': '화살표 키로 이전·다음 장으로 이동합니다'}, 'yue': {'reader_tools': '閱讀設定', 'font_smaller': '字細啲', 'font_larger': '字大啲', 'night_mode': '夜間模式', 'day_mode': '日間模式', 'copy_link': '複製連結', 'copied': '連結已複製', 'toc_open': '目錄', 'toc_close': '閂目錄', 'keyboard_hint': '用方向鍵可以跳去上一章或下一章'}}
+for _lang, _extra in _READER_COPY.items():
+    LOCALES[_lang].update(_extra)

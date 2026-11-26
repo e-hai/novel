@@ -251,6 +251,50 @@ STYLE = (
     "html:lang(ko) body,html:lang(yue) body{word-break:normal;overflow-wrap:break-word}"
     "@media(max-width:600px){h1{font-size:2rem}.hero h1{font-size:2.2rem}"
     "body{font-size:17px}}"
+    # Reading options: font scale, night mode, contents drawer, toast
+    "html[data-fs=xs] body{font-size:15px}"
+    "html[data-fs=sm] body{font-size:16px}"
+    "html[data-fs=md] body{font-size:17px}"
+    "html[data-fs=lg] body{font-size:19px}"
+    "html[data-fs=xl] body{font-size:21px}"
+    "html[data-theme=dark]{--fg:#e8e4dc;--muted:#a3a09a;--line:#32353b;"
+    "--accent:#e0907d;--paper:#12141a;--ink-soft:#c6c1b7;--warn-bg:#3a3018;--warn-bd:#b58a45}"
+    "html[data-theme=dark] body{background:var(--paper);color:var(--fg)}"
+    "html[data-theme=dark] h1,html[data-theme=dark] h2,html[data-theme=dark] h3,"
+    "html[data-theme=dark] .glossary dt{color:#f2ede4}"
+    "html[data-theme=dark] .progress-card,html[data-theme=dark] .disclosure{background:#191c22}"
+    "html[data-theme=dark] .subscribe input{background:#0d1014;color:var(--fg);border-color:var(--line)}"
+    "html[data-theme=dark] .explore-list{background:#191c22}"
+    ".reader-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;"
+    "padding:.55rem 0;border-bottom:1px solid var(--line);font-family:system-ui,sans-serif;"
+    "font-size:.78rem}"
+    ".reader-bar .rb-label{color:var(--muted);letter-spacing:.04em;margin-right:.4rem}"
+    ".reader-bar button{background:none;border:1px solid var(--line);color:var(--muted);"
+    "border-radius:4px;padding:.25rem .55rem;font:inherit;cursor:pointer}"
+    ".reader-bar button:hover{color:var(--fg);border-color:var(--muted)}"
+    ".reader-bar button[aria-expanded=true]{color:var(--fg);border-color:var(--accent)}"
+    ".toast{position:fixed;left:50%;bottom:1.4rem;transform:translate(-50%,1rem);"
+    "background:#1c1b19;color:#fff;font-family:system-ui,sans-serif;font-size:.82rem;"
+    "padding:.55rem .9rem;border-radius:5px;opacity:0;pointer-events:none;"
+    "transition:opacity .2s,transform .2s;z-index:20;max-width:80vw}"
+    ".toast.on{opacity:1;transform:translate(-50%,0)}"
+    ".toc-panel{position:fixed;inset:0 0 0 auto;width:min(88vw,360px);background:var(--paper);"
+    "border-left:1px solid var(--line);box-shadow:-8px 0 26px rgba(0,0,0,.12);z-index:30;"
+    "padding:1.2rem 1.3rem 2rem;overflow:auto;font-family:system-ui,sans-serif}"
+    ".toc-panel h2{font-size:1rem;margin:0 0 .8rem;letter-spacing:.06em;text-transform:uppercase;"
+    "color:var(--muted)}"
+    ".toc-panel ol{list-style:none;margin:0;padding:0}"
+    ".toc-panel li{border-bottom:1px solid var(--line);padding:.55rem 0;font-size:.86rem}"
+    ".toc-panel a{text-decoration:none;color:var(--fg);display:block}"
+    ".toc-panel a .n{display:block;color:var(--accent);font-size:.7rem;letter-spacing:.1em;"
+    "text-transform:uppercase}"
+    ".toc-panel a[aria-current=page]{color:var(--accent);font-weight:700}"
+    ".toc-panel .close{background:none;border:0;color:var(--muted);cursor:pointer;"
+    "font:inherit;float:right}"
+    ".kbd-hint{display:none;color:var(--muted);font-family:system-ui,sans-serif;"
+    "font-size:.76rem;margin-top:.6rem}"
+    "@media(hover:hover) and (min-width:700px){.kbd-hint{display:block}}"
+
 )
 
 def disclosure_banner(is_draft: bool, language: str = "en") -> str:
@@ -265,7 +309,8 @@ def page(title: str, description: str, canonical_path: str, body: str,
          jsonld: dict | list[dict] | None = None, is_draft: bool = False,
          language: str = "en", alternates: dict | None = None,
          switches: dict | None = None, page_kind: str = "",
-         chapter_num: str = "", noindex: bool = False) -> str:
+         chapter_num: str = "", noindex: bool = False,
+         toc_html: str = "") -> str:
     t = LOCALES[language]
     w = work(C.WORK, language)
     base = C.SITE["base_url"]
@@ -382,6 +427,91 @@ if(PK==='home'){
   var clr=document.querySelector('[data-clear]');if(clr){clr.addEventListener('click',function(){try{localStorage.removeItem(LS.key)}catch(e){}location.reload()})}
 }
 """.replace('__HINT__', json.dumps(ex["resume_hint"], ensure_ascii=False))
+    tools_html = (
+        f'<div class="reader-bar" role="group" aria-label="{html.escape(t["reader_tools"])}">'
+        f'<span class="rb-label">{html.escape(t["reader_tools"])}</span>'
+        f'<button type="button" data-fs="-" aria-label="{html.escape(t["font_smaller"])}" title="{html.escape(t["font_smaller"])}">A−</button>'
+        f'<button type="button" data-fs="+" aria-label="{html.escape(t["font_larger"])}" title="{html.escape(t["font_larger"])}">A+</button>'
+        f'<button type="button" data-theme-toggle aria-pressed="false">{html.escape(t["night_mode"])}</button>'
+        f'<button type="button" data-copy>{html.escape(t["copy_link"])}</button>'
+        + (f'<button type="button" data-toc-btn aria-expanded="false" '
+           f'aria-controls="toc-panel">{html.escape(t["toc_open"])}</button>' if toc_html else "")
+        + '</div>')
+    extra_js = """
+(function(){
+  var root=document.documentElement;
+  var L=__LABELS__;
+  function rd(k,d){try{return localStorage.getItem(k)||d}catch(e){return d}}
+  function wr(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  var steps=['xs','sm','md','lg','xl'];
+  var fs=rd('cinder-fs','md');
+  if(steps.indexOf(fs)<0){fs='md'}
+  root.setAttribute('data-fs',fs);
+  function applyFs(n){fs=n;root.setAttribute('data-fs',n);wr('cinder-fs',n)}
+  var bar=document.querySelector('.reader-bar');
+  if(bar){bar.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return;
+    if(b.hasAttribute('data-fs')){
+      var i=steps.indexOf(fs);
+      i=b.getAttribute('data-fs')==='+'?Math.min(steps.length-1,i+1):Math.max(0,i-1);
+      applyFs(steps[i]);
+    }
+  });}
+  var th=rd('cinder-theme','');
+  if(!th&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){th='dark'}
+  function applyTheme(v){
+    if(v==='dark'){root.setAttribute('data-theme','dark')}else{root.removeAttribute('data-theme')}
+    var tb=document.querySelector('[data-theme-toggle]');
+    if(tb){
+      tb.textContent=v==='dark'?L.day_mode:L.night_mode;
+      tb.setAttribute('aria-pressed',v==='dark'?'true':'false');
+    }
+  }
+  applyTheme(th);
+  var tb=document.querySelector('[data-theme-toggle]');
+  if(tb){tb.addEventListener('click',function(){
+    th=(root.getAttribute('data-theme')==='dark')?'light':'dark';wr('cinder-theme',th);applyTheme(th);
+  });}
+  var cb=document.querySelector('[data-copy]');
+  var toast=document.getElementById('toast');
+  function say(msg){ if(!toast)return; toast.textContent=msg; toast.classList.add('on');
+    clearTimeout(say.t); say.t=setTimeout(function(){toast.classList.remove('on')},2200); }
+  if(cb&&toast){cb.addEventListener('click',function(){
+    var url=location.href;
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){say(L.copied)},function(){say(url)});
+    } else {
+      var t=document.createElement('textarea'); t.value=url; document.body.appendChild(t);
+      t.select(); try{document.execCommand('copy'); say(L.copied);}catch(e){say(url);}
+      document.body.removeChild(t);
+    }
+  });}
+  var tocBtn=document.querySelector('[data-toc-btn]');
+  var panel=document.getElementById('toc-panel');
+  if(tocBtn&&panel){
+    var closeBtn=panel.querySelector('[data-toc-close]');
+    function setOpen(v){
+      panel.hidden=!v; tocBtn.setAttribute('aria-expanded',v?'true':'false');
+      if(v){panel.setAttribute('tabindex','-1');panel.focus();}
+    }
+    tocBtn.addEventListener('click',function(){setOpen(panel.hidden)});
+    if(closeBtn){closeBtn.addEventListener('click',function(){setOpen(false);tocBtn.focus()})}
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden){setOpen(false);tocBtn.focus()}});
+    panel.addEventListener('click',function(e){if(e.target.closest('a')){setOpen(false)}});
+  }
+  var nav=document.querySelector('.chapter-nav');
+  if(nav){
+    document.addEventListener('keydown',function(e){
+      if(e.metaKey||e.ctrlKey||e.altKey)return;
+      var tag=(e.target.tagName||'').toLowerCase();
+      if(tag==='input'||tag==='textarea'||tag==='select')return;
+      var prev=nav.querySelector('.prev'),next=nav.querySelector('.next');
+      if(e.key==='ArrowLeft'&&prev){location.assign(prev.href)}
+      if(e.key==='ArrowRight'&&next){location.assign(next.href)}
+    });
+  }
+})();
+""".replace('__LABELS__', json.dumps({k: t[k] for k in ("night_mode", "day_mode", "copied")}, ensure_ascii=False))
     return f"""<!doctype html>
 <html lang="{t['lang']}">
 <head>
@@ -398,12 +528,15 @@ if(PK==='home'){
 </head>
 <body data-page-kind="{html.escape(page_kind)}" data-chapter-num="{html.escape(chapter_num)}">
 <div class="progress" id="progress"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <header class="site"><div class="wrap">
   <a class="brand" href="{route(language)}">{html.escape(C.SITE['name'])}</a>
   <nav>{novels_link}<a href="{route(language, '/about/')}">{html.escape(t['about'])}</a>{explore_menu}</nav>
 </div></header>
 <div class="wrap">
 <nav class="language-switch" aria-label="{html.escape(t['languages'])}">{' '.join(switch_links)}</nav>
+{tools_html}
+{toc_html}
 {revision_banner}
 {disclosure_banner(is_draft, language)}
 {summary_banner}
@@ -426,6 +559,7 @@ if(exBtn){{exBtn.addEventListener('click',function(){{
 }});}}
 {progress_js}
 {sub_js}
+{extra_js}
 </script>
 </body>
 </html>"""
@@ -735,6 +869,28 @@ def breadcrumb_schema(language: str, c: dict) -> dict:
     }
 
 
+def _toc(language: str, chapters: list[dict], current_slug: str, links: list[tuple[str, str]] |
+         None = None, labels: tuple[str, str] | None = None) -> str:
+    """目录抽屉：章节标题列表，当前章高亮。链接由调用方给出，保持各自路径规则。"""
+    t = LOCALES[language]
+    rows = []
+    src = links or [(c["slug"], chapter_path(c)) for c in chapters]
+    for slug, href in src:
+        c = next((x for x in chapters if x["slug"] == slug), None)
+        if not c:
+            continue
+        cur = ' aria-current="page"' if slug == current_slug else ""
+        rows.append(f'<li><a href="{html.escape(href)}"{cur}>'
+                    f'<span class="n">{html.escape(t["chapter"].format(n=c["num"]))}</span>'
+                    f'{html.escape(c["title"])}</a></li>')
+    if not rows:
+        return ""
+    return (f'<aside class="toc-panel" id="toc-panel" hidden aria-label="{html.escape(t["toc_open"])}">'
+            f'<button type="button" class="close" data-toc-close '
+            f'aria-label="{html.escape(t["toc_close"])}">✕</button>'
+            f'<h2>{html.escape(t["toc_open"])}</h2><ol>{"".join(rows)}</ol></aside>')
+
+
 def render_chapter(c: dict, chapters: list[dict], out: Path, collection: dict | None = None):
     language = c["language"]
     t = LOCALES[language]
@@ -767,14 +923,16 @@ def render_chapter(c: dict, chapters: list[dict], out: Path, collection: dict | 
             f'<h1>{html.escape(c["title"])}</h1><p class="byline meta">{html.escape(w["title"])} · '
             f'{html.escape(t["by"].format(author=w["author"]))} · '
             f'{html.escape(t["readtime"].format(n=c["readtime"]))}</p>{lead}'
-            f'<div class="chapter-body">{c["html"]}</div>{nav_html}{further}')
+            f'<div class="chapter-body">{c["html"]}</div>{nav_html}'
+            f'<p class="kbd-hint">{html.escape(t["keyboard_hint"])}</p>{further}')
     schemas = [schema, breadcrumb_schema(language, c)] if c["approved"] else [schema]
     write_page(out, chapter_path(c), page(f'{c["title"]} — {w["title"]}', c["summary"] or w["description"],
                chapter_path(c), body, schemas, is_draft=not c["approved"], language=language,
                alternates=page_alternates(collection, f'/chapters/{c["slug"]}/'),
                switches=chapter_switches(collection, c["slug"]),
                page_kind="chapter", chapter_num=str(c["num"]),
-               noindex=language in C.SUMMARY_LANGS))
+               noindex=language in C.SUMMARY_LANGS,
+               toc_html=_toc(language, visible, c["slug"])))
 
 
 def feed_path(language: str) -> str:

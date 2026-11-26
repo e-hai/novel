@@ -178,6 +178,19 @@ def render_hub(out: Path, flagships: dict | None = None):
             page_kind="hub", noindex=language in C.SUMMARY_LANGS and False))
 
 
+def _also(book: dict, language: str) -> str:
+    """书页底部的跨书导览：同一语言下其他四部的书名 + 一句钩子。"""
+    cc = BC.COPY[language]
+    others = [b for b in BK.BOOKS if b["slug"] != book["slug"]]
+    items = "".join(
+        f'<li><a href="{html.escape(book_path(b["slug"], language))}">'
+        f'<h3>{html.escape(b["title"])}</h3>'
+        f'<p class="summary">{html.escape(b["tagline"][language])}</p></a></li>'
+        for b in others)
+    return (f'<section class="part"><h2 class="part-title">{html.escape(cc["also"])}</h2>'
+            f'<ul class="chapters">{items}</ul></section>')
+
+
 def render_book(out: Path, book: dict, language: str):
     cc = BC.COPY[language]
     t = LOCALES[language]
@@ -216,7 +229,8 @@ def render_book(out: Path, book: dict, language: str):
             f'<ul class="chapters">{items}</ul></section>'
             f'<p class="meta"><a href="{html.escape(notes_path(book["slug"], language))}">'
             f'{html.escape(cc["notes"])}</a></p>'
-            f'<p class="meta">{html.escape(cc["book_note"])}</p>{rss}')
+            f'<p class="meta">{html.escape(cc["book_note"])}</p>{rss}'
+            f'{_also(book, language)}')
     G.write_page(out, book_path(book["slug"], language), G.page(
         f'{book["title"]} — {C.SITE["name"]}',
         f'{book["tagline"][language]} {book["genre"][language]}, six chapters.',
@@ -240,10 +254,12 @@ def render_book(out: Path, book: dict, language: str):
                 f'{html.escape(t["readtime"].format(n=c["readtime"]))}</p>'
                 f'<div class="chapter-body">{c["html"]}</div>'
                 f'<nav class="chapter-nav">{"".join(nav)}</nav>'
+                f'<p class="kbd-hint">{html.escape(t["keyboard_hint"])}</p>'
                 f'<p class="meta"><a href="{html.escape(book_path(book["slug"], language))}">'
                 f'{html.escape(cc["book_toc"])}</a> · '
                 f'<a href="{html.escape(route(language, "/novels/"))}">'
-                f'{html.escape(cc["back_hub"])}</a></p>')
+                f'{html.escape(cc["back_hub"])}</a></p>'
+                f'{_also(book, language)}')
         G.write_page(out, chapter_url(book["slug"], c, language), G.page(
             f'{c["title"]} — {book["title"]}', c["summary"], chapter_url(book["slug"], c, language),
             body, chapter_schema(book, c, language), not c["approved"], language,
@@ -254,7 +270,10 @@ def render_book(out: Path, book: dict, language: str):
             switches={lg: (chapter_url(book["slug"], c, lg) if _lang_has(book["slug"], lg)
                            else route(lg, "/novels/")) for lg in LOCALES},
             page_kind="chapter", chapter_num=str(c["num"]),
-            noindex=language in C.SUMMARY_LANGS))
+            noindex=language in C.SUMMARY_LANGS,
+            toc_html=G._toc(language, chapters, c["slug"],
+                             [(x["slug"], chapter_url(book["slug"], x, language))
+                              for x in chapters])))
 
 
 def render_notes(out: Path, book: dict, language: str):
