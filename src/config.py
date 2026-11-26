@@ -41,7 +41,8 @@ PREVIEW_DRAFTS = os.environ.get("PREVIEW_DRAFTS", "").strip() in ("1", "true", "
 
 # 概要节录语言：章节只翻出开头段落，正文远短于英文原文（约 1/9 长度）。
 # 这类页面保留给人读（有语言切换和阅读路径），但不参与索引与 sitemap，避免薄页稀释站点质量。
-SUMMARY_LANGS = {"yue"}
+# 2026-11-26：粤语不再是节录版，第 21-100 章已是全文翻译，故此集合清空。
+SUMMARY_LANGS = set()
 
 # 邮件订阅：填 Buttondown 的 embed 地址即可自动在页脚出现订阅表单，例如
 #   SITE_SUBSCRIBE_ENDPOINT=https://buttondown.email/api/emails/embed-subscribe/<username>

@@ -270,7 +270,9 @@ class LanguageTests(unittest.TestCase):
                     continue
                 self.assertEqual(alternates[LOCALES[candidate]['hreflang']], G.C.SITE['base_url'] + path)
             self.assertNotIn('ko', alternates)
-            self.assertNotIn(LOCALES['yue']['hreflang'], alternates)
+            # 2026-11-26: 粤语已是全文翻译，纳入 hreflang 集群。
+            self.assertEqual(alternates[LOCALES['yue']['hreflang']],
+                             G.C.SITE['base_url'] + expected['yue'])
             schema = json.loads(document.split('<script type="application/ld+json">')[1].split('</script>')[0])
             self.assertEqual(schema[0]['inLanguage'], LOCALES[lang]['lang'])
 
