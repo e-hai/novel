@@ -15,7 +15,7 @@ review_notes: "The Memory Repairman'ın onaylı İngilizce 89. bölümünden 202
 
 Kayıt 89 — 7 Nisan. Bir avukat dükkâna mektup yazıp bir kaydı tasdik edip etmeyeceğimizi sordu: üç çekirdekte tutulan, üç dükkândan alınmış, saat konusunda anlaşmayan bir ailenin yangın hesabı.
 
-Dükkânın lisansı tasdik etmeyi kapsamıyor. Sektör onarımları tasdik eder, olayları değil; Ward'da bir aile kaydının kendi içinde tutarlı olduğunu söyleyen bir dükkân kategorisi yok.
+Dükkânın lisansı tasdik etmeyi kapsamıyor. Sektör onarımları tasdik eder, olayları değil; Koruma Dairesi'nde bir aile kaydının kendi içinde tutarlı olduğunu söyleyen bir dükkân kategorisi yok.
 
 Mara hayır dedi. Wren, defterin zaten onarımlardan fazlasını tasdik ettiğini söyledi: yüz dört adres, bir not defteri, dokuz çocuklu bir liste. Ben evet dedim, ve bu evet bu kitapta dükkânın lisansı dışında yaptığı ilk şey.
 

@@ -17,7 +17,7 @@ Kayıt 70 — 21 Kasım. Faturalandırılamayan saatler sütunu artık on bir ay
 
 İki bin yüz kırk saat. Okumalar, retler, dört sessiz gün, bir kararı değiştiren ikinci okumalar, dokuz partideki testler, yürüdüğüm dört adres.
 
-Ward'ın denetçisi Şubat ayında okudu ve bunun bir kusur olmadığını yazdı. Mara bunun ofisin söyleyebileceği en fazla şey ve söylemesi gereken en az şey olduğunu söylüyor. Wren bunun dükkânın asıl ürünü olduğunu ve tezgâh kartının da öyle söylemesi gerektiğini söylüyor, ve ben tezgâh kartına koymadım.
+Koruma Dairesi'nin denetçisi Şubat ayında okudu ve bunun bir kusur olmadığını yazdı. Mara bunun ofisin söyleyebileceği en fazla şey ve söylemesi gereken en az şey olduğunu söylüyor. Wren bunun dükkânın asıl ürünü olduğunu ve tezgâh kartının da öyle söylemesi gerektiğini söylüyor, ve ben tezgâh kartına koymadım.
 
 Yaptığım şey ikinci bir sütun açmak oldu: okuma olmayan iş için faturalandırılan saatler. Neredeyse boş, neredeyse boş kalacak, ve bu boşluk bu kitapta bir cevaba benzeyen tek şey.
 

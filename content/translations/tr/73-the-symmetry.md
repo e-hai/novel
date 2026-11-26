@@ -1,7 +1,7 @@
 ---
 chapter: 73
 title: "Simetri"
-summary: "İki adam, bir yöntem, ve hem denetleyici hem müşteri olan bir kişi için prosedürü olmayan bir Ward."
+summary: "İki adam, bir yöntem, ve hem denetleyici hem müşteri olan bir kişi için prosedürü olmayan bir Koruma Dairesi."
 status: approved
 language: tr
 source_sha256: c8a83458016248545761bab7172e87301bcea2dc38b0f59d45ecdde2dc4b1cb1
@@ -19,6 +19,6 @@ O şüphesini onardı ve bir bulgu üretti. Ben 2015'te anımı onardım ve bir 
 
 Fark, onun onarımının kaydedilmiş, benimkinin kaydedilmemiş olmasıdır, ve fark ahlaki değil, idaridir. Kaydedilmiş bir onarım gözden geçirilebilir. Kaydedilmemiş olan ise sadece bir adam hakkında bir olgudur.
 
-Mara'nın satırı: Ward'ın hem denetleyici hem müşteri olan biri için bir prosedürü yok, bu yüzden bir kurumun sınıflandırılamayan bir kişiyle yapabileceği tek şeyi yapacak: onu tutmak ve yıllık olarak okumak.
+Mara'nın satırı: Koruma Dairesi'nin hem denetleyici hem müşteri olan biri için bir prosedürü yok, bu yüzden bir kurumun sınıflandırılamayan bir kişiyle yapabileceği tek şeyi yapacak: onu tutmak ve yıllık olarak okumak.
 
 Onun satırını kitaba yazdım ve altına bir satır koydum: ve onu okuyacak olan dükkân olacak.

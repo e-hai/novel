@@ -15,7 +15,7 @@ review_notes: "The Memory Repairman'ın onaylı İngilizce 27. bölümünden 202
 
 Kayıt 27 — 27 Ocak. Bu ay kenarında Gri olan ve hiç hasarı olmayan üç çekirdek geldi.
 
-Gri — Ward'ın adını koymadığı leke — mesleğin ders kitaplarında hep hasarın belirtisi olagelmiştir. Bu üçü temizdi: dikiş yok, vuruş yok, dolgu yok, anının temiz bir çerçeveyle bitmesi gereken yerde yumuşak gri bir kenarlıktan başka bir şey yok.
+Gri — Koruma Dairesi'nin adını koymadığı leke — mesleğin ders kitaplarında hep hasarın belirtisi olagelmiştir. Bu üçü temizdi: dikiş yok, vuruş yok, dolgu yok, anının temiz bir çerçeveyle bitmesi gereken yerde yumuşak gri bir kenarlıktan başka bir şey yok.
 
 Biri otobüs şoförüne, biri okul sekreterine, biri de geçimini nasıl sağladığını söyleyemeyen bir kadına aitti. Üçü de aynı bölgedeydi. Üçü de son iki yıl içinde oraya taşınmıştı.
 

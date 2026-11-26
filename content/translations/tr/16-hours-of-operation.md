@@ -13,7 +13,7 @@ review_notes: "25 Kasım 2026 çok dilli tamamlama için onaylı İngilizce 16. 
 
 # Çalışma Saatleri
 
-Ward bir dükkânı denetlerken onu kapatmazdı. Böyle bir işlem yoktu. Lisans askıya alınabilir, askıya alma itiraz edilebilir, itiraz bir yıl sürebilirdi, ve o bir yıl boyunca dükkân açık kalırdı. Kapalı dükkân denetlenemezdi.
+Koruma Dairesi bir dükkânı denetlerken onu kapatmazdı. Böyle bir işlem yoktu. Lisans askıya alınabilir, askıya alma itiraz edilebilir, itiraz bir yıl sürebilirdi, ve o bir yıl boyunca dükkân açık kalırdı. Kapalı dükkân denetlenemezdi.
 
 Bu yüzden Elias çalıştı. Salıdan cumartesiye, dokuzdan altıya. Ve bunu yazan kartı vitrine astı. On bir yılda astığı üçüncü karttı.
 
@@ -61,7 +61,7 @@ Elias çekirdeği bağladı. Düğün katlanır sandalyeli bir bahçedeydi, koca
 
 Cuma geldi ve istemedi.
 
-Üçüncü müşteri, elinde bir dolgu paketi taşıyan bir kuryeydi, paketin ölçüsü uymuyordu ve yine de imza istiyordu. Elias imzaladı, kuryenin önünde açtı ve içindeki tuğlada tanımadık bir tedarikçi işareti vardı. Ward'ın işareti değil, eski Cinder'ın işareti de değil. Küçük bir daire içinde tek bir çizgi, kepengi kapanmış bir mercek gibi.
+Üçüncü müşteri, elinde bir dolgu paketi taşıyan bir kuryeydi, paketin ölçüsü uymuyordu ve yine de imza istiyordu. Elias imzaladı, kuryenin önünde açtı ve içindeki tuğlada tanımadık bir tedarikçi işareti vardı. Koruma Dairesi'nin işareti değil, eski Cinder'ın işareti de değil. Küçük bir daire içinde tek bir çizgi, kepengi kapanmış bir mercek gibi.
 
 “Bu nereden geldi?”
 

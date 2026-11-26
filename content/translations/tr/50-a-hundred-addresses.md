@@ -1,7 +1,7 @@
 ---
 chapter: 50
 title: "Yüz Adres"
-summary: "Liste yüz adresi geçer, Ward listeyi ister ve dükkân orijinali yerine bir kopyayı teslim eder."
+summary: "Liste yüz adresi geçer, Koruma Dairesi listeyi ister ve dükkân orijinali yerine bir kopyayı teslim eder."
 status: approved
 language: tr
 source_sha256: 70446a45a36a04b19f5ef2cf10fb43f8d31981622403ff7b7a00828b9418993f
@@ -13,7 +13,7 @@ review_notes: "The Memory Repairman'ın onaylı İngilizce 50. bölümünden 202
 
 # Yüz Adres
 
-Kayıt 50 — 7 Temmuz. Yüz dört adres. Ward listeyi yıl içinde ikinci kez, yazılı olarak istedi.
+Kayıt 50 — 7 Temmuz. Yüz dört adres. Koruma Dairesi listeyi yıl içinde ikinci kez, yazılı olarak istedi.
 
 İlk seferinde defterden bir sayfa aldılar. Bu sefer bütün haritayı istiyorlar, ve bir istek olmayan bir isteğin diliyle istediler: semt planlaması amaçlarıyla.
 

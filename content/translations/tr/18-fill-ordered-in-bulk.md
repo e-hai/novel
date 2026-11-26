@@ -13,7 +13,7 @@ review_notes: "25 Kasım 2026 çok dilli tamamlama için onaylı İngilizce 18. 
 
 # Toplu Dolgu Siparişi
 
-Depo Ward'ın dışındaydı; tramvay hattının bittiği döner kavşağı geçince, bir zamanlar soğuk hava deposu olan bir binadaydı. Ve hâlâ soğuk hava deposuydu. Binalar inşa edildikleri amacı bırakmaz.
+Depo Koruma Dairesi'nin dışındaydı; tramvay hattının bittiği döner kavşağı geçince, bir zamanlar soğuk hava deposu olan bir binadaydı. Ve hâlâ soğuk hava deposuydu. Binalar inşa edildikleri amacı bırakmaz.
 
 Adresi Mara teslimat irsaliyesinden almıştı. Elias irsaliyeyi tutuyordu. Evrakı sorgulamaya başlayan insanların yaptığı şeydi bu.
 
@@ -91,4 +91,4 @@ Kolundaki tuğlaya baktı. Kâğıttaki boş ikinci kutu, içeriden örülmüş 
 
 “Nereden geldiğini yazacağım,” dedi.
 
-Tramvayla Ward'a döndü. Tuğla yol boyunca dizinin üzerindeydi ve Cinder Lane'e vardığında artık onun elinin sıcaklığındaydı. Dolgunun tek sıcaklığı buydu.
+Tramvayla Koruma Dairesi'ne döndü. Tuğla yol boyunca dizinin üzerindeydi ve Cinder Lane'e vardığında artık onun elinin sıcaklığındaydı. Dolgunun tek sıcaklığı buydu.

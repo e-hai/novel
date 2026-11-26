@@ -1,7 +1,7 @@
 ---
 chapter: 13
-title: "Ward'dan Gelen Mektup"
-summary: "Ward, Elias'a bir mektup gönderir: 4-119 numaralı lisans denetlenecek, ama mektup tarihinden önce çekirdekte kendi el yazısıyla bir imza vardır."
+title: "Koruma Dairesi'nden Gelen Mektup"
+summary: "Koruma Dairesi, Elias'a bir mektup gönderir: 4-119 numaralı lisans denetlenecek, ama mektup tarihinden önce çekirdekte kendi el yazısıyla bir imza vardır."
 status: approved
 language: tr
 source_sha256: 8bb03ed746b0265a0e9af83987ed4d492ebac577735864701faab03377390df5
@@ -11,13 +11,13 @@ review_date: "2026-11-25"
 review_notes: "25 Kasım 2026 çok dilli tamamlama için onaylı İngilizce 13. bölümden çevrildi."
 ---
 
-# Ward'dan Gelen Mektup
+# Koruma Dairesi'nden Gelen Mektup
 
 Mektup bir Salı geldi ve zarfın üzerinde pul yoktu.
 
 Cinder Lane'de pul, bir şeyin resmî olduğunu gösteren işaretti; zarfı kapıya bırakan eller resmîydi, kâğıt değil. Elias zarfı yerden aldı, çevirdi. Adres doğruydu, adı doğruydu, arkasında mühür vardı: bir daire içinde tek bir çizgi, kepenk kapanmış bir mercek gibi.
 
-Ward'dı.
+Koruma Dairesi'ydi.
 
 İçeride tek bir sayfa vardı, tek bir paragraf, satır araları geniş.
 
@@ -37,7 +37,7 @@ Sonra Mara geldi. Kapıyı çalmadan açtı, paltosunu çıkarmadı.
 
 Ona baktı. “Neden seni denetlesinler? Senin lisansın askıya alınmış.”
 
-“Askıya alınmış lisans da kayıttır.” Mara zarfı geri koydu. “Ward askıya alınmışı denetlemezse neden askıya aldığını hatırlamaz. Ward'ın işi hatırlamak değil. Ward'ın işi kayıt tutmak.”
+“Askıya alınmış lisans da kayıttır.” Mara zarfı geri koydu. “Koruma Dairesi askıya alınmışı denetlemezse neden askıya aldığını hatırlamaz. Koruma Dairesi'nin işi hatırlamak değil. Koruma Dairesi'nin işi kayıt tutmak.”
 
 Mektubu tezgâha, çekirdeğin yanına koydu ve çekirdeği çalıştırdı.
 
@@ -83,7 +83,7 @@ Kapıda durdu, paltosunu ilikledi. “Bir şey daha var,” dedi. “Mektupta bi
 
 Gitti.
 
-Elias sayfayı tekrar okudu. Kâğıt kalındı, mühür kuruydı, cümleler kısaydı. Ward'ın mektupları hep kısa olurdu, çünkü Ward kısa olmayı bir nezaket sanıyordu.
+Elias sayfayı tekrar okudu. Kâğıt kalındı, mühür kuruydı, cümleler kısaydı. Koruma Dairesi'nin mektupları hep kısa olurdu, çünkü Koruma Dairesi kısa olmayı bir nezaket sanıyordu.
 
 O gece dükkânı kapatmadı. Işığı açık bıraktı, tahtayı çevirdi, kasa çekmecesini kilitledi ve yukarı çıktı. Yatağa değil, pencerenin yanındaki sandalyeye oturdu ve Cinder Lane'i izledi.
 

@@ -1,6 +1,6 @@
 ---
 chapter: 19
-title: "Ward'ın Unuttuğu Şey"
+title: "Koruma Dairesi'nin Unuttuğu Şey"
 summary: "Üç üye kaydı yüksek sesle okur ve dikişin ne olduğuna karar veremez. Mara lisansını masaya koyar ve ikinci imzayı gerçek yapar."
 status: approved
 language: tr
@@ -11,9 +11,9 @@ review_date: "2026-11-25"
 review_notes: "25 Kasım 2026 çok dilli tamamlama için onaylı İngilizce 19. bölümden çevrildi."
 ---
 
-# Ward'ın Unuttuğu Şey
+# Koruma Dairesi'nin Unuttuğu Şey
 
-Duruşma odası dördüncü kattaydı ve penceresi vardı. Ward'da nadir bir şeydi, ve pencereden otopark ve duvar görünüyordu.
+Duruşma odası dördüncü kattaydı ve penceresi vardı. Koruma Dairesi'nde nadir bir şeydi, ve pencereden otopark ve duvar görünüyordu.
 
 Masanın arkasında üç kişi oturuyordu. Biri kaydı okuyordu, biri not alıyordu, biri Elias'a bakıyordu. Yanlış hesaplanmış bir sayıya bakar gibi.
 

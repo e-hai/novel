@@ -1,7 +1,7 @@
 ---
 chapter: 77
 title: "Olmayan Prosedür"
-summary: "Dükkân, hem denetleyici hem müşteri olanlar için bir prosedür taslaklar, ve Ward onu literatür olarak dosyalar."
+summary: "Dükkân, hem denetleyici hem müşteri olanlar için bir prosedür taslaklar, ve Koruma Dairesi onu literatür olarak dosyalar."
 status: approved
 language: tr
 source_sha256: ee95ea1370fdbbf239b93fbfebc9eaea7a774877cbf7c5e2cb7708337beacf3b
@@ -17,7 +17,7 @@ Kayıt 77 — 13 Ocak. Taslakladık. Dört sayfa, on bir madde, bunlardan biri �
 
 İlk taslağı Mara yazdı, ben düzelttim, Wren daktiloya geçirdi; bu da onu bu kitapta üzerinde üç el bulunan tek belge yapıyor. Kurula ve ikinci denetçiye gönderdik, başka kimseye değil.
 
-Kurulun cevabı on bir gün sonra geldi: alındı, not edildi, kabul edilmedi, yönerge sunumları altına dosyalandı. Ward'ın literatür demesinin yolu budur bu.
+Kurulun cevabı on bir gün sonra geldi: alındı, not edildi, kabul edilmedi, yönerge sunumları altına dosyalandı. Koruma Dairesi'nin literatür demesinin yolu budur bu.
 
 Ader'in cevabı dokuz gün sonra geldi ve açmadım. Dükkânda defterin üstündeki rafta, açık değil, altı haftadır orada, ve kitapta orada olduğunu yazdım; çünkü dükkândaki açık olmayan bir mektup, sonunda birisinin açacağı bir şeydir ve o kişi ben olmayacağım.
 

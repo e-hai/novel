@@ -103,7 +103,7 @@ Birine telefon edip farklı bir adam olduğunu itiraf etmek istedi. Bu kolay tan
 
 Çekirdeği en alt çekmeceye koydu. Sonra tekrar çıkardı.
 
-Arşiv, sınıflandırmaya itirazı yalnızca adı açık bir başvuru sahibinden alıyordu. Anonim bir kopya Ward'da dolaşabilir, ama hiçbir memur cevap vermek zorunda kalmazdı. Adlı bir kopya, ruhsatsız dükkânına bir müfettiş getirebilirdi.
+Arşiv, sınıflandırmaya itirazı yalnızca adı açık bir başvuru sahibinden alıyordu. Anonim bir kopya Koruma Dairesi'nde dolaşabilir, ama hiçbir memur cevap vermek zorunda kalmazdı. Adlı bir kopya, ruhsatsız dükkânına bir müfettiş getirebilirdi.
 
 Elias temiz bir kâğıda üç sütun açtı: **hayatta kalan kayıt**, **dış doğrulama**, **sentetik köprü**. Her birinin neyi kanıtlayabildiğini ve neyi kanıtlayamadığını yazdı. Boş aralığın altına: **Mara'nın sonraki yazgısı bilinmiyor.** Hesabı bitirmek için bir buluşma ya da bir ölüm eklemedi.
 

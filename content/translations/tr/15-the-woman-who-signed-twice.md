@@ -65,7 +65,7 @@ Panele baktı. Altındaki lamba eskiydi, kokuyordu bile.
 
 “Mektubu yazabilirdiniz,” dedi. “Denetimin geleceğini söyleyebilirdiniz.”
 
-“Söyledim.” Kadın iki parmağıyla panele dokundu. İnsanların kapıyı açmadan önce kapıya dokunması gibi. “Mektup bildirimin kendisidir. Ve denetimin içeri girebileceği tek yoldur. Ward uyarı kabul etmez. Mektup kabul eder.”
+“Söyledim.” Kadın iki parmağıyla panele dokundu. İnsanların kapıyı açmadan önce kapıya dokunması gibi. “Mektup bildirimin kendisidir. Ve denetimin içeri girebileceği tek yoldur. Koruma Dairesi uyarı kabul etmez. Mektup kabul eder.”
 
 “Ve çekirdekteki el yazımla imza, mektuptan on gün önce.”
 

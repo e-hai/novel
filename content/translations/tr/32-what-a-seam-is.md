@@ -17,6 +17,6 @@ Kayıt 32 — 9 Mart. Öğretmek, tanıklı bir denetimdir.
 
 Wren'e dikişin ne olduğunu anlattım: birleşme yeri değil, anının kendisiyle anlaşmayı bıraktığı yer. İyi bir dikiş içeriden görünmez, dışarıdan hafifçe sıcaktır; boyanmış bir duvar gibi. Kötü bir dikiş bir vuruştur — kendi sesinden önce gelen bir oda.
 
-Dikişin ne zaman kusur, ne zaman kategori olduğunu sordu. Duruşmadan sonra bunu bana soran olmadı ve ona Ward'ın verdiği cevabı verdim: ikinci kayda bağlı olduğunu. Yazdı. Sonra kuralın insanlarla mı yoksa kâğıtlarla mı ilgili olduğunu sordu.
+Dikişin ne zaman kusur, ne zaman kategori olduğunu sordu. Duruşmadan sonra bunu bana soran olmadı ve ona Koruma Dairesi'nin verdiği cevabı verdim: ikinci kayda bağlı olduğunu. Yazdı. Sonra kuralın insanlarla mı yoksa kâğıtlarla mı ilgili olduğunu sordu.
 
 İnsanlar, dedim. Bunu da yazdı ve inanıp inanmayacağına karar verdiğini görebiliyordum; iki kez denetlenmiş bir adamdan çıkan bir cümle karşısında bir çırak için doğru olan şey bu.

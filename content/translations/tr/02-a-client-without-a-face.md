@@ -29,7 +29,7 @@ Fişin tarihinin altında bir numara vardı. Arşiv hattını arayıp numarayı 
 
 “Süresi dolmuş saklama,” dedi kayıtlı ses. “Malzeme sahibine iade edildi. Ek kayıtlar için kimlik gerekir.”
 
-Ziyaretçi değil, otomatik bir iadeydi. Ward'da kimse onu aramamıştı. Bir saklama sözleşmesi yirmi yıl sürmüş, bir memur ya da makine söylediğini yapmıştı.
+Ziyaretçi değil, otomatik bir iadeydi. Koruma Dairesi'nde kimse onu aramamıştı. Bir saklama sözleşmesi yirmi yıl sürmüş, bir memur ya da makine söylediğini yapmıştı.
 
 Bir şeyi unutmak için peşin ödeme yapmıştı; ödeme bitmişti.
 

@@ -15,7 +15,7 @@ review_notes: "The Memory Repairman'ın onaylı İngilizce 76. bölümünden 202
 
 Kayıt 76 — 6 Ocak. İkinci denetçi 6 Ocak'ta geldi, elli yaşlarında bir kadın, bir dosyayla, dükkân için bir dosyası yoktu.
 
-Denetimin denetimini gözden geçiriyor, ki Ward'ın utanmadan kullandığı bir cümle. Ader'in dosyasını okumadan önce dükkânın dokuz sorusunu okudu, sonra 2015'ten beri kimsenin sormadığı soruyu sordu: dükkân ne olsun istiyor.
+Denetimin denetimini gözden geçiriyor, ki Koruma Dairesi'nin utanmadan kullandığı bir cümle. Ader'in dosyasını okumadan önce dükkânın dokuz sorusunu okudu, sonra 2015'ten beri kimsenin sormadığı soruyu sordu: dükkân ne olsun istiyor.
 
 Ne önerdiğini değil. Ne istediğini. Dükkânın Ader'in bulgularının kuruldan başka biri tarafından okunabilir olmasını istediğini söyledim, ve bunu istemenin bir prosedür olmadığını; bunun ayın ilk dürüst cevabı olduğunu söyledi.
 

@@ -54,7 +54,7 @@ DESCRIPTIONS = {
         "en": "Elias Vane, Mara, Halloway and the people who come to have their memories repaired.",
         "tr": "Elias Vane, Mara, Halloway ve anılarını onartmaya gelenler.",
         "yue": "Elias Vane、Mara、Halloway，同埋嚟修補記憶嘅人。",
-        "ko": "엘리아스 베인, 마라, 할로웨이와 기억을 고치러 오는 사람들.",
+        "ko": "Elias Vane, Mara, Halloway와 기억을 고치러 오는 사람들.",
     },
     "themes": {
         "en": "Facts versus feeling, the ethics of erasing, and the recurring blue door and rain.",
@@ -147,8 +147,8 @@ CONTENT = {
                 "Yoğun onarım **griyi** doğurur: olguları sağlam, duyguları gitmiş bir insan. Bunun klinik bir adı yoktur, çünkü onarım satan şirketlerin ona ad vermeye ilgisi yoktur.",
                 "Sektörün sloganı, *\"Size olanı geri veriyoruz\"* der. Tamircilerin bildiği gerçek ise: *\"Size olanın şeklini geri veriyoruz.\"*",
             ]),
-            ("Ward", [
-                "Hikâye, Ward'da, yıpranmış ve bürokratik bir yakın gelecekte geçer — neon gösterişi yok, sadece yağmur, metal tenteler ve güven veren maviye boyanmış klinikler.",
+            ("Koruma Dairesi", [
+                "Hikâye, Koruma Dairesi'nde, yıpranmış ve bürokratik bir yakın gelecekte geçer — neon gösterişi yok, sadece yağmur, metal tenteler ve güven veren maviye boyanmış klinikler.",
             ]),
         ],
         "characters": [
@@ -209,8 +209,8 @@ CONTENT = {
                 "大量修補會造成**灰化**：一個人事實完整、感覺消失。呢個病冇臨床名稱，因為賣修補嘅公司冇興趣幫佢命名。",
                 "行業口號話：*「我哋將發生過嘢還返畀你。」* 修補師知嘅真相係：*「我哋將發生過嘢嘅形還返畀你。」*",
             ]),
-            ("Ward", [
-                "故事喺 Ward 發生，一個殘舊、官僚嘅近未來 —— 冇霓虹特效，只有雨、金屬簷篷同埋漆成令人安心藍色嘅診所。",
+            ("管理局", [
+                "故事喺管理局發生，一個殘舊、官僚嘅近未來 —— 冇霓虹特效，只有雨、金屬簷篷同埋漆成令人安心藍色嘅診所。",
             ]),
         ],
         "characters": [
@@ -265,26 +265,26 @@ CONTENT = {
             ]),
             ("직조기", [
                 "**직조기**는 엔그램을 수리공이 그 안에서 작업할 수 있는 구조로 펼치는 탁자 크기의 기계입니다. 보존사가 프레스코를 다루듯합니다. 모든 수리는 봉합을 남깁니다.",
-                "엘리아스는 다른 십 년 전에는 합법이었던 부품으로 만든 낡고 무면허인 직조기를 씁니다. 케이스 아래의 일련번호가 그것을 최초의 상업용 기계와 연결합니다.",
+                "Elias은 다른 십 년 전에는 합법이었던 부품으로 만든 낡고 무면허인 직조기를 씁니다. 케이스 아래의 일련번호가 그것을 최초의 상업용 기계와 연결합니다.",
             ]),
             ("회색화", [
                 "대대적인 수리는 **회색화**를 낳습니다. 사실은 온전하지만 감정은 사라진 사람입니다. 임상적 이름이 없는데, 수리를 파는 회사들이 이름 붙일 이유가 없기 때문입니다.",
                 "업계 구호는 *\"일어난 일을 되돌려 드립니다\"* 라고 합니다. 수리공이 아는 진실은 이렇습니다. *\"일어난 일의 형태를 되돌려 드립니다.\"*",
             ]),
-            ("워드", [
-                "이야기는 닳고 관료적인 근미래의 워드를 배경으로 합니다. 네온 과시가 아니라, 비와 금속 차양, 안심되는 파란색으로 칠해진 진료소가 있을 뿐입니다.",
+            ("관리청", [
+                "이야기는 닳고 관료적인 근미래의 관리청을 배경으로 합니다. 네온 과시가 아니라, 비와 금속 차양, 안심되는 파란색으로 칠해진 진료소가 있을 뿐입니다.",
             ]),
         ],
         "characters": [
-            ("엘리아스 베인", [
+            ("Elias Vane", [
                 "오십 대 후반. 한때 기억 설계자, 최초의 상업용 직조기를 설계한 기술자 중 한 명. 결코 말하지 않는 사건 뒤에 떠나 지금은 신더 레인에서 무면허 가게를 엽니다.",
                 "그의 규칙: 자기 엔그램은 수리하지 않는다. 이야기는 그 규칙이 그에게 무엇을 빼앗았는지, 그리고 어떻게 마침내 다시 쓰는지를 다룹니다.",
             ]),
-            ("마라", [
-                "엘리아스의 옛 멘토. 그의 기억이 지워질 때 방 안에 있었고 진실의 다른 절반을 지고 있습니다. 유령이 아니라 고객으로, 마지막에는 증인으로 돌아옵니다.",
+            ("Mara", [
+                "Elias의 옛 멘토. 그의 기억이 지워질 때 방 안에 있었고 진실의 다른 절반을 지고 있습니다. 유령이 아니라 고객으로, 마지막에는 증인으로 돌아옵니다.",
             ]),
             ("할로웨이", [
-                "엘리아스의 옛 동료이자 지금은 면허 진료소를 운영합니다. 수리를 누구나 감당할 수 있게 만들었고, 침묵과 맞바꾸어 자기 방을 제안합니다.",
+                "Elias의 옛 동료이자 지금은 면허 진료소를 운영합니다. 수리를 누구나 감당할 수 있게 만들었고, 침묵과 맞바꾸어 자기 방을 제안합니다.",
             ]),
             ("고객들", [
                 "감정을 되돌려 달라는 영수증 든 여자, 파란 문이 있는 소년, 사실은 온전한 회색화된 아버지의 가족, 아내를 한 번 더 고쳐 달라는 늙은 남자.",
@@ -295,7 +295,7 @@ CONTENT = {
                 "중심 질문: 어떤 회상을 *당신의 것*으로 만드는 것은 사실인가, 감정인가? 이야기는 계속 이 문장으로 돌아갑니다. *\"사실은 살릴 수 있어도 감정은 살릴 수 없다.\"*",
             ]),
             ("돕기의 윤리", [
-                "편안한 거짓말이 고통스러운 진실보다 친절한가? 수리업은 지움으로써 안도를 팔고, 모든 고객이 자발적으로 그 거래를 한다 — 엘리아스도 포함해.",
+                "편안한 거짓말이 고통스러운 진실보다 친절한가? 수리업은 지움으로써 안도를 팔고, 모든 고객이 자발적으로 그 거래를 한다 — Elias도 포함해.",
             ]),
             ("되풀이되는 모티프", [
                 "뜨거운 금속에 내리는 비 냄새, 한 번 이상의 기억에 나타나는 **파란 문**, 사실과 감정에 관한 말. 각각 장식이 아니라 전환점에서 돌아옵니다.",

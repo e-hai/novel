@@ -1,7 +1,7 @@
 ---
 chapter: 30
 title: "Kutu"
-summary: "Defter Ward'a gider ve damga, bir not ve çıkarılan bir sayfayla geri döner."
+summary: "Defter Koruma Dairesi'ne gider ve damga, bir not ve çıkarılan bir sayfayla geri döner."
 status: approved
 language: tr
 source_sha256: 2dbf5f21b417f5e1d17fa0506e4915aa2a967974c48a2d353b037e45ca98fb7b
@@ -13,7 +13,7 @@ review_notes: "The Memory Repairman'ın onaylı İngilizce 30. bölümünden 202
 
 # Kutu
 
-Kayıt 30 — 24 Şubat. Defter kutusunda geri geldi; iç kapağında bir damga ve Ward'ın el yazısıyla bir not vardı.
+Kayıt 30 — 24 Şubat. Defter kutusunda geri geldi; iç kapağında bir damga ve Koruma Dairesi'nin el yazısıyla bir not vardı.
 
 Damga kitabın incelenip iade edildiğini söylüyor. Not iki şey söylüyor. Birincisi, faturalandırılamayan saatler sütununun bir kusur olmadığı ve tutulabileceği. İkincisi, inceleme kuralları uyarınca bir sayfanın çıkarıldığı: adreslerin bulunduğu sayfa.
 

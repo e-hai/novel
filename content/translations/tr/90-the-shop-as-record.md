@@ -17,7 +17,7 @@ Kayıt 90 — 14 Nisan. Dükkân şimdi bir dosya. Bu kitaptaki en açık cümle
 
 Bir iş tezgâhı onarır ve hesap tutar. Bir dosya tasdik eder, reddeder, karşılaştırır ve müşterilerin getirip onarılamayan şeylerini saklar: not defterleri, listeler, mektuplar, bir ailenin yangını, dokuz çocuklu bir koridor.
 
-Ward'da dosya için bir kategori yok. Sektörün lisansı çekirdekleri kapsıyor. Dükkânın geliri çekirdeklerden geliyor. Kasım'dan beri dükkânın yaptığı işin yüzde doksanı okuma, ve okuma lisansta yok, ofis de hiç sormadı.
+Koruma Dairesi'nde dosya için bir kategori yok. Sektörün lisansı çekirdekleri kapsıyor. Dükkânın geliri çekirdeklerden geliyor. Kasım'dan beri dükkânın yaptığı işin yüzde doksanı okuma, ve okuma lisansta yok, ofis de hiç sormadı.
 
 Mara Nisan'ın sonunda soruyu bana sordu: dükkân bir dosyaysa, defter nedir? Defter dosyanın kendine kaydı, dedim. O zaman defter odadaki tek lisanslı şey, dedi.
 

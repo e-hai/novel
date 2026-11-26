@@ -17,7 +17,7 @@ Kayıt 85 — 10 Mart. Okul sekreteri, kuzey koridorunu kullanmayı bırakan dok
 
 Koridor onarılmadı, çünkü koridor hasta değildir. Çocuklar kendi onarımlarını bulmuşlar: uzun yolu kullanıyorlar, uzun yol yol olmuş, ve ikisi artık bundan bahsetmeyi bırakmış; sektörün yönetilmiş, onarılmamış anı tanımı bu.
 
-Dükkânın koridoru hasarlı olarak belgelendiremeyeceğini, böylece semtin yeniden kaplamayı yaptırtıp yaptırtmayacağını öğrenmek istedi. Sektörün bir binayı belgeleyen bir aracı yok, ve Ward'ın yönetmeliği bir dükkânın semti teşhis etmesini yasaklıyor.
+Dükkânın koridoru hasarlı olarak belgelendiremeyeceğini, böylece semtin yeniden kaplamayı yaptırtıp yaptırtmayacağını öğrenmek istedi. Sektörün bir binayı belgeleyen bir aracı yok, ve Koruma Dairesi'nin yönetmeliği bir dükkânın semti teşhis etmesini yasaklıyor.
 
 Yani dükkân yardım edemiyor, ve sekreter kurumların yapmadığı şeyi yaptı: listeyi sakladı, liste bir kayıt ve dokuz çocuk, dört ay, bir koridor yazıyor.
 

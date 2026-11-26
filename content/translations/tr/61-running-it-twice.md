@@ -19,4 +19,4 @@ Kayıt 61 — 19 Eylül. Tezgâh bir kişiyi değil, bir bakış açısını tut
 
 İkinci şey, tezgâha hangi kaydın çerçeveyi tuttuğunun söylenmesi gerektiğidir. Tarafsız ayar yoktur. Çerçeveyi kim tutarsa, kendi odasına uyan bir onarım alır, öteki kayıt ise içinde bulunduğu odaya uyan bir onarım alır.
 
-Mara ilk testi tek başına, kimseye ait olmayan iki çekirdekte çalıştırdı, sonuç hiçbir kaydın tanımadığı üçüncü bir anıydı. Bunu bir başarısızlık olarak yazdı ve Ward'a söylenmedi, çünkü kural iki eli söyler ve o iki elin ne üreteceği hakkında hiçbir şey söylemez.
+Mara ilk testi tek başına, kimseye ait olmayan iki çekirdekte çalıştırdı, sonuç hiçbir kaydın tanımadığı üçüncü bir anıydı. Bunu bir başarısızlık olarak yazdı ve Koruma Dairesi'ne söylenmedi, çünkü kural iki eli söyler ve o iki elin ne üreteceği hakkında hiçbir şey söylemez.

@@ -17,6 +17,6 @@ Kayıt 36 — 3 Nisan. Hata iki isim altında dosyalandı; kuralın söylediği 
 
 Ek imza, kaydın iki kişiye ait olması demektir. Wren'in hatası bu yüzden benimdir: sayfayı tezgâhtan önce değil, günün sonunda okudum, kural tam olarak bunu önlemek için yazılmıştı ve dükkânın adını, imza sorumluluğunu üstlenmediğim bir onarıma attım.
 
-Ward formunda bunun için bir kutu var. Kayıt hatası deniyor ve dükkân on bir yıldır onu hiç işaretlememişti. İşaretledim, dört satır yazdım ve dükkânın ilk kendi bildirimini bölge ofisine gönderdim.
+Koruma Dairesi formunda bunun için bir kutu var. Kayıt hatası deniyor ve dükkân on bir yıldır onu hiç işaretlememişti. İşaretledim, dört satır yazdım ve dükkânın ilk kendi bildirimini bölge ofisine gönderdim.
 
 Mara kopyayı okudu ve hiç memnuniyet duymadan: defter artık sadece müşterilerin değil, dükkânın da kaydı, dedi. Haklı ve Nisan'dan sonraki sayfalar farklı okunuyor, çünkü okunduklarını bilen insanlar tarafından yazılıyorlar.

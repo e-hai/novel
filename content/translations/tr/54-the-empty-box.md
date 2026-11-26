@@ -15,7 +15,7 @@ review_notes: "The Memory Repairman'ın onaylı İngilizce 54. bölümünden 202
 
 Kayıt 54 — 4 Ağustos. Pazartesi'den itibaren dükkân, tanıksız bağış formu olan partilerden dolgu kullanmaz.
 
-Bu Ward'ın istediği bir kural değil. Mara'yla birlikte bir kâğıda yazıp defterin önüne koyduğumuz bir kural, ve dükkâna işinin yaklaşık üçte birine mâl oluyor, çünkü rafın üçte birinde tanıksız form var.
+Bu Koruma Dairesi'nin istediği bir kural değil. Mara'yla birlikte bir kâğıda yazıp defterin önüne koyduğumuz bir kural, ve dükkâna işinin yaklaşık üçte birine mâl oluyor, çünkü rafın üçte birinde tanıksız form var.
 
 Etkilenen ilk müşteri bir köprü isteyen ve gecikmeyi karşılayamayan bir adamdı. Dolgunun tehlikeli olup olmadığını sordu. Tehlikeli olmadığını, tasdik edilmediğini söyledim, ve hasarlı çekirdeği ve Pazartesi işi olan bir adam için ikisinin aynı şey olduğunu söyledi.
 

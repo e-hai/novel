@@ -19,7 +19,7 @@ Elias engrama uzandı. Adam parmaklarını kumaşın üzerinde tuttu.
 
 “Gülüşü,” dedi. “Onun için geldim.”
 
-Dışarıda yağmur metal saçak boyunca akıyordu. Cinder Lane'in sonundaki satıcı, satılmayan ekmeği sarıyordu; her kâğıt sargıyı gevşetip yeniden sıkıyordu. Ward'da insanlar bir işe daha yarayabilecek her şeyi saklardı. Yaşlı adamın ceketinde üç farklı düğme vardı. Başparmağı kumaşın üzerinde duruyordu; sanki o da bir arada tutulmayı gerektiriyordu.
+Dışarıda yağmur metal saçak boyunca akıyordu. Cinder Lane'in sonundaki satıcı, satılmayan ekmeği sarıyordu; her kâğıt sargıyı gevşetip yeniden sıkıyordu. Koruma Dairesi'nde insanlar bir işe daha yarayabilecek her şeyi saklardı. Yaşlı adamın ceketinde üç farklı düğme vardı. Başparmağı kumaşın üzerinde duruyordu; sanki o da bir arada tutulmayı gerektiriyordu.
 
 “Kayıtta ne oldu?” diye sordu Elias.
 

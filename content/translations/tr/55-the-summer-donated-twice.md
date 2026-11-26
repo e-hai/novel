@@ -17,8 +17,8 @@ Kayıt 55 — 11 Ağustos. Parti 8841 ve parti 8902 aynı yazı içeriyor.
 
 Benzer değil. Aynı: aynı köpek, aynı kıyıda aynı iki hafta, aynı ikinci ölçüde aynı yanlış notu çalan aynı grubun düğünü. Bir parti Haziran'da, biri Temmuz'da mühürlenmiş, ve ikinci partinin bağış formunda adı geçen bağışçı, ilkindeki bağışçı değil.
 
-Biri bir yazı iki kez sattı. Bu defterde açıkça suç olan ilk şey, ve Ward'ın yöntemi olmayan bir suç, çünkü Ward onarımı düzenler, tedariki değil.
+Biri bir yazı iki kez sattı. Bu defterde açıkça suç olan ilk şey, ve Koruma Dairesi'nin yöntemi olmayan bir suç, çünkü Koruma Dairesi onarımı düzenler, tedariki değil.
 
-İki parti kâğıdını bir üst satırla semt ofisine gönderdim. Dokuz gün sonra, dükkânın şikâyette bulunup bulunmayacağını sorarak cevap verdiler. Cevap evet, ve cevap aynı zamanda, lisanslı bir onarımcının bir tedarikçi hakkında şikâyetinin onarımcının denetimi olmasıdır, çünkü tedarikçinin sözleşmesi Ward'ladır.
+İki parti kâğıdını bir üst satırla semt ofisine gönderdim. Dokuz gün sonra, dükkânın şikâyette bulunup bulunmayacağını sorarak cevap verdiler. Cevap evet, ve cevap aynı zamanda, lisanslı bir onarımcının bir tedarikçi hakkında şikâyetinin onarımcının denetimi olmasıdır, çünkü tedarikçinin sözleşmesi Koruma Dairesi'ndedir.
 
 Şikâyeti yaptım. Bunun defter numarası 55, ve defterin ikinci sayfası olan tek kaydı.

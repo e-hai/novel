@@ -17,6 +17,6 @@ Kayıt 79 — 27 Ocak. Mara'nın lisansı yıllık denetimine çıktı ve yine k
 
 Şart değişmedi: çift kayıtlı onarımlar, ek tezgâhtan önce adlandırılır, iki isim de defterde. Denetçi bu yıl bir satır ekledi — lisans sahibinin kendi kaydı, ikinci eli tuttuğu bir dükkânda onarılamayacak — bu yeni ve küçük bir madde ve bana yöneltilmiş.
 
-Mara okudu ve güldü, ki onu belki dört kez böyle duymuşum. Ward'ın nihayet ikimizin bölgede birbirini onarabilecek tek kişi olduğunu fark ettiğini ve bunu mümkün olan en az yararlı biçimde yasaklamaya karar verdiğini söyledi.
+Mara okudu ve güldü, ki onu belki dört kez böyle duymuşum. Koruma Dairesi'nin nihayet ikimizin bölgede birbirini onarabilecek tek kişi olduğunu fark ettiğini ve bunu mümkün olan en az yararlı biçimde yasaklamaya karar verdiğini söyledi.
 
 Maddeyi defterin önüne, şartların altına yazdım, diğer üçüne katıldı. Dördüncü şart, bir belge hakkında değil, bir kişi hakkında olan ilk şart ve itaatsizlik etme niyetinde olduğum ilk şart.

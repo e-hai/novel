@@ -15,7 +15,7 @@ review_notes: "25 Kasım 2026 çok dilli tamamlama için onaylı İngilizce 14. 
 
 Ertesi sabah, açmadan önce, Elias tezgâhın altındaki dolaptan annesinin çekirdeğini çıkardı.
 
-Yıllardır oradaydı. Onu kapatmamıştı; Ward'ın kapatma bölümünü kullanmamıştı, mühür basmamıştı, kasa çekmecesine fiş koymamıştı. Sadece sarmış, dolaba koymuş, kapağı kapatmıştı. Bir insanın paltosunu askıya asması gibi.
+Yıllardır oradaydı. Onu kapatmamıştı; Koruma Dairesi'nin kapatma bölümünü kullanmamıştı, mühür basmamıştı, kasa çekmecesine fiş koymamıştı. Sadece sarmış, dolaba koymuş, kapağı kapatmıştı. Bir insanın paltosunu askıya asması gibi.
 
 Çekirdeği tezgâha koydu, bağladı, çalıştırdı.
 
@@ -45,7 +45,7 @@ Oda bir kayıt odasıydı: raflar, dosyalar, etiketler. Ama rafların arasında 
 
 “Bu ne?”
 
-“İkinci çekirdek,” dedi kadın. “Senin onarımının. Kapatmadığın için.” Sonunda döndü. Yüzü yaşlıydı, gözleri yorgun, kolyesinde bir numara vardı ama çekirdek numarayı okumuyordu, sadece gösteriyordu, bir isim tabelası gibi. “Kayıt kapanmazsa ikinci çekirdek açılır. Kural bu. Ward bunu kapatma bölümüne yazmadı, çünkü kimse okumaz.”
+“İkinci çekirdek,” dedi kadın. “Senin onarımının. Kapatmadığın için.” Sonunda döndü. Yüzü yaşlıydı, gözleri yorgun, kolyesinde bir numara vardı ama çekirdek numarayı okumuyordu, sadece gösteriyordu, bir isim tabelası gibi. “Kayıt kapanmazsa ikinci çekirdek açılır. Kural bu. Koruma Dairesi bunu kapatma bölümüne yazmadı, çünkü kimse okumaz.”
 
 “Kimsin sen?”
 
@@ -75,7 +75,7 @@ Sessizlik oldu. Koridorda bir panel yandı, sonra arkada karardı.
 
 “Ben atmadım.”
 
-“Atmadın. Ama el senindi.” Kadın ona baktı. “Ward iki şeyi ayırmaz: elin ne yaptığını ve kişinin ne yaptığını. Ward için ikisi aynı kayıttır.”
+“Atmadın. Ama el senindi.” Kadın ona baktı. “Koruma Dairesi iki şeyi ayırmaz: elin ne yaptığını ve kişinin ne yaptığını. Koruma Dairesi için ikisi aynı kayıttır.”
 
 Elias ikinci çekirdeğe baktı. İçinde dokuzuncu kat vardı, açık mavi kapı vardı, kendi imzası vardı, ve kendi imzasının altında boş bir satır vardı; ikinci imza için ayrılmış, hiç imzalanmamış bir satır.
 

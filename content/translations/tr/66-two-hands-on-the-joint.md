@@ -15,7 +15,7 @@ review_notes: "The Memory Repairman'ın onaylı İngilizce 66. bölümünden 202
 
 Kayıt 66 — 24 Ekim. Ek imza, ikinci bir kişinin kaydı tezgâhtan önce okuduğunu onaylar. Onarımın doğru olduğunu onaylamaz.
 
-Bu, Altıncı Bölüm'ün açtığı ve Onuncu Bölüm'ün kapattığı boşluktur. Ward'ın kuralı, bir kişinin kaçıracağını iki kişinin bir kaydı okurken yakalayacağını varsayar; bu hasar için doğrudur, yargı için yanlıştır: bir onarım teknik olarak kusursuz, insanca yanlış olabilir, ve iki imza bunu yakalamaz.
+Bu, Altıncı Bölüm'ün açtığı ve Onuncu Bölüm'ün kapattığı boşluktur. Koruma Dairesi'nin kuralı, bir kişinin kaçıracağını iki kişinin bir kaydı okurken yakalayacağını varsayar; bu hasar için doğrudur, yargı için yanlıştır: bir onarım teknik olarak kusursuz, insanca yanlış olabilir, ve iki imza bunu yakalamaz.
 
 Mara deftere bir satır olarak koydu: ek, kararın değil, okumanın denetimidir. Altına bir satır daha koydum: o zaman kararın dükkânın lisanssız olduğu yerdir.
 

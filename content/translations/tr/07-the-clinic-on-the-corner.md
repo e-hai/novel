@@ -20,7 +20,7 @@ Elias yıllardır önünden geçip durduğu yere düzgün bakmamıştı. Sabahla
 
 En büyük fotoğrafta bir aile masada oturuyordu. Anne baba gülümsüyordu; çocuk onlara gülümsüyordu. Altında, kaldırımdan okunabilecek büyüklükte bir cümle vardı: **Aynı gün onarım. Hatırladığın kişi olarak eve git.**
 
-Fotoğraftaki çocuğun yüzü, yaşlı adamın onarılmış karısının yüzü gibi dikkatlice düzeltilmişti. Elias yağmur ceketinin manşetlerinden su damlaya damlaya tentenin altında durdu, sonra içeri girdi. Çünkü arşive gönderdiği paketin hâlâ cevabı yoktu; çünkü Ward'da eski dosyaları tutan tek yer buranın bekleme salonuydu.
+Fotoğraftaki çocuğun yüzü, yaşlı adamın onarılmış karısının yüzü gibi dikkatlice düzeltilmişti. Elias yağmur ceketinin manşetlerinden su damlaya damlaya tentenin altında durdu, sonra içeri girdi. Çünkü arşive gönderdiği paketin hâlâ cevabı yoktu; çünkü Koruma Dairesi'nde eski dosyaları tutan tek yer buranın bekleme salonuydu.
 
 İlk gişe işini sormuştu.
 

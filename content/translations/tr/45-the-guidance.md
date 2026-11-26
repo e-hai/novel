@@ -1,7 +1,7 @@
 ---
 chapter: 45
 title: "Yönerge"
-summary: "Ward teşhis yerine bir yönerge yayınlar ve dükkân, hiçbir şey söylemeyen bir belgeye uyup uymayacağına karar vermek zorunda kalır."
+summary: "Koruma Dairesi teşhis yerine bir yönerge yayınlar ve dükkân, hiçbir şey söylemeyen bir belgeye uyup uymayacağına karar vermek zorunda kalır."
 status: approved
 language: tr
 source_sha256: 58988ffa03c4d48e40e02629d012e33f0ffdedf3246771f57d96a6ae8d13a446
@@ -13,7 +13,7 @@ review_notes: "The Memory Repairman'ın onaylı İngilizce 45. bölümünden 202
 
 # Yönerge
 
-Kayıt 45 — 2 Haziran. Ward'ın yönergesi geldi: dört sayfa, teşhis yok, bir buyruk.
+Kayıt 45 — 2 Haziran. Koruma Dairesi'nin yönergesi geldi: dört sayfa, teşhis yok, bir buyruk.
 
 Sınıflandırılmamış Gri'nin onarılmayıp kaydedilmesini; üç veya daha fazla vakanın çakıştığı adreslerin dükkânlar tarafından kayda geçirilmesini; hiçbir dükkânın bir semte dair teşhis sunmamasını; yönergenin semt düzeyinde bir olgunun var olduğunu kabul etmediğini söylüyor.
 
