@@ -78,9 +78,52 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages project create ${{ vars.CF_PAGES_PROJECT || 'novel' }} --production-branch=main
 
+      - name: Write IndexNow key file
+        run: |
+          key="${{ secrets.INDEXNOW_KEY }}"
+          if [ -z "$key" ]; then echo "[i] INDEXNOW_KEY not set, skip key file"; exit 0; fi
+          printf '%s' "$key" > "site/${key}.txt"
+          echo "[i] wrote site/${key}.txt"
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy site --project-name=${{ vars.CF_PAGES_PROJECT || 'novel' }} --branch=main
+
+      # 部署后把 sitemap 里的 URL 提交给 IndexNow（Bing / Yandex / Seznam / Naver 共用）。
+      # 失败不影响部署，输出保留在日志里便于排查。
+      - name: Submit URLs to IndexNow
+        continue-on-error: true
+        run: |
+          python3 - <<'PY'
+          import json, os, re, sys, urllib.request, urllib.error
+          from urllib.parse import urlparse
+
+          key = os.environ.get("INDEXNOW_KEY", "").strip()
+          if not key:
+              print("[i] INDEXNOW_KEY not set, skip IndexNow")
+              sys.exit(0)
+
+          xml = open("site/sitemap.xml", encoding="utf-8").read()
+          urls = re.findall(r"<loc>(.*?)</loc>", xml)[:10000]
+          if not urls:
+              print("[i] no URLs in sitemap, skip")
+              sys.exit(0)
+
+          host = urlparse(urls[0]).netloc
+          payload = {"host": host, "key": key,
+                     "keyLocation": f"https://{host}/{key}.txt", "urlList": urls}
+          req = urllib.request.Request("https://api.indexnow.org/indexnow",
+                                       data=json.dumps(payload).encode(),
+                                       headers={"Content-Type": "application/json; charset=utf-8",
+                                                "User-Agent": "apprank-studio/1.0"})
+          try:
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  print(f"[i] IndexNow {r.status} for {len(urls)} URLs on {host}")
+          except urllib.error.HTTPError as e:
+              print(f"[!] IndexNow HTTP {e.code}: {e.read()[:200]}")
+          sys.exit(0)
+          PY
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
