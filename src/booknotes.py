@@ -137,4 +137,26 @@ NOTES = {
 "六章你當係一更接一更咁讀。每一章都停喺一個喺第度已經入咗帳嘅數字——呢個就係本書嘅紋路：紀錄喺人知道之前就已經存在。",
 "最後一章嘅浮標，係全書唯一一樣新嘢。其餘全部一早喺紙上面，用一隻冇人得閒去查係邊個嘅手寫。"]},
 },
+"the-twenty-fourth-child": {
+"en": {"title": "Behind The Twenty-Fourth Child", "paras": [
+"This is the series' one-room story: a school of twenty-three names, a county that pays per head, and a column with no heading that has said twenty-four every morning since 1911.",
+"The uncanny here is arithmetic. Nobody in the book is lying. A head teacher answers an auditor truthfully, a clerk files a duplicate honestly, a county pays a penny a day for a child it can count. The horror is that a number can be correct for the people keeping it and wrong about the room.",
+"Nell Darrow is not an investigator. She is a teacher who has been trained to distrust any page that cannot say who wrote it and when, and the book rewards that training: the file breaks on provenance, not on ghosts. The mark has no name for a hundred and eleven years because nobody was ever asked to sign for it.",
+"The last chapter is the only one in the series where the office's rule is obeyed from inside the room. Somebody with a pen, a date, and a chair by the window writes the name down. That is all the series has ever claimed: a record kept honestly is a claim that the thing happened."]},
+"tr": {"title": "The Twenty-Fourth Child'ın arkasında", "paras": [
+"Bu, dizinin tek odalı hikâyesi: yirmi üç isimli bir okul, kafa başına ödeme yapan bir kontluk ve 1911'den beri her sabah yirmi dört diyen, başlıksız bir sütun.",
+"Buradaki tekinsizlik aritmetik. Kitapta kimse yalan söylemiyor. Bir müdür denetçiye doğruyu söylüyor, bir memur bir kopyayı dürüstçe dosyalıyor, bir kontluk sayabildiği bir çocuk için günde bir peni ödüyor. Korkunç olan, bir sayının onu tutanlar için doğru, oda için yanlış olabilmesi.",
+"Nell Darrow bir araştırmacı değil. Kimin ne zaman yazdığını söyleyemeyen hiçbir sayfaya güvenmemek üzere eğitilmiş bir öğretmen ve kitap bu eğitimi ödüllendiriyor: dosya hayaletlerde değil, kaynağın doğrulanabilirliğinde kırılıyor. İşaretin yüz on bir yıl adı yok, çünkü kimseden onun adına imza atması istenmemiş.",
+"Son bölüm, dizide dairenin kuralına odanın içinden uyulan tek bölüm. Kalemi, tarihi ve pencerenin yanında bir sandalyesi olan biri adı yazıyor. Dizinin iddia ettiği tek şey bu: dürüstçe tutulmuş bir kayıt, o şeyin olduğunu iddia eder."]},
+"ko": {"title": "『The Twenty-Fourth Child』뒤에 있는 것", "paras": [
+"시리즈의 단칸 이야기다. 이름이 스물셋인 학교, 머릿수로 돈을 주는 카운티, 그리고 1911년부터 매일 아침 스물넷이라고 말해 온 제목 없는 칸.",
+"여기서 기이한 것은 산수다. 책에서 아무도 거짓말하지 않는다. 교장은 감사관에게 사실대로 답하고, 서기는 사본을 정직하게 철하고, 카운티는 셀 수 있는 아이에게 하루 1펜스를 낸다. 공포는 숫자가 그것을 유지하는 사람들에게는 맞고 방에 대해서는 틀릴 수 있다는 것이다.",
+"Nell Darrow는 조사자가 아니다. 누가 언제 썼는지 말할 수 없는 페이지를 믿지 않도록 훈련받은 교사이고, 책은 그 훈련에 보답한다. 서류는 유령이 아니라 출처에서 깨진다. 표시가 111년 동안 이름이 없는 것은 아무도 그 표시를 대신 서명해 달라고 요청받은 적이 없기 때문이다.",
+"마지막 장은 시리즈에서 부서의 규칙이 방 안에서 지켜지는 유일한 장이다. 펜과 날짜와 창가의 의자를 가진 사람이 이름을 적는다. 시리즈가 내내 주장한 것은 그것뿐이다. 정직하게 남긴 기록은 그 일이 있었다고 주장한다."]},
+"yue": {"title": "《The Twenty-Fourth Child》背後", "paras": [
+"呢個係系列入面最細嘅一個故事：一間得廿三個名嘅學校、一個按人頭撥款嘅縣府，同一欄冇標題、由 1911 年起每個朝早都寫住廿四嘅空格。",
+"呢度嘅詭異係算術。書入面冇人講大話：校長照實答核數師，文員老實入檔一份副本，縣府為一個數得到嘅細路一日畀一便士。恐怖嘅係，一個數字可以對得住管數嘅人，但對唔住間課室。",
+"Nell Darrow 唔係查案嘅人。佢係一個受過訓練嘅老師：唔信任何講唔出「邊個、幾時寫」嘅一頁。而本書就係回報呢種訓練——檔案係喺出處度斷，唔係喺鬼度斷。嗰一筆一百一十一年都冇名，因為由頭到尾冇人要求過任何人代佢簽名。",
+"最尾一章，係全系列唯一一次，部門嘅規矩由課室入面嘅人自己執行：一個有筆、有日期、有窗邊一張櫈嘅人，寫低咗個名。系列由頭到尾只講一樣：老實寫低嘅紀錄，就係話件事真係發生過。"]},
+},
 }

@@ -167,7 +167,7 @@ def render_hub(out: Path, flagships: dict | None = None):
             meta = cc["hub_meta"].format(n=len(chapters), genre=b["genre"][language])
             cards.append(
                 f'<li><a href="{html.escape(book_path(b["slug"], language))}">'
-                f'<span class="num">{html.escape(SR.COPY[language]["volume_short"].format(n=SR.volume(b["slug"])) if SR.volume(b["slug"]) else b["genre"][language])}</span>'
+                f'<span class="num">{html.escape(SR.short(language, b["slug"]) if SR.volume(b["slug"]) else b["genre"][language])}</span>'
                 f'<h3>{html.escape(b["title"])}</h3>'
                 f'<p class="summary">{html.escape(b["tagline"][language])}</p>'
                 f'<span class="readtime">{html.escape(meta)}</span></a></li>')
@@ -194,7 +194,7 @@ def render_series(out: Path, language: str):
     volumes.sort(key=lambda b: SR.volume(b["slug"]))
     items = "".join(
         f'<li><a href="{html.escape(book_path(b["slug"], language))}">'
-        f'<span class="num">{html.escape(sc["volume_short"].format(n=SR.volume(b["slug"])))}</span>'
+        f'<span class="num">{html.escape(SR.short(language, b["slug"]))}</span>'
         f'<h3>{html.escape(b["title"])}</h3>'
         f'<p class="summary">{html.escape(b["tagline"][language])}</p>'
         f'<span class="readtime">{html.escape(b["genre"][language])}</span></a></li>'
@@ -233,7 +233,7 @@ def series_strip(book: dict, language: str) -> str:
         return ""
     return (f'<p class="meta series-strip"><a href="{html.escape(series_path(language))}">'
             f'{html.escape(sc["title"])} · '
-            f'{html.escape(sc["volume"].format(n=n))}</a></p>')
+            f'{html.escape(SR.label(language, book["slug"]))}</a></p>')
 
 
 def _also(book: dict, language: str) -> str:
@@ -354,7 +354,7 @@ def render_notes(out: Path, book: dict, language: str):
              f'<p>{html.escape(SR.CONNECT[book["slug"]][language])}</p>'
              f'<p class="meta"><a href="{html.escape(series_path(language))}">'
              f'{html.escape(SR.COPY[language]["title"])} · '
-             f'{html.escape(SR.COPY[language]["volume"].format(n=SR.volume(book["slug"])))}</a></p>'
+             f'{html.escape(SR.label(language, book["slug"]))}</a></p>'
              if SR.CONNECT.get(book["slug"], {}).get(language) else "") +
             f'<p class="meta"><a href="{html.escape(book_path(book["slug"], language))}">'
             f'{html.escape(cc["book_toc"])}</a> · '

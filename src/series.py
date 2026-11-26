@@ -20,15 +20,16 @@ SERIES = {
         "sunday-repeated",
         "the-last-translator",
         "weather-for-a-town-that-isnt-there",
+        "the-twenty-fourth-child",
     ],
 }
 
 COPY = {
     "en": {
         "title": "The Register",
-        "kicker": "Six stories, one institution",
+        "kicker": "Seven stories, one institution",
         "lede": ("A standing office exists to register events that had no witness. "
-                 "Six novels are six of its files."),
+                 "Seven novels are seven of its files."),
         "paras": [
             ("The office has no building you can visit. It has a rule instead: if something "
              "happened and nobody saw it, somebody still has to write it down, in ink, in order, "
@@ -36,14 +37,15 @@ COPY = {
              "and every entry outlives the person who made it."),
             ("The objects differ — a harbour ledger, a compartment manifest, twelve blank iron "
              "tags, a delivery receipt, a language's death certificate, a station register "
-             "paragraph — but the hand is the same. That is the only thing the six volumes "
+             "paragraph, a school attendance book with one mark too many — but the hand is the "
+             "same. That is the only thing the seven volumes "
              "share, and it is enough: a record kept honestly is a claim that the thing "
              "happened, whether or not the world still has room for it."),
         ],
         "order_title": "Reading order",
         "order_note": ("Each volume stands alone. Read them in any order; read them in this "
                        "one and the handwriting starts to show."),
-        "volume": "Volume {n} of 6",
+        "volume": "Volume {n} of {total}",
         "volume_short": "Volume {n}",
         "connect_title": "In the Register",
         "back_series": "The Register",
@@ -51,23 +53,24 @@ COPY = {
     },
     "tr": {
         "title": "Kütük",
-        "kicker": "Altı hikâye, tek kurum",
+        "kicker": "Yedi hikâye, tek kurum",
         "lede": ("Tanığı olmayan olayları kayda geçirmek için kurulmuş bir daire var. "
-                 "Altı roman, onun altı dosyası."),
+                 "Yedi roman, onun yedi dosyası."),
         "paras": [
             ("Dairenin gezilecek bir binası yok. Bir kuralı var: bir şey olduysa ve kimse "
              "görmediyse, biri yine de onu yazmak zorunda — mürekkeple, sırayla, en üstte "
              "tarihle. Bu dizideki her hikâye o kayıtlardan biri ve her kayıt, onu tutan "
              "kişiden daha uzun yaşıyor."),
             ("Nesneler değişiyor — bir liman defteri, bir bölme manifestosu, on iki boş demir "
-             "plaka, bir teslim makbuzu, bir dilin ölüm belgesi, bir istasyon kütüğü paragrafı "
-             "— ama el aynı. Altı cildin paylaştığı tek şey bu ve yetiyor: dürüstçe tutulmuş "
+             "plaka, bir teslim makbuzu, bir dilin ölüm belgesi, bir istasyon kütüğü paragrafı, "
+             "bir fazla çentikli bir okul yoklama defteri — ama el aynı. Yedi cildin paylaştığı "
+             "tek şey bu ve yetiyor: dürüstçe tutulmuş "
              "bir kayıt, dünyada artık yer kalmamış olsa da o şeyin olduğunu iddia eder."),
         ],
         "order_title": "Okuma sırası",
         "order_note": ("Her cilt tek başına durur. İstediğiniz sırayla okuyun; bu sırayla "
                        "okursanız el yazısı görünmeye başlar."),
-        "volume": "6 cildin {n}.",
+        "volume": "{total} cildin {n}.",
         "volume_short": "{n}. cilt",
         "connect_title": "Kütük'te",
         "back_series": "Kütük",
@@ -75,23 +78,23 @@ COPY = {
     },
     "ko": {
         "title": "등록부",
-        "kicker": "여섯 편의 이야기, 하나의 기관",
+        "kicker": "일곱 편의 이야기, 하나의 기관",
         "lede": ("목격자가 없던 사건을 등록하기 위해 존재하는 상설 부서가 있다. "
-                 "여섯 편의 소설은 그 부서의 서류 여섯 건이다."),
+                 "일곱 편의 소설은 그 부서의 서류 일곱 건이다."),
         "paras": [
             ("그 부서에는 견학할 건물이 없다. 대신 규칙이 하나 있다. 어떤 일이 일어났는데 "
              "아무도 보지 못했다면, 누군가는 여전히 그것을 적어야 한다. 잉크로, 순서대로, "
              "맨 위에 날짜를 붙여서. 이 시리즈의 모든 이야기는 그 기록 중 하나이고, 모든 "
              "기록은 그것을 적은 사람보다 오래 산다."),
             ("대상은 달라진다. 항구 장부, 격실 명세서, 이름 없는 철제 명찰 열둘, 배송 "
-             "영수증, 한 언어의 사망 증명서, 관측소 대장의 한 문단. 그러나 필체는 같다. "
-             "여섯 권이 공유하는 것은 그것뿐이고, 그것으로 충분하다. 정직하게 남긴 기록은 "
+             "영수증, 한 언어의 사망 증명서, 관측소 대장의 한 문단, 한 칸이 더 찍힌 학교 "
+             "출석부. 그러나 필체는 같다. 일곱 권이 공유하는 것은 그것뿐이고, 그것으로 충분하다. 정직하게 남긴 기록은 "
              "세상에 그 자리가 더 이상 없더라도 그 일이 있었다고 주장한다."),
         ],
         "order_title": "읽는 순서",
         "order_note": ("각 권은 따로 완결된다. 아무 순서로 읽어도 되지만, 이 순서로 읽으면 "
                        "필체가 보이기 시작한다."),
-        "volume": "6권 중 {n}권",
+        "volume": "{total}권 중 {n}권",
         "volume_short": "{n}권",
         "connect_title": "등록부 안에서",
         "back_series": "등록부",
@@ -99,20 +102,21 @@ COPY = {
     },
     "yue": {
         "title": "登記冊",
-        "kicker": "六個故事，一個機構",
+        "kicker": "七個故事，一個機構",
         "lede": ("有個常設部門，專門登記「冇人見到」嘅事。六部小說，就係佢六宗檔案。"),
         "paras": [
             ("呢個部門冇一棟你參觀得到嘅樓。佢只有一條規矩：一件事發生過、而冇人見到，"
              "都仲要有人用墨寫低，按次序寫，頂頭寫日期。呢個系列每個故事都係其中一條紀錄，"
              "而每條紀錄都比寫佢嗰個人活得久。"),
             ("對象個個唔同——一本港口簿、一份艙格艙單、十二塊冇名嘅鐵牌、一張冇人簽收嘅"
-             "送貨回執、一份開畀一種將死語言嘅死亡證明、一段幫水底小鎮補登嘅觀測站條目——"
-             "但隻字係同一隻手。六卷共用嘅就係呢樣，而已經夠：老實寫低嘅紀錄，就算個世界"
+             "送貨回執、一份開畀一種將死語言嘅死亡證明、一段幫水底小鎮補登嘅觀測站條目、"
+             "一本多咗一格嘅點名簿——但隻字係同一隻手。七卷共用嘅就係呢樣，而已經夠："
+             "老實寫低嘅紀錄，就算個世界"
              "已經冇位擺佢，都仍然係話「件事真係發生過」。"),
         ],
         "order_title": "閱讀次序",
         "order_note": ("每卷自己企得住。點讀都得；但照呢個次序讀，隻手就會慢慢現形。"),
-        "volume": "六卷中第 {n} 卷",
+        "volume": "{total}卷中第 {n} 卷",
         "volume_short": "第 {n} 卷",
         "connect_title": "喺登記冊入面",
         "back_series": "登記冊",
@@ -188,7 +192,35 @@ CONNECT = {
 "yue": ("第六宗檔案：一段幫一個沉喺十五米水下嘅鎮補登嘅觀測站條目。係最新一宗檔案，"
         "亦係部門唯一一次要打開一條已經封咗嘅紀錄，畀返個模型搵得到嘅編號。"),
 },
+"the-twenty-fourth-child": {
+"en": ("Case seven: a school attendance book with one mark too many, kept for a hundred and eleven "
+       "years on behalf of a child who was buried in 1911. It is the only file in the series where "
+       "somebody eventually wrote the name in the margin, and the hand that wrote it was in the room."),
+"tr": ("Yedinci dosya: 1911'de defnedilen bir çocuk adına yüz on bir yıl boyunca tutulmuş, bir "
+       "çentiği fazla bir okul yoklama defteri. Dizide birinin sonunda adı kenara yazdığı tek dosya "
+       "ve o adı yazan el odadaydı."),
+"ko": ("일곱 번째 서류: 1911년에 묻힌 아이를 대신해 백십일 년 동안 유지된, 한 칸이 더 찍힌 학교 "
+       "출석부. 시리즈에서 누군가 결국 여백에 이름을 적은 유일한 파일이며, 그 이름을 적은 손은 "
+       "그 방 안에 있었다."),
+"yue": ("第七宗檔案：一本多咗一格嘅點名簿，替一個 1911 年落葬嘅細路，喺帳上留咗一百一十一年。"
+        "係系列入面唯一一宗，最後有人喺邊位寫返個名——而寫嗰隻手，當時就喺課室入面。"),
+},
 }
+
+
+def total() -> int:
+    """本系列当前卷数。"""
+    return len(SERIES["order"])
+
+
+def label(language: str, slug: str) -> str:
+    """「Volume N of M」这类卷次标注。"""
+    return COPY[language]["volume"].format(n=volume(slug), total=total())
+
+
+def short(language: str, slug: str) -> str:
+    """只含卷次的短标注。"""
+    return COPY[language]["volume_short"].format(n=volume(slug), total=total())
 
 
 def volume(slug: str) -> int:

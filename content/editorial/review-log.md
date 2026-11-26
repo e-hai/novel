@@ -533,6 +533,15 @@ Batch approval by explicit user instruction "补三语 + 做常青页" on 2026-1
 - **Substantive changes:** Original English novella written for the six-book catalogue on 2026-11-25 (six chapters, about 2,700 words). Translations produced from the approved English source in the same pass; each translated file carries a `source_sha256` matching its English chapter, and no sentence-level human rewrite was supplied or claimed. Chapters are individually listed in their front matter, all `status: approved`.
 - **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-25
 
+## The Twenty-Fourth Child — series volume seven (2026-11-26)
+
+- **Scope:** `content/books/the-twenty-fourth-child/` — six chapters in English, plus full tr / ko / yue editions.
+- **Reviewer:** apprank studio
+- **Date:** 2026-11-26
+- **Approval basis:** user-release-request
+- **Substantive changes:** Original English novella written for the seven-volume Register series on 2026-11-26 (six chapters, about 2,400 words). Translations produced from the approved English source in the same pass; each translated file carries a `source_sha256` matching its English chapter, and no sentence-level human rewrite was supplied or claimed. Chapters are individually listed in their front matter, all `status: approved`.
+- **Approved to publish:** ☑ Yes — approved by apprank studio, 2026-11-26
+
 ---
 
 ## Note to the human editor

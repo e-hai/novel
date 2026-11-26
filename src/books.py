@@ -103,4 +103,20 @@ BOOKS = [
             "yue": "靜默科幻小品",
         },
     },
+    {
+        "slug": "the-twenty-fourth-child",
+        "title": "The Twenty-Fourth Child",
+        "tagline": {
+            "en": "A one-room school keeps twenty-three names on its roll and twenty-four children in the room.",
+            "tr": "Tek odalı bir okulun listesinde yirmi üç isim, odasında yirmi dört çocuk var.",
+            "ko": "한 교실 학교의 명단에는 스물세 개의 이름이, 교실에는 스물네 명의 아이가 있다.",
+            "yue": "一間單室學校，名單上廿三個名，課室入面廿四個細路。",
+        },
+        "genre": {
+            "en": "Quiet rural uncanny",
+            "tr": "Sakin taşra tekinsizliği",
+            "ko": "조용한 농촌 기이 소설",
+            "yue": "靜默鄉村異談",
+        },
+    },
 ]

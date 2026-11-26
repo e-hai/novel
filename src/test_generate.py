@@ -473,14 +473,14 @@ class ReaderUITests(unittest.TestCase):
     def read(self, path):
         return (self.out / path.lstrip('/') / 'index.html').read_text(encoding='utf-8')
 
-    def test_series_page_lists_all_six_volumes(self):
+    def test_series_page_lists_every_volume(self):
         """《The Register》系列页四语齐备，且把六卷按卷次列全。"""
         for lang in LOCALES:
             page = self.read(route(lang, "/series/"))
             self.assertIn(S.COPY[lang]["title"], page, lang)
             for book in MB.BK.BOOKS:
                 self.assertIn(MB.book_path(book["slug"], lang), page, (lang, book["slug"]))
-            self.assertIn(S.COPY[lang]["volume_short"].format(n=len(S.SERIES["order"])), page, lang)
+            self.assertIn(S.COPY[lang]["volume_short"].format(n=len(S.SERIES["order"]), total=len(S.SERIES["order"])), page, lang)
 
     def test_volumes_declare_their_place_in_the_series(self):
         """每部书的书页、章节页、笔记页都写明自己是第几卷并能回到系列页。"""
@@ -488,7 +488,7 @@ class ReaderUITests(unittest.TestCase):
             for book in MB.BK.BOOKS:
                 n = S.volume(book["slug"])
                 self.assertGreater(n, 0)
-                stamp = S.COPY[lang]["volume"].format(n=n)
+                stamp = S.label(lang, book["slug"])
                 for path in (MB.book_path(book["slug"], lang),
                              MB.notes_path(book["slug"], lang)):
                     page = self.read(path)
