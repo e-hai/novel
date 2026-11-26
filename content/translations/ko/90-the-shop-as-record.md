@@ -1,7 +1,7 @@
 ---
 chapter: 90
 title: "기록으로서의 가게"
-summary: "가게는 작업대가 아니라 기록철이 되고, Elias은 자기 손으로 그것을 인정한다."
+summary: "가게는 작업대가 아니라 기록철이 되고, Elias는 자기 손으로 그것을 인정한다."
 status: approved
 language: ko
 source_sha256: e4319e22274163f39bfea4ce44ee02156e750f549d91826baf4dfcff2a88ca0a

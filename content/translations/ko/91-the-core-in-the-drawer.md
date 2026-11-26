@@ -1,7 +1,7 @@
 ---
 chapter: 91
 title: "서랍 속 코어"
-summary: "Elias은 2015년부터 서랍 안에 있던 자기 코어를 꺼낸다."
+summary: "Elias는 2015년부터 서랍 안에 있던 자기 코어를 꺼낸다."
 status: approved
 language: ko
 source_sha256: a713ea2f3968a849a1d700d96fc51acb45c8fff60afd889a5d8f1953f9980915
